@@ -17,11 +17,11 @@ class PackageTest extends \PHPUnit_Framework_TestCase
 	public function testPackagePrepares()
 	{
 		$package = new Package('Package Test');
-		$package->setAuthor('VikiJel');
+		//$package->setAuthor('VikiJel');
 
 		$package->prepare();
 
-		$this->assertContains($package->getAuthor(), $package->getCopyright());
+		//$this->assertContains($package->getAuthor(), $package->getCopyright());
 		$this->assertContains(date('Y'), $package->getCopyright());
 		$this->assertEquals('1.0.0', $package->getVersion());
 

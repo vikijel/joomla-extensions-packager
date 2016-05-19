@@ -8,78 +8,202 @@ namespace VikiJel\JoomlaExtensionsPackager;
 class Package
 {
 	/**
-	 * @var string System name of package
-	 */
-	protected $pkg_name = '';
-
-	/**
 	 * @var string Human name of package
 	 */
 	protected $name = '';
-	
+
 	/**
 	 * @var string Description of package
 	 */
 	protected $description = '';
-	
+
 	/**
 	 * @var string Version of package
 	 */
 	protected $version = '';
-	
+
 	/**
 	 * @var string Author of package
 	 */
 	protected $author = '';
-	
+
 	/**
 	 * @var string Email of package author
 	 */
 	protected $authorEmail = '';
-	
+
 	/**
 	 * @var string URL of package author
 	 */
 	protected $authorUrl = '';
-	
+
 	/**
 	 * @var string Packager of package
 	 */
 	protected $packager = 'vikijel/joomla-extensions-packager';
-	
+
 	/**
 	 * @var string Licence of package
 	 */
 	protected $license = 'http://opensource.org/licenses/GPL-3.0 GPL-3.0';
-	
+
 	/**
 	 * @var string Copyright of package (%1$s will be filled with actual year, %2$s will become author)
 	 */
 	protected $copyright = 'Copyright %1$s %2$s - All rights reserved.';
-	
+
 	/**
 	 * @var string URL of package
 	 */
 	protected $url = '';
-	
+
 	/**
 	 * @var string URL of package file
 	 */
 	protected $packagerurl = '';
-	
+
 	/**
 	 * @var string Date of package creation (if empty, actual date will be used)
 	 */
 	protected $creationDate = '';
-	
+
 	/**
 	 * @var string Install script filename
 	 */
 	protected $scriptfile = '';
 
+	/**
+	 * @var string System name of package
+	 */
+	protected $pkg_name = '';
+
+	/**
+	 * @var string Joomla minimal version
+	 */
+	protected $pkg_version = '3.5';
+
+	/**
+	 * @var string Package type
+	 */
+	protected $pkg_type = 'package';
+
+	/**
+	 * @var string Package install method
+	 */
+	protected $pkg_method = 'upgrade';
+
+	/**
+	 * @var string Prefix for archive and xml filenames
+	 */
+	protected $pkg_prefix = 'pkg_';
+
+	/**
+	 * @var array List of extensions contained in package
+	 */
+	protected $pkg_extensions = [];
+
+	/**
+	 * @var array List of languages contained in package
+	 */
+	protected $pkg_languages = [];
+
+	/**
+	 * @var array List of package update servers
+	 */
+	protected $pkg_updateservers = [];
+
+	/**
+	 * @var array List of filepaths to be packed into package
+	 */
+	protected $pkg_files = [];
+	/**
+	 * @var string Install xml manifest content
+	 */
+	protected $pkg_xml = '';
+
 	public function __construct($name)
 	{
 		$this->name = $name;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getPkgVersion()
+	{
+		return $this->pkg_version;
+	}
+
+	/**
+	 * @param string $pkg_version
+	 *
+	 * @return Package
+	 */
+	public function setPkgVersion($pkg_version)
+	{
+		$this->pkg_version = $pkg_version;
+
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getPkgType()
+	{
+		return $this->pkg_type;
+	}
+
+	/**
+	 * @param string $pkg_type
+	 *
+	 * @return Package
+	 */
+	public function setPkgType($pkg_type)
+	{
+		$this->pkg_type = $pkg_type;
+
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getPkgMethod()
+	{
+		return $this->pkg_method;
+	}
+
+	/**
+	 * @param string $pkg_method
+	 *
+	 * @return Package
+	 */
+	public function setPkgMethod($pkg_method)
+	{
+		$this->pkg_method = $pkg_method;
+
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getPkgPrefix()
+	{
+		return $this->pkg_prefix;
+	}
+
+	/**
+	 * @param string $pkg_prefix
+	 *
+	 * @return Package
+	 */
+	public function setPkgPrefix($pkg_prefix)
+	{
+		$this->pkg_prefix = $pkg_prefix;
+
+		return $this;
 	}
 
 	/**
@@ -115,9 +239,9 @@ class Package
 	 *
 	 * @return Package
 	 */
-	public function setVersion($version)
+	public function setVersion($version = '')
 	{
-		$this->version = $version;
+		$this->version = version_compare($version, '0.0.0', '>') ? $version : '1.0.0';
 
 		return $this;
 	}
@@ -235,9 +359,17 @@ class Package
 	 *
 	 * @return Package
 	 */
-	public function setCopyright($copyright)
+	public function setCopyright($copyright = '')
 	{
-		$this->copyright = $copyright;
+		if ($copyright != '')
+		{
+			$this->copyright = $copyright;
+		}
+
+		if (strpos($this->copyright, '%') !== false)
+		{
+			$this->copyright = sprintf($this->copyright, date('Y'), $this->author);
+		}
 
 		return $this;
 	}
@@ -324,11 +456,9 @@ class Package
 
 	public function prepare()
 	{
-		$year            = date('Y');
-		$this->version   = version_compare($this->version, '0.0.0', '>') ? $this->version : '1.0.0';
-		$this->copyright = sprintf($this->copyright, $year, $this->author);
-
-		$this->setPkgName($this->name);
+		$this->setCopyright($this->copyright);
+		$this->setVersion($this->version);
+		$this->setPkgName($this->pkg_name);
 	}
 
 	/**
