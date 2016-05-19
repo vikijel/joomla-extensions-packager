@@ -85,7 +85,7 @@ class Extension
 	 */
 	public function setFile($file)
 	{
-		$this->file = trim(str_replace(['\\', '/'], DIRECTORY_SEPARATOR, $file));
+		$this->file = Helper::toFilePath($file);
 
 		return $this;
 	}

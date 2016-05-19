@@ -23,4 +23,9 @@ class Helper
 			)
 		);
 	}
+
+	public static function toFilePath($file)
+	{
+		return trim(str_replace(['\\', '/'], DIRECTORY_SEPARATOR, $file));
+	}
 }

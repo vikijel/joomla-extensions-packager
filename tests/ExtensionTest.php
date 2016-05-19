@@ -25,7 +25,7 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
 		$instance = new Extension(static::$name, static::$file, static::$type, static::$client, static::$group);
 
 		$this->assertEquals('plg_system_test', $instance->getName());
-		$this->assertEquals('C:\\wamp\\www\\SomeFile.zip', $instance->getFile());
+		$this->assertEquals('C:' . DIRECTORY_SEPARATOR . 'wamp' . DIRECTORY_SEPARATOR . 'www' . DIRECTORY_SEPARATOR . 'SomeFile.zip', $instance->getFile());
 		$this->assertEquals('plugin', $instance->getType());
 		$this->assertEquals(null, $instance->getClient());
 		$this->assertEquals('system', $instance->getGroup());
