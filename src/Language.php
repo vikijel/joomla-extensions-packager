@@ -30,6 +30,14 @@ class Language
 	}
 
 	/**
+	 * @see Language::__construct()
+	 */
+	public static function create($file, $tag = 'en-GB')
+	{
+		return new static($file, $tag);
+	}
+
+	/**
 	 * @return string Path to language file for package (*.ini)
 	 */
 	public function getFile()

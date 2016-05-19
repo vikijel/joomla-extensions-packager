@@ -51,6 +51,14 @@ class Extension
 	}
 
 	/**
+	 * @see Extension::__construct()
+	 */
+	public static function create($name, $file, $type = 'component', $client = null, $group = null)
+	{
+		return new static($name, $file, $type, $client, $group);
+	}
+
+	/**
 	 * @return string System name of extension
 	 */
 	public function getName()

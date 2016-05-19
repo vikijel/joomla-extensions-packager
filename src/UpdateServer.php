@@ -36,6 +36,14 @@ class UpdateServer
 	}
 
 	/**
+	 * @see UpdateServer::__construct()
+	 */
+	public static function create($url, $name = '', $type = '', $priority = 1)
+	{
+		return new static($url, $name, $type, $priority);
+	}
+
+	/**
 	 * @return string URL of update server's xml list of updates
 	 */
 	public function getUrl()

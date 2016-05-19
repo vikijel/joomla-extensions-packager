@@ -127,6 +127,14 @@ class Package
 	}
 
 	/**
+	 * @see Package::__construct()
+	 */
+	public static function create($name)
+	{
+		return new static($name);
+	}
+
+	/**
 	 * @param string $name   System name of extension
 	 * @param string $file   Path to extension's install package
 	 * @param string $type   Type of extension (component/module/plugin/language/file/library/template)
@@ -137,9 +145,7 @@ class Package
 	 */
 	public function addExtension($name, $file, $type = 'component', $client = null, $group = null)
 	{
-		$extension = new Extension($name, $file, $type, $client, $group);
-
-		return $this->addExtensionInstance($extension);
+		return $this->addExtensionInstance(Extension::create($name, $file, $type, $client, $group));
 	}
 
 	/**
@@ -537,5 +543,13 @@ class Package
 		$this->pkg_name = Helper::toSystemName($this->pkg_name);
 
 		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getName()
+	{
+		return $this->name;
 	}
 }
