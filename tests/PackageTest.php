@@ -7,16 +7,18 @@ namespace VikiJel\JoomlaExtensionsPackager;
 
 class PackageTest extends \PHPUnit_Framework_TestCase
 {
+	static $name = 'Package Test';
+
 	public function testClassAutoloads()
 	{
-		$package = new Package('Package Test');
+		$instance = new Package(static::$name);
 
-		$this->assertInstanceOf('\VikiJel\JoomlaExtensionsPackager\Package', $package);
+		$this->assertInstanceOf('\\VikiJel\\JoomlaExtensionsPackager\\Package', $instance);
 	}
 
 	public function testPackagePrepares()
 	{
-		$package = new Package('Package Test');
+		$package = new Package(static::$name);
 		//$package->setAuthor('VikiJel');
 
 		$package->prepare();
