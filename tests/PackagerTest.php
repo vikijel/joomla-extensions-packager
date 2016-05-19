@@ -32,6 +32,7 @@ class PackagerTest extends \PHPUnit_Framework_TestCase
 			       ->setScriptfile('/path\\to/script.php')
 			       ->setVersion('1.2.3')
 			       ->setUrl('https:://url.cz')
+			       ->prepare()
 		);
 	}
 }

@@ -176,6 +176,8 @@ class Package
 		$this->setCopyright($this->copyright);
 		$this->setVersion($this->version);
 		$this->setPkgName($this->pkg_name);
+
+		return $this;
 	}
 
 	/**
