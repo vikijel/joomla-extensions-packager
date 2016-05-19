@@ -8,6 +8,6 @@ class PackagerTest extends \PHPUnit_Framework_TestCase
 	{
 		$packager = new Packager();
 
-		$this->assertTrue($packager instanceof Packager);
+		$this->assertInstanceOf('\VikiJel\JoomlaExtensionsPackager\Packager', $packager);
 	}
 }
