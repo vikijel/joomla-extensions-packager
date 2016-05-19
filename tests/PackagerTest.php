@@ -15,7 +15,7 @@ class PackagerTest extends \PHPUnit_Framework_TestCase
 
 	public function testBuildsPackage()
 	{
-		Packager::create()->build(
+		Packager::create()->pack(
 			Package::create(static::$name)
 			       ->setAuthor('VikiJel', 'vikijel@gmail.com', 'http://vikijel.cz')
 			       ->setUrl('http://url.com')

@@ -12,9 +12,10 @@ class Packager
 		return new static();
 	}
 
-	public function build(Package $package)
+	public function pack(Package $package)
 	{
 		//todo
 		print_r($package);
+		throw new \Exception('TODO');
 	}
 }
