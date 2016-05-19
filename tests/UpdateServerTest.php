@@ -7,7 +7,7 @@ namespace VikiJel\JoomlaExtensionsPackager;
 
 class UpdateServerTest extends \PHPUnit_Framework_TestCase
 {
-	public function testClassAutoloads()
+	public function testClassInstantiates()
 	{
 		$instance = new UpdateServer();
 

@@ -7,7 +7,7 @@ namespace VikiJel\JoomlaExtensionsPackager;
 
 class ExtensionTest extends \PHPUnit_Framework_TestCase
 {
-	public function testClassAutoloads()
+	public function testClassInstantiates()
 	{
 		$instance = new Extension();
 

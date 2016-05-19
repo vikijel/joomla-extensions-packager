@@ -12,7 +12,7 @@ class PackageTest extends \PHPUnit_Framework_TestCase
 	static $author_email = 'vikijel@gmail.com';
 	static $author_url   = 'http://www.vikijel.cz';
 
-	public function testClassAutoloads()
+	public function testClassInstantiates()
 	{
 		$instance = new Package(static::$name);
 

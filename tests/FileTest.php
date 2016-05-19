@@ -7,7 +7,7 @@ namespace VikiJel\JoomlaExtensionsPackager;
 
 class FileTest extends \PHPUnit_Framework_TestCase
 {
-	public function testClassAutoloads()
+	public function testClassInstantiates()
 	{
 		$instance = new File();
 
