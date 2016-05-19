@@ -71,7 +71,14 @@ class Language
 			throw new   \InvalidArgumentException("Invalid format of language tag '{$tag}'");
 		}
 
-		$this->tag = strtolower(trim($arr[0])) . '-' . strtoupper(trim($arr[1]));
+		$tag = strtolower(trim($arr[0])) . '-' . strtoupper(trim($arr[1]));
+
+		if (strlen($tag) != 5)
+		{
+			throw new   \InvalidArgumentException("Invalid length of language tag '{$tag}'");
+		}
+
+		$this->tag = $tag;
 
 		return $this;
 	}
