@@ -263,12 +263,24 @@ class Package
 
 	/**
 	 * @param string $author
+	 * @param string $email
+	 * @param string $url
 	 *
 	 * @return Package
 	 */
-	public function setAuthor($author)
+	public function setAuthor($author, $email = '', $url = '')
 	{
 		$this->author = $author;
+
+		if ($email != '')
+		{
+			$this->setAuthorEmail($email);
+		}
+
+		if ($url != '')
+		{
+			$this->setAuthorUrl($url);
+		}
 
 		return $this;
 	}
