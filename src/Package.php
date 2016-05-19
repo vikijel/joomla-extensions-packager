@@ -123,7 +123,7 @@ class Package
 
 	public function __construct($name)
 	{
-		$this->name = $name;
+		$this->setName($name);
 	}
 
 	public function prepare()
@@ -500,7 +500,7 @@ class Package
 		return $this;
 	}
 
-	protected function toSystemName($name)
+	public function toSystemName($name)
 	{
 		return implode(
 			'_',
