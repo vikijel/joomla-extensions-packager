@@ -126,6 +126,15 @@ class Package
 		$this->setName($name);
 	}
 
+	/**
+	 * @param string $name   System name of extension
+	 * @param string $file   Path to extension's install package
+	 * @param string $type   Type of extension (component/module/plugin/language/file/library/template)
+	 * @param string $client Client (site/admin) - only some extension types such as modules, templates and language packs
+	 * @param string $group  Plugin group (system/content/search/authentication/...) - plugins only
+	 *
+	 * @return Package
+	 */
 	public function addExtension($name, $file, $type = 'component', $client = null, $group = null)
 	{
 		$extension = new Extension($name, $file, $type, $client, $group);
@@ -133,13 +142,29 @@ class Package
 		return $this->addExtensionInstance($extension);
 	}
 
+	/**
+	 * @param Extension $extension
+	 *
+	 * @return $this
+	 */
 	public function addExtensionInstance(Extension $extension)
 	{
-		$this->pkg_extensions[] = $extension;
+		$this->pkg_extensions[$extension->getName()] = $extension;
 
 		return $this;
 	}
 
+	/**
+	 * @return array<Extension>
+	 */
+	public function getExtensions()
+	{
+		return $this->pkg_extensions;
+	}
+
+	/**
+	 * Auto-populates some properties
+	 */
 	public function prepare()
 	{
 		$this->setCopyright($this->copyright);

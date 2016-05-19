@@ -31,7 +31,7 @@ class PackageTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals('1.0.0', $package->getVersion());
 	}
 
-	public function testSetsAuthor()
+	public function testSetsGetsAuthor()
 	{
 		$package = new Package(static::$name);
 		$package->setAuthor(static::$author, static::$author_email, static::$author_url);
@@ -39,5 +39,30 @@ class PackageTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals(static::$author, $package->getAuthor());
 		$this->assertEquals(static::$author_email, $package->getAuthorEmail());
 		$this->assertEquals(static::$author_url, $package->getAuthorUrl());
+	}
+
+	public function testAddsExtensions()
+	{
+		$package = new Package(static::$name);
+
+		$package->addExtension('mod_test', '/var/www/something.zip', 'module', 'site');
+
+		$extensions = $package->getExtensions();
+
+		$this->assertNotEmpty($extensions);
+
+		$count_1 = count($extensions);
+
+		$this->assertEquals(1, $count_1);
+		$this->assertInstanceOf('\\VikiJel\\JoomlaExtensionsPackager\\Extension', $extensions['mod_test']);
+
+		$package->addExtension('plg_search_stuff', '/var/www/something.zip', 'plugin', null, 'search');
+
+		$extensions = $package->getExtensions();
+
+		$count_2 = count($extensions);
+
+		$this->assertEquals(2, $count_2);
+		$this->assertInstanceOf('\\VikiJel\\JoomlaExtensionsPackager\\Extension', $extensions['plg_search_stuff']);
 	}
 }
