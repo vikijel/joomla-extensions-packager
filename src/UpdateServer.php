@@ -90,7 +90,7 @@ class UpdateServer
 	 */
 	public function setType($type)
 	{
-		$this->type = $type;
+		$this->type = Helper::toSystemName($type);
 
 		return $this;
 	}
@@ -110,7 +110,7 @@ class UpdateServer
 	 */
 	public function setPriority($priority)
 	{
-		$this->priority = $priority;
+		$this->priority = (int) $priority;
 
 		return $this;
 	}
