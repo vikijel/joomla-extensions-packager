@@ -1,0 +1,12 @@
+{
+	"name": "vikijel/joomla-extensions-packager",
+	"description": " Library for generating all-in-one install packages with multiple Joomla! extensions — ",
+	"minimum-stability": "stable",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Viktor Jelínek",
+			"email": "vikijel@gmail.com"
+		}
+	]
+}
