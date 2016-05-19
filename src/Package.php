@@ -126,6 +126,20 @@ class Package
 		$this->setName($name);
 	}
 
+	public function addExtension($name, $file, $type = 'component', $client = null, $group = null)
+	{
+		$extension = new Extension($name, $file, $type, $client, $group);
+
+		return $this->addExtensionInstance($extension);
+	}
+
+	public function addExtensionInstance(Extension $extension)
+	{
+		$this->pkg_extensions[] = $extension;
+
+		return $this;
+	}
+
 	public function prepare()
 	{
 		$this->setCopyright($this->copyright);
