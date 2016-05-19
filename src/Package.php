@@ -126,6 +126,13 @@ class Package
 		$this->name = $name;
 	}
 
+	public function prepare()
+	{
+		$this->setCopyright($this->copyright);
+		$this->setVersion($this->version);
+		$this->setPkgName($this->pkg_name);
+	}
+
 	/**
 	 * @return string
 	 */
@@ -452,13 +459,6 @@ class Package
 		$this->scriptfile = $scriptfile;
 
 		return $this;
-	}
-
-	public function prepare()
-	{
-		$this->setCopyright($this->copyright);
-		$this->setVersion($this->version);
-		$this->setPkgName($this->pkg_name);
 	}
 
 	/**
