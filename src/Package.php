@@ -495,26 +495,8 @@ class Package
 			$this->pkg_name = $pkg_name;
 		}
 
-		$this->pkg_name = $this->toSystemName($this->pkg_name);
+		$this->pkg_name = Helper::toSystemName($this->pkg_name);
 
 		return $this;
-	}
-
-	public function toSystemName($name)
-	{
-		return implode(
-			'_',
-			array_filter(
-				explode(
-					' ',
-					preg_replace(
-						'/[^a-zA-Z0-9]/',
-						' ',
-						strtolower($name)
-					)
-				),
-				'strlen'
-			)
-		);
 	}
 }
