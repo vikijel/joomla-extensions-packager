@@ -29,8 +29,6 @@ class PackageTest extends \PHPUnit_Framework_TestCase
 		$this->assertContains($package->getAuthor(), $package->getCopyright());
 		$this->assertContains(date('Y'), $package->getCopyright());
 		$this->assertEquals('1.0.0', $package->getVersion());
-
-		print_r($package);
 	}
 
 	public function testSetsAuthor()
