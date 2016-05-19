@@ -334,18 +334,6 @@ class Package
 	}
 
 	/**
-	 * @param string $packager
-	 *
-	 * @return Package
-	 */
-	public function setPackager($packager)
-	{
-		$this->packager = $packager;
-
-		return $this;
-	}
-
-	/**
 	 * @return string
 	 */
 	public function getLicense()
