@@ -8,5 +8,8 @@
 			"name": "Viktor Jelínek",
 			"email": "vikijel@gmail.com"
 		}
-	]
+	],
+	"require": {
+		"php": ">=5.6"
+	}
 }
