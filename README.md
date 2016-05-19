@@ -1,5 +1,5 @@
 #   Joomla Extensions Packager
-Library for generating all-in-one install packages with multiple Joomla! extensions
+Library for generating all-in-one install packages (*.zip) with multiple Joomla! extensions
 
 ##  UNDER DEVELOPMENT
 
