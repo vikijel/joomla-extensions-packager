@@ -123,22 +123,6 @@ class Package
 	 */
 	protected $pkg_xml;
 
-	protected static $pkg_xml_properties = [
-		'name',
-		'version',
-		'author',
-		'authorEmail',
-		'authorUrl',
-		'copyright',
-		'creationDate',
-		'description',
-		'license',
-		'url',
-		'scriptfile',
-		'packager',
-		'packagerurl',
-	];
-
 	public function __construct($name)
 	{
 		$this->setName($name);
@@ -231,126 +215,12 @@ class Package
 		return $this;
 	}
 
-	protected function setPkgXmlFiles()
-	{
-		$this->pkg_xml->startElement('files');
-
-		foreach ($this->getExtensions() as $ext)
-		{
-			$this->pkg_xml->startElement('file');
-			$this->pkg_xml->writeAttribute('type', $ext->getType());
-
-			if (!empty($ext->getName()))
-			{
-				$this->pkg_xml->writeAttribute('id', $ext->getName());
-			}
-
-			if (!empty($ext->getGroup()))
-			{
-				$this->pkg_xml->writeAttribute('group', $ext->getGroup());
-			}
-
-			if (!empty($ext->getClient()))
-			{
-				$this->pkg_xml->writeAttribute('client', $ext->getClient());
-			}
-
-			$this->pkg_xml->text(basename($ext->getFile()));
-			$this->pkg_xml->endElement();
-		}
-
-		$this->pkg_xml->endElement();
-	}
-
-	protected function setPkgXmlLanguages()
-	{
-		if (!empty($this->getLanguages()))
-		{
-			$this->pkg_xml->startElement('languages');
-
-			foreach ($this->getLanguages() as $lang)
-			{
-				$this->pkg_xml->startElement('language');
-				$this->pkg_xml->writeAttribute('tag', $lang->getTag());
-				$this->pkg_xml->text(basename($lang->getFile()));
-				$this->pkg_xml->endElement();
-			}
-
-			$this->pkg_xml->endElement();
-		}
-	}
-
-	public function setPkgXmlUpdateServers()
-	{
-		if (!empty($this->getPkgUpdateservers()))
-		{
-			$this->pkg_xml->startElement('updateservers');
-
-			foreach ($this->getPkgUpdateservers() as $server)
-			{
-				$this->pkg_xml->startElement('server');
-
-				if (!empty($server->getType()))
-				{
-					$this->pkg_xml->writeAttribute('type', $server->getType());
-				}
-
-				if (!empty($server->getPriority()))
-				{
-					$this->pkg_xml->writeAttribute('priority', $server->getPriority());
-				}
-
-				if (!empty($server->getName()))
-				{
-					$this->pkg_xml->writeAttribute('name', $server->getName());
-				}
-
-				$this->pkg_xml->text($server->getUrl());
-				$this->pkg_xml->endElement();
-			}
-
-			$this->pkg_xml->endElement();
-		}
-	}
-
-	protected function setPkgXmlProperties()
-	{
-		foreach (self::$pkg_xml_properties as $property)
-		{
-			if (!property_exists($this, $property))
-			{
-				continue;
-			}
-
-			if (trim($this->$property) != '')
-			{
-				$this->pkg_xml->writeElement($property, $this->$property);
-			}
-		}
-	}
-
 	/**
 	 * @return $this
 	 */
 	public function setPkgXml()
 	{
-		$this->pkg_xml = new XMLWriter();
-
-		$this->pkg_xml->openMemory();
-		$this->pkg_xml->setIndent(true);
-		$this->pkg_xml->setIndentString("\t");
-		$this->pkg_xml->startElement('extension');
-
-		$this->pkg_xml->writeAttribute('type', $this->pkg_type);
-		$this->pkg_xml->writeAttribute('version', $this->pkg_version);
-		$this->pkg_xml->writeAttribute('method', $this->pkg_method);
-
-		$this->setPkgXmlProperties();
-		$this->setPkgXmlFiles();
-		$this->setPkgXmlLanguages();
-		$this->setPkgXmlUpdateServers();
-
-		$this->pkg_xml->endElement();
+		$this->pkg_xml = Xml::create($this)->init();
 
 		return $this;
 	}
@@ -360,12 +230,12 @@ class Package
 	 */
 	public function getPkgXml($as_string)
 	{
-		if (!($this->pkg_xml instanceof XMLWriter))
+		if (!($this->pkg_xml instanceof Xml))
 		{
 			$this->prepare();
 		}
 
-		return $as_string ? $this->pkg_xml->outputMemory(false) : $this->pkg_xml;
+		return $as_string ? $this->pkg_xml->__toString() : $this->pkg_xml;
 	}
 
 	/**
@@ -692,18 +562,6 @@ class Package
 	}
 
 	/**
-	 * @param string $packagerurl
-	 *
-	 * @return Package
-	 */
-	public function setPackagerurl($packagerurl)
-	{
-		$this->packagerurl = $packagerurl;
-
-		return $this;
-	}
-
-	/**
 	 * @return string
 	 */
 	public function getCreationDate()
@@ -745,7 +603,7 @@ class Package
 	 */
 	public function setScriptfile($scriptfile)
 	{
-		$this->scriptfile = $scriptfile;
+		$this->scriptfile = Helper::toFilePath($scriptfile);
 
 		return $this;
 	}

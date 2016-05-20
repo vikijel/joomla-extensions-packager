@@ -13,10 +13,24 @@ class PackagerTest extends \PHPUnit_Framework_TestCase
 		$this->assertInstanceOf('\\VikiJel\\JoomlaExtensionsPackager\\Packager', $instance);
 	}
 
-	public function testBuildsPackageBasic()
+	public function testBuildsPackageComplete()
 	{
 		Packager::pack(
 			Package::create(static::$name)
+			       ->setAuthor('VikiJel', 'vikijel@gmail.com', 'http://vikijel.cz')
+			       ->setUrl('http://url.com')
+			       ->setPkgName('custom_packagename')
+			       ->setCopyright('Custom copyright author=%2$s - year=%1$s')
+			       ->setDescription('description')
+			       ->setLicense('GPL')
+			       ->setCreationDate(date('Y-m-d'))
+			       ->setPkgMethod('install')
+			       ->setPkgPrefix('package_')
+			       ->setPkgType('paaackaaaz')
+			       ->setPkgVersion('3.2')
+			       ->setScriptfile('/path\\to/script.php')
+			       ->setVersion('1.2.3')
+			       ->setUrl('https:://url.cz')
 			       ->addExtension('com_test', 'path/to/com_test.zip')
 			       ->addExtension('mod_test', 'path/to/mod_test.zip', 'module', 'site')
 			       ->addExtensionInstance(
@@ -31,25 +45,10 @@ class PackagerTest extends \PHPUnit_Framework_TestCase
 		);
 	}
 
-	public function testBuildsPackageAdvanced()
+	public function testBuildsPackageBasic()
 	{
 		Packager::pack(
 			Package::create(static::$name)
-			       ->setAuthor('VikiJel', 'vikijel@gmail.com', 'http://vikijel.cz')
-			       ->setUrl('http://url.com')
-			       ->setPkgName('custom_packagename')
-			       ->setCopyright('Custom copyright author=%2$s - year=%1$s')
-			       ->setDescription('description')
-			       ->setLicense('GPL')
-			       ->setPackagerurl('PACKAGERURL')
-			       ->setCreationDate(date('Y-m-d'))
-			       ->setPkgMethod('install')
-			       ->setPkgPrefix('package_')
-			       ->setPkgType('paaackaaaz')
-			       ->setPkgVersion('3.2')
-			       ->setScriptfile('/path\\to/script.php')
-			       ->setVersion('1.2.3')
-			       ->setUrl('https:://url.cz')
 			       ->addExtension('com_test', 'path/to/com_test.zip')
 			       ->addExtension('mod_test', 'path/to/mod_test.zip', 'module', 'site')
 			       ->addExtensionInstance(
