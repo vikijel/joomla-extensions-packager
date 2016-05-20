@@ -300,11 +300,6 @@ class Package
 		return $this;
 	}
 
-	public function getFiles()
-	{
-		return $this->pkg_files;
-	}
-
 	/**
 	 * @return string
 	 */
@@ -656,7 +651,7 @@ class Package
 	}
 
 	/**
-	 * @return array
+	 * @return File[]
 	 */
 	public function getPkgFiles()
 	{

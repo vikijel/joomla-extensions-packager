@@ -1,3 +1,7 @@
+# JoomlaExtensionsPackager
+/out/*
+!/out/index.html
+
 # Composer
 composer.phar
 composer.lock
