@@ -1,7 +1,7 @@
 #   Joomla Extensions Packager
 Library for generating all-in-one install packages (*.zip) with multiple Joomla! extensions
 
--   Author: [Viktor Jelínek](http://www.vikijel.cz) <vikijel@gmail.com>
+-   Author: [Viktor Jelínek](http://www.vikijel.cz) *<vikijel@gmail.com>*
 -   License: [The MIT License (MIT), Copyright (c) 2016 Viktor Jelínek](LICENSE.txt)
 -   GitHub: [vikijel/joomla-extensions-packager](https://github.com/vikijel/joomla-extensions-packager)
 
