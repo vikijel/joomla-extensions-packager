@@ -4,7 +4,17 @@ namespace VikiJel\JoomlaExtensionsPackager;
 
 class PackagerTest extends \PHPUnit_Framework_TestCase
 {
-	static $name = 'Package Test';
+	static $name = 'Something All-In-One';
+
+	protected $path;
+
+	public function tearDown()
+	{
+		if (file_exists($this->path))
+		{
+			//unlink($this->path);
+		}
+	}
 
 	public function testClassInstantiates()
 	{
@@ -15,7 +25,7 @@ class PackagerTest extends \PHPUnit_Framework_TestCase
 
 	public function testBuildsPackageComplete()
 	{
-		Packager::pack(
+		$this->path = Packager::pack(
 			Package::create(static::$name)
 			       ->setAuthor('VikiJel', 'vikijel@gmail.com', 'http://vikijel.cz')
 			       ->setUrl('http://url.com')
@@ -43,11 +53,14 @@ class PackagerTest extends \PHPUnit_Framework_TestCase
 				       Extension::create('file_test', 'path/to/file_test.zip', 'file')
 			       )
 		);
+
+		$this->assertFileExists($this->path);
+
 	}
 
 	public function testBuildsPackageBasic()
 	{
-		Packager::pack(
+		$this->path = Packager::pack(
 			Package::create(static::$name)
 			       ->addExtension('com_test', 'path/to/com_test.zip')
 			       ->addExtension('mod_test', 'path/to/mod_test.zip', 'module', 'site')
@@ -61,5 +74,12 @@ class PackagerTest extends \PHPUnit_Framework_TestCase
 				       Extension::create('file_test', 'path/to/file_test.zip', 'file')
 			       )
 		);
+
+		$this->assertFileExists($this->path);
+	}
+
+	public function testRunsDry()
+	{
+		$this->path = Packager::pack(new Package(static::$name), null, null, true);
 	}
 }

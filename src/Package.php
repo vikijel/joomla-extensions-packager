@@ -40,11 +40,6 @@ class Package
 	protected $authorUrl = '';
 
 	/**
-	 * @var string Packager of package
-	 */
-	protected $packager = 'vikijel/joomla-extensions-packager';
-
-	/**
 	 * @var string Licence of package
 	 */
 	protected $license = 'http://opensource.org/licenses/GPL-3.0 GPL-3.0';
@@ -60,11 +55,6 @@ class Package
 	protected $url = '';
 
 	/**
-	 * @var string URL of package file
-	 */
-	protected $packagerurl = '';
-
-	/**
 	 * @var string Date of package creation (if empty, actual date will be used)
 	 */
 	protected $creationDate = '';
@@ -73,6 +63,16 @@ class Package
 	 * @var string Install script filename
 	 */
 	protected $scriptfile = '';
+
+	/**
+	 * @var string Packager of package
+	 */
+	protected $packager = 'Joomla Extensions Packager made by VikiJel';
+
+	/**
+	 * @var string URL of package file
+	 */
+	protected $packagerUrl = 'https://github.com/vikijel/joomla-extensions-packager';
 
 	/**
 	 * @var string System name of package
@@ -551,9 +551,9 @@ class Package
 	/**
 	 * @return string
 	 */
-	public function getPackagerurl()
+	public function getPackagerUrl()
 	{
-		return $this->packagerurl;
+		return $this->packagerUrl;
 	}
 
 	/**

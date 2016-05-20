@@ -22,7 +22,7 @@ class Xml
 		'url',
 		'scriptfile',
 		'packager',
-		'packagerurl',
+		'packagerUrl',
 	];
 	/**
 	 * @var Package
