@@ -78,9 +78,9 @@ class Xml
 	{
 		$this->writer->startElement('extension');
 
-		$this->writer->writeAttribute('type', $this->package->getPkgType());
-		$this->writer->writeAttribute('version', $this->package->getPkgVersion());
-		$this->writer->writeAttribute('method', $this->package->getPkgMethod());
+		$this->writeAttributeIfValueNotEmpty('type', $this->package->getPkgType());
+		$this->writeAttributeIfValueNotEmpty('version', $this->package->getPkgVersion());
+		$this->writeAttributeIfValueNotEmpty('method', $this->package->getPkgMethod());
 
 		$this->initProperties();
 		$this->initFiles();
@@ -103,12 +103,7 @@ class Xml
 				continue;
 			}
 
-			$value = $this->package->$getter();
-
-			if (trim($value) != '')
-			{
-				$this->writer->writeElement($property, $value);
-			}
+			$this->writeElementIfValueNotEmpty($property, $this->package->$getter());
 		}
 	}
 
@@ -119,22 +114,11 @@ class Xml
 		foreach ($this->package->getExtensions() as $ext)
 		{
 			$this->writer->startElement('file');
-			$this->writer->writeAttribute('type', $ext->getType());
 
-			if (!empty($ext->getName()))
-			{
-				$this->writer->writeAttribute('id', $ext->getName());
-			}
-
-			if (!empty($ext->getGroup()))
-			{
-				$this->writer->writeAttribute('group', $ext->getGroup());
-			}
-
-			if (!empty($ext->getClient()))
-			{
-				$this->writer->writeAttribute('client', $ext->getClient());
-			}
+			$this->writeAttributeIfValueNotEmpty('type', $ext->getType());
+			$this->writeAttributeIfValueNotEmpty('id', $ext->getName());
+			$this->writeAttributeIfValueNotEmpty('group', $ext->getGroup());
+			$this->writeAttributeIfValueNotEmpty('client', $ext->getClient());
 
 			$this->writer->text(basename($ext->getFile()));
 			$this->writer->endElement();
@@ -152,7 +136,7 @@ class Xml
 			foreach ($this->package->getLanguages() as $lang)
 			{
 				$this->writer->startElement('language');
-				$this->writer->writeAttribute('tag', $lang->getTag());
+				$this->writeAttributeIfValueNotEmpty('tag', $lang->getTag());
 				$this->writer->text(basename($lang->getFile()));
 				$this->writer->endElement();
 			}
@@ -171,26 +155,35 @@ class Xml
 			{
 				$this->writer->startElement('server');
 
-				if (!empty($server->getType()))
-				{
-					$this->writer->writeAttribute('type', $server->getType());
-				}
-
-				if (!empty($server->getPriority()))
-				{
-					$this->writer->writeAttribute('priority', $server->getPriority());
-				}
-
-				if (!empty($server->getName()))
-				{
-					$this->writer->writeAttribute('name', $server->getName());
-				}
+				$this->writeAttributeIfValueNotEmpty('type', $server->getType());
+				$this->writeAttributeIfValueNotEmpty('priority', $server->getPriority());
+				$this->writeAttributeIfValueNotEmpty('name', $server->getName());
 
 				$this->writer->text($server->getUrl());
 				$this->writer->endElement();
 			}
 
 			$this->writer->endElement();
+		}
+	}
+
+	protected function writeElementIfValueNotEmpty($name, $value)
+	{
+		$value = trim($value);
+
+		if ($value != '')
+		{
+			$this->writer->writeElement($name, $value);
+		}
+	}
+
+	protected function writeAttributeIfValueNotEmpty($name, $value)
+	{
+		$value = trim($value);
+
+		if ($value != '')
+		{
+			$this->writer->writeAttribute($name, $value);
 		}
 	}
 }
