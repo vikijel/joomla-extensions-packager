@@ -1,6 +1,5 @@
 {
 	"name": "vikijel/joomla-extensions-packager",
-	"version": "1.0.0-dev",
 	"type": "library",
 	"description": " Library for generating all-in-one install packages with multiple Joomla! extensions — ",
 	"homepage": "https://github.com/vikijel/joomla-extensions-packager",
