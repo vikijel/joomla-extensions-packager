@@ -8,7 +8,7 @@ class PackagerTest extends \PHPUnit_Framework_TestCase
 
 	public function testClassInstantiates()
 	{
-		$instance = new Packager(new Package(static::$name));
+		$instance = new Packager();
 
 		$this->assertInstanceOf('\\VikiJel\\JoomlaExtensionsPackager\\Packager', $instance);
 	}
