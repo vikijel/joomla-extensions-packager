@@ -13,9 +13,27 @@ class PackagerTest extends \PHPUnit_Framework_TestCase
 		$this->assertInstanceOf('\\VikiJel\\JoomlaExtensionsPackager\\Packager', $instance);
 	}
 
-	public function testBuildsPackage()
+	public function testBuildsPackageBasic()
 	{
-		Packager::create()->pack(
+		Packager::pack(
+			Package::create(static::$name)
+			       ->addExtension('com_test', 'path/to/com_test.zip')
+			       ->addExtension('mod_test', 'path/to/mod_test.zip', 'module', 'site')
+			       ->addExtensionInstance(
+				       Extension::create('plg_system_test', 'path/to/plg_system_test.zip', 'plugin')->setGroup('system')
+			       )
+			       ->addExtension('tpl_test', 'path/to/tpl_test.zip', 'template', 'admin')
+			       ->addExtension('lib_test', 'path/to/lib_test.zip', 'library')
+			       ->addExtension('lng_test', 'path/to/lng_test.zip', 'language', 'site')
+			       ->addExtensionInstance(
+				       Extension::create('file_test', 'path/to/file_test.zip', 'file')
+			       )
+		);
+	}
+
+	public function testBuildsPackageAdvanced()
+	{
+		Packager::pack(
 			Package::create(static::$name)
 			       ->setAuthor('VikiJel', 'vikijel@gmail.com', 'http://vikijel.cz')
 			       ->setUrl('http://url.com')
@@ -34,7 +52,9 @@ class PackagerTest extends \PHPUnit_Framework_TestCase
 			       ->setUrl('https:://url.cz')
 			       ->addExtension('com_test', 'path/to/com_test.zip')
 			       ->addExtension('mod_test', 'path/to/mod_test.zip', 'module', 'site')
-			       ->addExtension('plg_system_test', 'path/to/plg_system_test.zip', 'plugin', null, 'system')
+			       ->addExtensionInstance(
+				       Extension::create('plg_system_test', 'path/to/plg_system_test.zip', 'plugin')->setGroup('system')
+			       )
 			       ->addExtension('tpl_test', 'path/to/tpl_test.zip', 'template', 'admin')
 			       ->addExtension('lib_test', 'path/to/lib_test.zip', 'library')
 			       ->addExtension('lng_test', 'path/to/lng_test.zip', 'language', 'site')
