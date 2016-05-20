@@ -1,6 +1,10 @@
 #   Joomla Extensions Packager
 Library for generating all-in-one install packages (*.zip) with multiple Joomla! extensions
 
+-   Author: [Viktor Jelínek](http://www.vikijel.cz) <vikijel@gmail.com>
+-   License: [The MIT License (MIT), Copyright (c) 2016 Viktor Jelínek](LICENSE.txt)
+-   GitHub: [vikijel/joomla-extensions-packager](https://github.com/vikijel/joomla-extensions-packager)
+
 ##  UNDER DEVELOPMENT
 
 ##  Basic Modern Usage example
@@ -43,7 +47,3 @@ catch (Exception $e)
 	die('Failed to create package, error: ' . $e->getMessage());
 }
 ```
-
-##  About
--   Author: [Viktor Jelínek](http://www.vikijel.cz) <vikijel@gmail.com>
--   License: [The MIT License (MIT), Copyright (c) 2016 Viktor Jelínek](LICENSE.txt)
