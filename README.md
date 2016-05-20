@@ -15,8 +15,8 @@ composer require vikijel/joomla-extensions-packager
 *You need to have [Composer](https://getcomposer.org/) installed for above command to work*
 
 ##  Download sources
--   GitHub: [GitHub](https://github.com/vikijel/joomla-extensions-packager)
--   Packagist: [Packagist](https://packagist.org/packages/vikijel/joomla-extensions-packager)
+-   [GitHub](https://github.com/vikijel/joomla-extensions-packager)
+-   [Packagist](https://packagist.org/packages/vikijel/joomla-extensions-packager)
 
 ##  Usage - Basic example
 
