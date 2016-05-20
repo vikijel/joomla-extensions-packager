@@ -60,6 +60,35 @@ class PackagerTest extends \PHPUnit_Framework_TestCase
 
 	}
 
+	public function testBuildsPackageStandard()
+	{
+		$this->path = Packager::pack(
+			Package::create($this->getUniqueName())
+			       ->setAuthor('VikiJel', 'vikijel@gmail.com', 'http://vikijel.cz')
+			       ->setVersion('1.2.3')
+			       ->setDescription('This is something...')
+			       ->setLicense('GPL')
+			       ->setCreationDate(date('Y-m-d'))
+			       ->setPkgVersion('3.2')
+			       ->setUrl('http://url.com')
+			       ->setScriptfile('/path\\to/script.php')
+			       ->addExtension('com_test', 'path/to/com_test.zip')
+			       ->addExtension('mod_test', 'path/to/mod_test.zip', 'module', 'site')
+			       ->addExtensionInstance(
+				       Extension::create('plg_system_test', 'path/to/plg_system_test.zip', 'plugin')->setGroup('system')
+			       )
+			       ->addExtension('tpl_test', 'path/to/tpl_test.zip', 'template', 'admin')
+			       ->addExtension('lib_test', 'path/to/lib_test.zip', 'library')
+			       ->addExtension('lng_test', 'path/to/lng_test.zip', 'language', 'site')
+			       ->addExtensionInstance(
+				       Extension::create('file_test', 'path/to/file_test.zip', 'file')
+			       )
+		);
+
+		$this->assertFileExists($this->path);
+
+	}
+
 	public function testBuildsPackageBasic()
 	{
 		$this->path = Packager::pack(
