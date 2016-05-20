@@ -1,5 +1,5 @@
-#   Joomla Extensions Packager *(Alpha)*
-PHP Library for generating all-in-one install packages (*.zip) with multiple extensions for Joomla! CMS
+#   Joomla! Extensions Packager *(Alpha)*
+PHP Library for generating All-In-One install packages (*.zip) with multiple extensions for Joomla! CMS
 
 -   Package: **vikijel/joomla-extensions-packager**
 -   Author: [Viktor Jelínek (VikiJel)](http://www.vikijel.cz), *<vikijel@gmail.com>*
@@ -30,7 +30,8 @@ try
 		       ->addExtension('plg_system_test', '/path/to/plg_system_test.zip', 'plugin', null, 'system')
 	);
 	
-	echo 'Path to created package is: ' . $path;
+	echo 'Path to created package is: ' . $path; 
+	//Outputs for example: Path to created package is /var/www/repository/pkg_something_all_in_one-1.0.0.zip
 }
 catch (Exception $e)
 {
@@ -69,9 +70,15 @@ try
 			       Extension::create('file_test', '/path/to/file_test.zip', 'file')
 		       )
 	);
+	echo 'Path to created package is: ' . $path; 
+    //Outputs for example: Path to created package is /var/www/repository/pkg_something_all_in_one-1.0.0.zip
 }
 catch (Exception $e)
 {
 	die('Failed to create package, error: ' . $e->getMessage());
 }
 ```
+
+--- 
+
+*This library is not affiliated with or endorsed by the Joomla! Project or Open Source Matters. The Joomla!® name and logo is used under a limited license granted by Open Source Matters, the trademark holder in the United States and other countries.*

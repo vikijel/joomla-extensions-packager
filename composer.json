@@ -1,7 +1,7 @@
 {
 	"name": "vikijel/joomla-extensions-packager",
 	"type": "library",
-	"description": "Library for generating all-in-one install packages (*.zip) with multiple extensions for Joomla! CMS",
+	"description": "Library for generating All-In-One install packages (*.zip) with multiple extensions for Joomla! CMS",
 	"homepage": "https://github.com/vikijel/joomla-extensions-packager",
 	"minimum-stability": "dev",
 	"prefer-stable": true,
