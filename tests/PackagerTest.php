@@ -12,7 +12,7 @@ class PackagerTest extends \PHPUnit_Framework_TestCase
 
 	public function tearDown()
 	{
-		if (file_exists($this->path))
+		if (getenv('PACKAGER_UNLINK') and file_exists($this->path))
 		{
 			unlink($this->path);
 		}
