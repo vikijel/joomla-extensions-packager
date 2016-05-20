@@ -14,7 +14,7 @@ class PackagerTest extends \PHPUnit_Framework_TestCase
 	{
 		if (file_exists($this->path))
 		{
-			//unlink($this->path);
+			unlink($this->path);
 		}
 	}
 
@@ -83,7 +83,7 @@ class PackagerTest extends \PHPUnit_Framework_TestCase
 	public function testRunsDry()
 	{
 		$this->expectException(Exception::class);
-		
+
 		$this->path = Packager::pack(new Package(static::$name), null, null, true);
 
 		$this->assertNull($this->path);
