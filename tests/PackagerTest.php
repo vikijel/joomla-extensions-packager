@@ -2,6 +2,8 @@
 
 namespace VikiJel\JoomlaExtensionsPackager;
 
+use Exception;
+
 class PackagerTest extends \PHPUnit_Framework_TestCase
 {
 	static $name = 'Something All-In-One';
@@ -80,6 +82,10 @@ class PackagerTest extends \PHPUnit_Framework_TestCase
 
 	public function testRunsDry()
 	{
+		$this->expectException(Exception::class);
+		
 		$this->path = Packager::pack(new Package(static::$name), null, null, true);
+
+		$this->assertNull($this->path);
 	}
 }
