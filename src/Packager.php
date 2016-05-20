@@ -14,6 +14,8 @@ class Packager
 
 	public function pack(Package $package)
 	{
+		$package->prepare();
+
 		//todo
 		print_r($package);
 		throw new \Exception('TODO');
