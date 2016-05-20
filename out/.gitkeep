@@ -1,0 +1,1 @@
+# This is default output directory for new packages, unless custom target dir is provided when calling Packager::pack())
