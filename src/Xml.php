@@ -24,10 +24,12 @@ class Xml
 		'packager',
 		'packagerUrl',
 	];
+
 	/**
 	 * @var Package
 	 */
 	protected $package;
+	
 	/**
 	 * @var XMLWriter
 	 */
