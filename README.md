@@ -3,7 +3,7 @@ Library for generating all-in-one install packages (*.zip) with multiple Joomla!
 
 ##  UNDER DEVELOPMENT
 
-##  Basic Usage
+##  Basic Modern Usage example
 
 ```php
 try
@@ -19,11 +19,11 @@ try
 }
 catch (Exception $e)
 {
-	die($e->getMessage());
+	die('Failed to create package, error: ' . $e->getMessage());
 }
 ```
 
-##  Old-School Usage
+##  Basic Old-School Usage example
 
 ```php
 try
