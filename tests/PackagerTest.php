@@ -33,6 +33,12 @@ class PackagerTest extends \PHPUnit_Framework_TestCase
 			       ->setVersion('1.2.3')
 			       ->setUrl('https:://url.cz')
 			       ->prepare()
+			       ->addExtension('com_test', 'path/to/com_test.zip')
+			       ->addExtension('mod_test', 'path/to/mod_test.zip', 'module', 'site')
+			       ->addExtension('plg_system_test', 'path/to/plg_system_test.zip', 'plugin', null, 'system')
+			       ->addExtension('tpl_test', 'path/to/tpl_test.zip', 'template', 'admin')
+			       ->addExtension('lib_test', 'path/to/lib_test.zip', 'library')
+			       ->addExtension('file_test', 'path/to/file_test.zip', 'file')
 		);
 	}
 }
