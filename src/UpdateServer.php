@@ -37,6 +37,8 @@ class UpdateServer
 
 	/**
 	 * @see UpdateServer::__construct()
+	 *
+	 * @return UpdateServer
 	 */
 	public static function create($url, $name = '', $type = '', $priority = 1)
 	{

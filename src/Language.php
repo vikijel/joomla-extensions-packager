@@ -31,6 +31,8 @@ class Language
 
 	/**
 	 * @see Language::__construct()
+	 *
+	 * @return Language
 	 */
 	public static function create($file, $tag = 'en-GB')
 	{

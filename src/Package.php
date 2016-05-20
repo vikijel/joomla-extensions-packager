@@ -130,6 +130,8 @@ class Package
 
 	/**
 	 * @see Package::__construct()
+	 *
+	 * @return Package
 	 */
 	public static function create($name)
 	{
@@ -206,7 +208,23 @@ class Package
 		$this->setVersion($this->version);
 		$this->setPkgName($this->pkg_name);
 
-		$this->buildXml();
+		$this->setPkgXml();
+		$this->setPkgFiles();
+
+		return $this;
+	}
+
+	/**
+	 * @return $this
+	 */
+	public function setPkgXml()
+	{
+		$this->pkg_xml = new XMLWriter();
+		$this->pkg_xml->openMemory();
+		$this->pkg_xml->setIndent(true);
+		$this->pkg_xml->setIndentString("\t");
+		$this->pkg_xml->startElement('extension');
+		$this->pkg_xml->endElement();
 
 		return $this;
 	}
@@ -224,20 +242,8 @@ class Package
 		return $as_string ? $this->pkg_xml->outputMemory() : $this->pkg_xml;
 	}
 
-	protected function buildXml()
-	{
-		$this->pkg_xml = new XMLWriter();
-		$this->pkg_xml->openMemory();
-		$this->pkg_xml->setIndent(true);
-		$this->pkg_xml->setIndentString("\t");
-		$this->pkg_xml->startElement('extension');
-		$this->pkg_xml->endElement();
-
-		return $this;
-	}
-
 	/**
-	 * @return array<Extension>
+	 * @return Extension[]
 	 */
 	public function getExtensions()
 	{
@@ -245,7 +251,7 @@ class Package
 	}
 
 	/**
-	 * @return array<Language>
+	 * @return Language[]
 	 */
 	public function getLanguages()
 	{
@@ -270,6 +276,37 @@ class Package
 		$this->pkg_version = $pkg_version;
 
 		return $this;
+	}
+
+	/**
+	 * @return Package
+	 */
+	public function setPkgFiles()
+	{
+		$this->pkg_files   = [];
+		$this->pkg_files[] = new File($this->getPkgPrefix() . $this->getPkgName() . '.xml', $this->getPkgXml(true));
+
+		foreach ($this->getExtensions() as $extension)
+		{
+			$this->pkg_files[] = File::createFromPath($extension->getFile());
+		}
+
+		foreach ($this->getLanguages() as $lang)
+		{
+			$this->pkg_files[] = File::createFromPath($lang->getFile());
+		}
+
+		if ($this->getScriptfile() != '')
+		{
+			$this->pkg_files[] = File::createFromPath($this->getScriptfile());
+		}
+
+		return $this;
+	}
+
+	public function getFiles()
+	{
+		return $this->pkg_files;
 	}
 
 	/**
@@ -581,18 +618,6 @@ class Package
 	}
 
 	/**
-	 * @param string $name
-	 *
-	 * @return Package
-	 */
-	public function setName($name)
-	{
-		$this->name = $name;
-
-		return $this;
-	}
-
-	/**
 	 * @return string
 	 */
 	public function getPkgName()
@@ -625,5 +650,25 @@ class Package
 	public function getName()
 	{
 		return $this->name;
+	}
+
+	/**
+	 * @param string $name
+	 *
+	 * @return Package
+	 */
+	public function setName($name)
+	{
+		$this->name = $name;
+
+		return $this;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getPkgFiles()
+	{
+		return $this->pkg_files;
 	}
 }

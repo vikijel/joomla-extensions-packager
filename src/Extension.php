@@ -52,6 +52,8 @@ class Extension
 
 	/**
 	 * @see Extension::__construct()
+	 * 
+	 * @return Extension
 	 */
 	public static function create($name, $file, $type = 'component', $client = null, $group = null)
 	{
