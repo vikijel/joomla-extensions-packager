@@ -5,6 +5,8 @@
 
 namespace VikiJel\JoomlaExtensionsPackager;
 
+use XMLWriter;
+
 class Package
 {
 	/**
@@ -117,9 +119,9 @@ class Package
 	 */
 	protected $pkg_files = [];
 	/**
-	 * @var string Install xml manifest content
+	 * @var XMLWriter Install xml manifest
 	 */
-	protected $pkg_xml = '';
+	protected $pkg_xml;
 
 	public function __construct($name)
 	{
@@ -196,6 +198,45 @@ class Package
 	}
 
 	/**
+	 * Auto-populates some properties before pack
+	 */
+	public function prepare()
+	{
+		$this->setCopyright($this->copyright);
+		$this->setVersion($this->version);
+		$this->setPkgName($this->pkg_name);
+
+		$this->buildXml();
+
+		return $this;
+	}
+
+	/**
+	 * @return XMLWriter
+	 */
+	public function getPkgXml($as_string)
+	{
+		if (!($this->pkg_xml instanceof XMLWriter))
+		{
+			$this->prepare();
+		}
+
+		return $as_string ? $this->pkg_xml->outputMemory() : $this->pkg_xml;
+	}
+
+	protected function buildXml()
+	{
+		$this->pkg_xml = new XMLWriter();
+		$this->pkg_xml->openMemory();
+		$this->pkg_xml->setIndent(true);
+		$this->pkg_xml->setIndentString("\t");
+		$this->pkg_xml->startElement('extension');
+		$this->pkg_xml->endElement();
+
+		return $this;
+	}
+
+	/**
 	 * @return array<Extension>
 	 */
 	public function getExtensions()
@@ -209,18 +250,6 @@ class Package
 	public function getLanguages()
 	{
 		return $this->pkg_languages;
-	}
-
-	/**
-	 * Auto-populates some properties
-	 */
-	public function prepare()
-	{
-		$this->setCopyright($this->copyright);
-		$this->setVersion($this->version);
-		$this->setPkgName($this->pkg_name);
-
-		return $this;
 	}
 
 	/**
