@@ -18,6 +18,9 @@ composer require vikijel/joomla-extensions-packager
 ##  Usage - Basic example
 
 ```php
+use VikiJel\JoomlaExtensionsPackager\Package;
+use VikiJel\JoomlaExtensionsPackager\Packager;
+
 try
 {
 	$path = Packager::pack(
@@ -38,6 +41,10 @@ catch (Exception $e)
 ##  Usage - Advanced example
 
 ```php
+use VikiJel\JoomlaExtensionsPackager\Package;
+use VikiJel\JoomlaExtensionsPackager\Packager;
+use VikiJel\JoomlaExtensionsPackager\Extension;
+
 try
 {
 	$path = Packager::pack(
