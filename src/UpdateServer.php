@@ -38,6 +38,11 @@ class UpdateServer
 	/**
 	 * @see UpdateServer::__construct()
 	 *
+	 * @param string $url
+	 * @param string $name
+	 * @param string $type
+	 * @param int    $priority
+	 *
 	 * @return UpdateServer
 	 */
 	public static function create($url, $name = '', $type = '', $priority = 1)

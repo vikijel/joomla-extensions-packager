@@ -13,8 +13,10 @@ class Packager
 	 * @param string  $dir  Target directory (defaults to ../out)
 	 * @param string  $file Target filename (defaults to auto-generate from package name)
 	 *
+	 * @param bool    $dry_run
+	 *
 	 * @return string Path to created package
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public static function pack(Package $package, $dir = null, $file = null, $dry_run = false)
 	{

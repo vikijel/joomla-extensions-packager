@@ -31,6 +31,9 @@ class File
 	/**
 	 * @see File::__construct()
 	 *
+	 * @param string $name
+	 * @param string $data
+	 *
 	 * @return File
 	 */
 	public static function create($name, $data = '')

@@ -131,6 +131,8 @@ class Package
 	/**
 	 * @see Package::__construct()
 	 *
+	 * @param string $name
+	 *
 	 * @return Package
 	 */
 	public static function create($name)
@@ -226,6 +228,8 @@ class Package
 	}
 
 	/**
+	 * @param bool $as_string
+	 *
 	 * @return XMLWriter
 	 */
 	public function getPkgXml($as_string)

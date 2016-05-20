@@ -52,7 +52,13 @@ class Extension
 
 	/**
 	 * @see Extension::__construct()
-	 * 
+	 *
+	 * @param string $name
+	 * @param string $file
+	 * @param string $type
+	 * @param null   $client
+	 * @param null   $group
+	 *
 	 * @return Extension
 	 */
 	public static function create($name, $file, $type = 'component', $client = null, $group = null)
