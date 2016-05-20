@@ -1,5 +1,5 @@
 #   Joomla Extensions Packager *(Alpha)*
-PHP Library for generating all-in-one install packages (*.zip) with multiple Joomla! extensions.
+PHP Library for generating all-in-one install packages (*.zip) with multiple extensions for Joomla! CMS
 
 -   Package: **vikijel/joomla-extensions-packager**
 -   Author: [Viktor Jelínek (VikiJel)](http://www.vikijel.cz), *<vikijel@gmail.com>*
