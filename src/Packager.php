@@ -16,7 +16,7 @@ class Packager
 		throw new \Exception(
 			"TODO:\n" .
 			"target_dir: " . $target_dir . "\n" .
-			"manifest_xml: " . print_r($manifest_xml, true).
+			"manifest_xml: " . var_export($manifest_xml, true) .
 			"package: " . print_r($package, true)
 		);
 
