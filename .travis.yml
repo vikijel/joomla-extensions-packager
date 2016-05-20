@@ -6,3 +6,4 @@ php:
 env:
     - PACKAGER_UNLINK=1
 before_script: composer update
+script: phpunit --configuration tests/phpunit.xml
