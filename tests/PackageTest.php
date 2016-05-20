@@ -56,7 +56,7 @@ class PackageTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals(1, $count_1);
 		$this->assertInstanceOf('\\VikiJel\\JoomlaExtensionsPackager\\Extension', $extensions['mod_test']);
 
-		$package->addExtension('plg_search_stuff', '/var/www/something.zip', 'plugin', null, 'search');
+		$package->addExtensionInstance(Extension::create('plg_search_stuff', '/var/www/something.zip', 'plugin', null, 'search'));
 
 		$extensions = $package->getExtensions();
 
@@ -64,5 +64,30 @@ class PackageTest extends \PHPUnit_Framework_TestCase
 
 		$this->assertEquals(2, $count_2);
 		$this->assertInstanceOf('\\VikiJel\\JoomlaExtensionsPackager\\Extension', $extensions['plg_search_stuff']);
+	}
+
+	public function testAddsLanguage()
+	{
+		$package = new Package(static::$name);
+
+		$package->addLanguage('/var/www/something.ini', 'cs-CZ');
+
+		$languages = $package->getLanguages();
+
+		$this->assertNotEmpty($languages);
+
+		$count_1 = count($languages);
+
+		$this->assertEquals(1, $count_1);
+		$this->assertInstanceOf('\\VikiJel\\JoomlaExtensionsPackager\\Language', $languages[0]);
+
+		$package->addLanguageInstance(Language::create('/var/www/something2.ini', 'sk-SK'));
+
+		$languages = $package->getLanguages();
+
+		$count_2 = count($languages);
+
+		$this->assertEquals(2, $count_2);
+		$this->assertInstanceOf('\\VikiJel\\JoomlaExtensionsPackager\\Language', $languages[1]);
 	}
 }

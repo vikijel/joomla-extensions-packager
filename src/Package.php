@@ -161,11 +161,54 @@ class Package
 	}
 
 	/**
+	 * @param string $file Path to language file for package (*.ini)
+	 * @param string $tag  Language tag like 'en-GB'
+	 *
+	 * @return Package
+	 */
+	public function addLanguage($file, $tag = 'en-GB')
+	{
+		return $this->addLanguageInstance(Language::create($file, $tag));
+	}
+
+	/**
+	 * @param Language $language
+	 *
+	 * @return $this
+	 */
+	public function addLanguageInstance(Language $language)
+	{
+		$this->pkg_languages[] = $language;
+
+		return $this;
+	}
+
+	/**
+	 * @param UpdateServer $updateserver
+	 *
+	 * @return $this
+	 */
+	public function addUpdateServerInstance(UpdateServer $updateserver)
+	{
+		$this->pkg_updateservers[] = $updateserver;
+
+		return $this;
+	}
+
+	/**
 	 * @return array<Extension>
 	 */
 	public function getExtensions()
 	{
 		return $this->pkg_extensions;
+	}
+
+	/**
+	 * @return array<Language>
+	 */
+	public function getLanguages()
+	{
+		return $this->pkg_languages;
 	}
 
 	/**

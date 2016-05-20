@@ -8,8 +8,7 @@ class Packager
 		$package->prepare();
 
 		//todo
-		print_r($package);
-		throw new \Exception('TODO');
+		throw new \Exception('TODO: '.print_r($package, true));
 
 		return true;
 	}
