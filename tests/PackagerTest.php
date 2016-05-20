@@ -37,6 +37,7 @@ class PackagerTest extends \PHPUnit_Framework_TestCase
 			       ->addExtension('plg_system_test', 'path/to/plg_system_test.zip', 'plugin', null, 'system')
 			       ->addExtension('tpl_test', 'path/to/tpl_test.zip', 'template', 'admin')
 			       ->addExtension('lib_test', 'path/to/lib_test.zip', 'library')
+			       ->addExtension('lng_test', 'path/to/lng_test.zip', 'language', 'site')
 			       ->addExtensionInstance(
 				       Extension::create('file_test', 'path/to/file_test.zip', 'file')
 			       )
