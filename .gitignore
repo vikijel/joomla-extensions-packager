@@ -1,6 +1,6 @@
 # JoomlaExtensionsPackager
 /out/*
-!/out/index.html
+!.gitkeep
 
 # Composer
 composer.phar
