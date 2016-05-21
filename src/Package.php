@@ -214,10 +214,9 @@ class Package
 	public function prepare()
 	{
 		$this->setCreationDate();
-		$this->setCopyright($this->copyright);
+		$this->setCopyright();
 		$this->setVersion($this->version);
 		$this->setPkgName($this->pkg_name);
-
 		$this->setPkgXml();
 		$this->setPkgFiles();
 
@@ -590,8 +589,18 @@ class Package
 		{
 			$this->copyright = $copyright;
 		}
-
-		$this->copyright = str_replace(['{year}', '{author}'], [date('Y'), $this->author], $this->copyright);
+		elseif ($this->getAuthor() != '')
+		{
+			$this->copyright = str_replace(
+				['{year}', '{author}', '  '],
+				[date('Y', strtotime($this->getCreationDate())), $this->author, ' '],
+				$this->copyright
+			);
+		}
+		else
+		{
+			$this->copyright = $copyright;
+		}
 
 		return $this;
 	}

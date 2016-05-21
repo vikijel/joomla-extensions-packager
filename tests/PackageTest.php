@@ -120,7 +120,7 @@ class PackageTest extends \PHPUnit_Framework_TestCase
 		                     ->setAuthor('VikiJel', 'vikijel@gmail.com', 'http://vikijel.cz')
 		                     ->setUrl('http://url.com')
 		                     ->setPkgName($this->getUniqueName(' custom2 packagename2 '))
-		                     ->setCopyright('Custom copyright author=%2$s - year=%1$s')
+		                     ->setCopyright('Custom copyright author={author} - year={year}')
 		                     ->setDescription('description')
 		                     ->setLicense('GPL')
 		                     ->setCreationDate(date('Y-m-d'))
