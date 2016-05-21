@@ -22,9 +22,9 @@ class Packager
 	{
 		$package->prepare();
 
-		$file = empty($file) ? $package->getPkgPrefix() . $package->getPkgName() . '-' . $package->getVersion() . '.zip' : $file;
-		$dir  = empty($dir) ? self::$default_target_dir : $dir;
-		$path = $dir . DIRECTORY_SEPARATOR . $file;
+		$file = Helper::toFileName(empty($file) ? $package->getPkgPrefix() . $package->getPkgName() . '-' . $package->getVersion() . '.zip' : $file);
+		$dir  = Helper::toFilePath(empty($dir) ? self::$default_target_dir : $dir);
+		$path = Helper::toFilePath($dir . DIRECTORY_SEPARATOR . $file);
 
 		if ($dry_run)
 		{
