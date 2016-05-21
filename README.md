@@ -15,21 +15,30 @@ composer require vikijel/joomla-extensions-packager
 
 *You need to have [Composer](https://getcomposer.org/) installed for above command to work*
 
-##  Usage - Basic example
+##  Including library
+-   *If you are using Composer in your project, the `vendor/autoload.php` should be already required in your project*
+-   *`repository` = your project directory (where you ran `composer require`)*
 
 ```php
+require_once '/path/to/repository/vendor/autoload.php'; 
+```
+
+##  Usage - Basic example
+-   Source: [examples/usage_basic.php](examples/usage_basic.php)
+
+```php
+require_once __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
+
 use VikiJel\JoomlaExtensionsPackager\Package;
-use VikiJel\JoomlaExtensionsPackager\Packager;
 
 try
 {
-	$path = Packager::pack(
-		Package::create('Something All-In-One')
-		       ->addExtension('com_test', '/path/to/com_test.zip')
-		       ->addExtension('mod_test', '/path/to/mod_test.zip', 'module', 'site')
-		       ->addExtension('plg_system_test', '/path/to/plg_system_test.zip', 'plugin', null, 'system')
-	);
-	
+	$path = Package::create('Something All-In-One')
+	               ->addExtension('com_test', '/path/to/com_test.zip')
+	               ->addExtension('mod_test', '/path/to/mod_test.zip', 'module', 'site')
+	               ->addExtension('plg_system_test', '/path/to/plg_system_test.zip', 'plugin', null, 'system')
+	               ->pack();
+
 	echo 'Path to created package is: ' . $path; //Path to created package is: /path/to/repository/out/pkg_something_all_in_one-1.0.0.zip
 }
 catch (Exception $e)
@@ -39,37 +48,38 @@ catch (Exception $e)
 ```
 
 ##  Usage - Advanced example
+-   Source: [examples/usage_advanced.php](examples/usage_advanced.php)
 
 ```php
+require_once __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
+
 use VikiJel\JoomlaExtensionsPackager\Package;
-use VikiJel\JoomlaExtensionsPackager\Packager;
 use VikiJel\JoomlaExtensionsPackager\Extension;
 
 try
 {
-	$path = Packager::pack(
-		Package::create('Something Else All-in-one')
-		       ->setAuthor('Your Name', 'your.email@example.com', 'http://www.vikijel.cz')
-		       ->setVersion('1.2.3')
-		       ->setDescription('This is something else...')
-		       ->setLicense('GPL')
-		       ->setCreationDate('2016-05-20')
-		       ->setPkgVersion('3.2')
-		       ->setUrl('http://url.com')
-		       ->setScriptfile('/path/to/script.php')
-		       ->addExtension('com_test', '/path/to/com_test.zip')
-		       ->addExtension('mod_test', '/path/to/mod_test.zip', 'module', 'site')
-		       ->addExtensionInstance(
-			       Extension::create('plg_system_test', '/path/to/plg_system_test.zip', 'plugin')->setGroup('system')
-		       )
-		       ->addExtension('tpl_test', '/path/to/tpl_test.zip', 'template', 'admin')
-		       ->addExtension('lib_test', '/path/to/lib_test.zip', 'library')
-		       ->addExtension('lng_test', '/path/to/lng_test.zip', 'language', 'site')
-		       ->addExtensionInstance(
-			       Extension::create('file_test', '/path/to/file_test.zip', 'file')
-		       ),
-	    '/path/to/custom_out_dir'
-	);
+	$path = Package::create('Something Else All-in-one')
+	               ->setAuthor('Your Name', 'your.email@example.com', 'http://www.vikijel.cz')
+	               ->setVersion('1.2.3')
+	               ->setDescription('This is something else...')
+	               ->setLicense('GPL')
+	               ->setCreationDate('2016-05-20')
+	               ->setPkgVersion('3.2')
+	               ->setUrl('http://url.com')
+	               ->setScriptfile('/path/to/script.php')
+	               ->addExtension('com_test', '/path/to/com_test.zip')
+	               ->addExtension('mod_test', '/path/to/mod_test.zip', 'module', 'site')
+	               ->addExtensionInstance(
+		               Extension::create('plg_system_test', '/path/to/plg_system_test.zip', 'plugin')->setGroup('system')
+	               )
+	               ->addExtension('tpl_test', '/path/to/tpl_test.zip', 'template', 'admin')
+	               ->addExtension('lib_test', '/path/to/lib_test.zip', 'library')
+	               ->addExtension('lng_test', '/path/to/lng_test.zip', 'language', 'site')
+	               ->addExtensionInstance(
+		               Extension::create('file_test', '/path/to/file_test.zip', 'file')
+	               )
+	               ->pack('/path/to/custom_out_dir');
+
 	echo 'Path to created package is: ' . $path; //Path to created package is: /path/to/custom_out_dir/pkg_something_else_all_in_one-1.2.3.zip
 }
 catch (Exception $e)

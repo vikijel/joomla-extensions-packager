@@ -90,4 +90,17 @@ class PackageTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals(2, $count_2);
 		$this->assertInstanceOf('\\VikiJel\\JoomlaExtensionsPackager\\Language', $languages[1]);
 	}
+
+	public function testPacks()
+	{
+		$path = Package::create(static::$name)
+		               ->addLanguage('/var/www/something.ini', 'cs-CZ')
+		               ->addExtension('mod_test', '/var/www/something.zip', 'module', 'site')
+		               ->addExtensionInstance(Extension::create('plg_search_stuff', '/var/www/something.zip', 'plugin', null, 'search'))
+		               ->pack();
+
+		$this->assertFileExists($path);
+
+		unlink($path);
+	}
 }

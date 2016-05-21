@@ -228,6 +228,20 @@ class Package
 	}
 
 	/**
+	 * @param string $dir  Target directory (defaults to ../out)
+	 * @param string $file Target filename (defaults to auto-generate from package name)
+	 *
+	 * @param bool   $dry_run
+	 *
+	 * @return string Path to created package
+	 * @throws \Exception
+	 */
+	public function pack($dir = null, $file = null, $dry_run = false)
+	{
+		return Packager::pack($this, $dir, $file, $dry_run);
+	}
+
+	/**
 	 * @param bool $as_string
 	 *
 	 * @return XMLWriter
