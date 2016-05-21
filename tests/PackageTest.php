@@ -131,7 +131,7 @@ class PackageTest extends \PHPUnit_Framework_TestCase
 		                     ->setPkgPrefix('package_')
 		                     ->setPkgType('paaackaaaz')
 		                     ->setPkgVersion('3.2')
-		                     ->setScriptfile(__FILE__)
+		                     ->setScriptfile(static::$php_src)
 		                     ->setVersion('1.2.3')
 		                     ->setUrl('https:://url.cz')
 		                     ->addExtension('com_easyredminehelper', static::$archive_src)
