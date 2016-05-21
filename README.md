@@ -10,7 +10,7 @@ PHP Library for generating All-In-One install packages (*.zip) with multiple ext
 -   Copyright: (c) 2016 Viktor Jelínek
 
 ##  Features
--   Packs given extensions, languages, scriptfile etc. together with auto-generated install xml manifest into a ZIP archive ready for installation
+-   Packs given extensions, languages, scriptfile etc. together with auto-generated install xml manifest into a ZIP archive ready for installation into Joomla! CMS
 -   Created install packages are: 
     -   Compatible with Joomla! 2.5 and newer *(Xml manifest has `<extension>` root element)*
     -   Native extension installation packages of type *'package'*
