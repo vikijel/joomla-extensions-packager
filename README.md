@@ -31,7 +31,7 @@ try
 	);
 	
 	echo 'Path to created package is: ' . $path; 
-	//Outputs for example: Path to created package is /var/www/repository/pkg_something_all_in_one-1.0.0.zip
+	//Outputs for example: Path to created package is /path/to/repository/out/pkg_something_all_in_one-1.0.0.zip
 }
 catch (Exception $e)
 {
@@ -50,7 +50,7 @@ try
 {
 	$path = Packager::pack(
 		Package::create('Something All-in-one')
-		       ->setAuthor('VikiJel', 'vikijel@gmail.com', 'http://www.vikijel.cz')
+		       ->setAuthor('Your Name', 'your.email@example.com', 'http://www.vikijel.cz')
 		       ->setVersion('1.2.3')
 		       ->setDescription('This is something...')
 		       ->setLicense('GPL')
@@ -71,7 +71,7 @@ try
 		       )
 	);
 	echo 'Path to created package is: ' . $path; 
-    //Outputs for example: Path to created package is /var/www/repository/pkg_something_all_in_one-1.0.0.zip
+    //Outputs for example: Path to created package is /path/to/repository/out/pkg_something_all_in_one-1.0.0.zip
 }
 catch (Exception $e)
 {
