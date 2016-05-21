@@ -67,12 +67,12 @@ class Package
 	/**
 	 * @var string Packager of package
 	 */
-	protected $packager = 'Joomla! Extensions Packager library made by VikiJel';
+	private $packager = 'Joomla! Extensions Packager library made by VikiJel';
 
 	/**
 	 * @var string URL of package file
 	 */
-	protected $packagerUrl = 'https://github.com/vikijel/joomla-extensions-packager';
+	private $packagerUrl = 'https://github.com/vikijel/joomla-extensions-packager';
 
 	/**
 	 * @var string System name of package
