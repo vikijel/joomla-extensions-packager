@@ -12,6 +12,16 @@ class PackageTest extends \PHPUnit_Framework_TestCase
 	static $author_email = 'vikijel@gmail.com';
 	static $author_url   = 'http://www.vikijel.cz';
 
+	protected $path;
+
+	public function tearDown()
+	{
+		if (!empty($this->path) and getenv('PACKAGER_UNLINK') and file_exists($this->path))
+		{
+			unlink($this->path);
+		}
+	}
+
 	public function testClassInstantiates()
 	{
 		$instance = new Package(static::$name);
@@ -93,14 +103,17 @@ class PackageTest extends \PHPUnit_Framework_TestCase
 
 	public function testPacks()
 	{
-		$path = Package::create(static::$name)
-		               ->addLanguage('/var/www/something.ini', 'cs-CZ')
-		               ->addExtension('mod_test', '/var/www/something.zip', 'module', 'site')
-		               ->addExtensionInstance(Extension::create('plg_search_stuff', '/var/www/something.zip', 'plugin', null, 'search'))
-		               ->pack();
+		$this->path = Package::create(self::getUniqueName(static::$name))
+		                     ->addLanguage('/var/www/something.ini', 'cs-CZ')
+		                     ->addExtension('mod_test', '/var/www/something.zip', 'module', 'site')
+		                     ->addExtensionInstance(Extension::create('plg_search_stuff', '/var/www/something.zip', 'plugin', null, 'search'))
+		                     ->pack();
 
-		$this->assertFileExists($path);
+		$this->assertFileExists($this->path);
+	}
 
-		unlink($path);
+	protected function getUniqueName($prefix = null)
+	{
+		return ($prefix !== null ? $prefix : static::$name) . ' ' . uniqid();
 	}
 }

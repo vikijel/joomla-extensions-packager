@@ -118,8 +118,9 @@ class Package
 	 * @var array List of filepaths to be packed into package
 	 */
 	protected $pkg_files = [];
+	
 	/**
-	 * @var XMLWriter Install xml manifest
+	 * @var Xml Install xml manifest
 	 */
 	protected $pkg_xml;
 
@@ -242,18 +243,16 @@ class Package
 	}
 
 	/**
-	 * @param bool $as_string
-	 *
-	 * @return XMLWriter
+	 * @return Xml
 	 */
-	public function getPkgXml($as_string)
+	public function getPkgXml()
 	{
 		if (!($this->pkg_xml instanceof Xml))
 		{
 			$this->prepare();
 		}
 
-		return $as_string ? $this->pkg_xml->__toString() : $this->pkg_xml;
+		return $this->pkg_xml;
 	}
 
 	/**
@@ -298,7 +297,7 @@ class Package
 	public function setPkgFiles()
 	{
 		$this->pkg_files   = [];
-		$this->pkg_files[] = new File($this->getPkgPrefix() . $this->getPkgName() . '.xml', $this->getPkgXml(true));
+		$this->pkg_files[] = new File($this->getPkgPrefix() . $this->getPkgName() . '.xml', (string) $this->getPkgXml());
 
 		foreach ($this->getExtensions() as $extension)
 		{
