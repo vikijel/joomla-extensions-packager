@@ -61,9 +61,9 @@ class Package
 	protected $creationDate = '';
 
 	/**
-	 * @var string Install script filename
+	 * @var File Install script file
 	 */
-	protected $scriptfile = '';
+	protected $scriptfile;
 
 	/**
 	 * @var string Packager of package
@@ -362,9 +362,9 @@ class Package
 			$this->pkg_files[] = File::createFromPath($lang->getFile());
 		}
 
-		if ($this->getScriptfile() != '')
+		if ($this->getScriptfile())
 		{
-			$this->pkg_files[] = File::createFromPath($this->getScriptfile());
+			$this->pkg_files[] = $this->getScriptfile();
 		}
 
 		return $this;
@@ -661,7 +661,7 @@ class Package
 	}
 
 	/**
-	 * @return string
+	 * @return File
 	 */
 	public function getScriptfile()
 	{
@@ -669,13 +669,26 @@ class Package
 	}
 
 	/**
-	 * @param string $scriptfile
+	 * @param File $scriptfile
 	 *
 	 * @return Package
 	 */
-	public function setScriptfile($scriptfile)
+	public function setScriptfileInstance(File $scriptfile)
 	{
-		$this->scriptfile = Helper::toFilePath($scriptfile);
+		$this->scriptfile = $scriptfile;
+
+		return $this;
+	}
+
+	/**
+	 * @param string $path Path to file
+	 * @param string $name Override file name
+	 *
+	 * @return Package
+	 */
+	public function setScriptfile($path, $name = null)
+	{
+		$this->scriptfile = File::createFromPath($path, $name);
 
 		return $this;
 	}

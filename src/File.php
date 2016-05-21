@@ -42,13 +42,14 @@ class File
 	}
 
 	/**
-	 * @param $path
+	 * @param string $path Path to file
+	 * @param string $name Override file name
 	 *
 	 * @return File
 	 */
-	public static function createFromPath($path)
+	public static function createFromPath($path, $name = null)
 	{
-		return new static(Helper::toFileName($path), @file_get_contents($path));
+		return new static(($name != null ? $name : Helper::toFileName($path)), @file_get_contents(Helper::toFilePath($path)));
 	}
 
 	/**

@@ -22,7 +22,6 @@ class Xml
 		'description',
 		'license',
 		'url',
-		'scriptfile',
 		'packager',
 		'packagerUrl',
 	];
@@ -87,6 +86,7 @@ class Xml
 		$this->writeAttributeIfValueNotEmpty('method', $this->package->getPkgMethod());
 
 		$this->initProperties();
+		$this->initScriptfile();
 		$this->initFiles();
 		$this->initLanguages();
 		$this->initUpdateServers();
@@ -129,6 +129,14 @@ class Xml
 		}
 
 		$this->writer->endElement();
+	}
+
+	protected function initScriptfile()
+	{
+		if($this->package->getScriptfile() and $this->package->getScriptfile()->getName() != '')
+		{
+			$this->writer->writeElement('scriptfile', $this->package->getScriptfile()->getName());
+		}
 	}
 
 	protected function initLanguages()
