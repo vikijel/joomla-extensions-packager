@@ -12,12 +12,12 @@ use VikiJel\JoomlaExtensionsPackager\Extension;
 try
 {
 	$path = Package::create('Something Else All-in-one')
-	               ->setAuthor('Your Name', 'your.email@example.com', 'http://www.vikijel.cz')
+	               ->setAuthor('Your Name', 'your.email@example.com', 'http://your.domain.example.com')
 	               ->setVersion('1.2.3')
 	               ->setDescription('This is something else...')
 	               ->setLicense('GPL')
-	               ->setCreationDate('2016-05-20')
-	               ->setPkgVersion('3.2')
+	               ->setCreationDate('2016-05-21')
+	               ->setPkgVersion('2.5')
 	               ->setUrl('http://url.com')
 	               ->setScriptfile('/path/to/script.php')
 	               ->addExtension('com_test', '/path/to/com_test.zip')
