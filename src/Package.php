@@ -5,8 +5,6 @@
 
 namespace VikiJel\JoomlaExtensionsPackager;
 
-use XMLWriter;
-
 class Package
 {
 	/**
@@ -45,9 +43,9 @@ class Package
 	protected $license = 'http://opensource.org/licenses/GPL-3.0 GPL-3.0';
 
 	/**
-	 * @var string Copyright of package (%1$s will be filled with actual year, %2$s will become author)
+	 * @var string Copyright of package ({year} will be replaced with actual year, {author} will be replaced with $this->author)
 	 */
-	protected $copyright = 'Copyright %1$s %2$s - All rights reserved.';
+	protected $copyright = 'Copyright (c){year} {author} - All rights reserved';
 
 	/**
 	 * @var string URL of package
@@ -118,7 +116,7 @@ class Package
 	 * @var array List of filepaths to be packed into package
 	 */
 	protected $pkg_files = [];
-	
+
 	/**
 	 * @var Xml Install xml manifest
 	 */
@@ -537,10 +535,7 @@ class Package
 			$this->copyright = $copyright;
 		}
 
-		if (strpos($this->copyright, '%') !== false)
-		{
-			$this->copyright = sprintf($this->copyright, date('Y'), $this->author);
-		}
+		$this->copyright = str_replace(['{year}', '{author}'], [date('Y'), $this->author], $this->copyright);
 
 		return $this;
 	}
