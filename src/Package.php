@@ -67,7 +67,7 @@ class Package
 	/**
 	 * @var string Packager of package
 	 */
-	protected $packager = 'Joomla Extensions Packager made by VikiJel';
+	protected $packager = 'Joomla! Extensions Packager library made by VikiJel';
 
 	/**
 	 * @var string URL of package file
