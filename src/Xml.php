@@ -7,6 +7,8 @@ namespace VikiJel\JoomlaExtensionsPackager;
 
 use XMLWriter;
 
+//todo: refactor to Manifest??
+//todo: move generic_properties from Package??
 class Xml
 {
 	protected static $generic_properties = [
