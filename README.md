@@ -1,4 +1,4 @@
-#   Joomla! Extensions Packager *(Alpha)*
+#   Joomla! Extensions Packager&nbsp;&nbsp;&nbsp;&nbsp;[![Build Status](https://travis-ci.org/vikijel/joomla-extensions-packager.svg?branch=master)](https://travis-ci.org/vikijel/joomla-extensions-packager)
 PHP Library for generating All-In-One install packages (*.zip) with multiple extensions for Joomla! CMS
 
 -   Package: **vikijel/joomla-extensions-packager**
@@ -6,8 +6,6 @@ PHP Library for generating All-In-One install packages (*.zip) with multiple ext
 -   License: [The MIT License (MIT)](LICENSE.txt)
 -   Copyright: (c) 2016 Viktor Jelínek
 -   [GitHub](https://github.com/vikijel/joomla-extensions-packager), [Packagist](https://packagist.org/packages/vikijel/joomla-extensions-packager)
-
-[![Build Status](https://travis-ci.org/vikijel/joomla-extensions-packager.svg?branch=master)](https://travis-ci.org/vikijel/joomla-extensions-packager)
 
 ##  Installation via Composer
 Run this command in your project directory: 
