@@ -13,7 +13,7 @@ PHP Library for generating All-In-One install packages (*.zip) with multiple ext
 -   Copyright: (c) 2016 Viktor Jelínek
 
 ##  Requirements
--   PHP 5.6 or newer *(Recommended is 7.0 or newer)*
+-   PHP 5.6 or newer
 -   *For more info about PHP versions compatibility see [PHPUnit results at Travis](https://travis-ci.org/vikijel/joomla-extensions-packager)*
 
 ##  Installation via Composer
