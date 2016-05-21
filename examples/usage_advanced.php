@@ -32,6 +32,7 @@ try
 	               ->addExtensionInstance(
 		               Extension::create('file_test', '/path/to/file_test.zip', 'file')
 	               )
+	               ->addLanguage('/path/to/cs-CZ.pkg_something.ini', 'cs-CZ')
 	               ->pack('/path/to/custom_out_dir');
 
 	echo 'Path to created package is: ' . $path; //Path to created package is: /path/to/custom_out_dir/pkg_something_else_all_in_one-1.2.3.zip
