@@ -1,5 +1,7 @@
-#   Joomla! Extensions Packager&nbsp;&nbsp;&nbsp;&nbsp;[![Build Status](https://travis-ci.org/vikijel/joomla-extensions-packager.svg?branch=master)](https://travis-ci.org/vikijel/joomla-extensions-packager)
+#   Joomla! Extensions Packager
 PHP Library for generating All-In-One install packages (*.zip) with multiple extensions for Joomla! CMS
+
+[![Build Status](https://travis-ci.org/vikijel/joomla-extensions-packager.svg?branch=master)](https://travis-ci.org/vikijel/joomla-extensions-packager)
 
 -   Packs given extensions, languages, scriptfile etc. together with auto-generated install xml manifest into a ZIP archive ready for installation
 -   Created packages are native extension installation packages of type 'package'
