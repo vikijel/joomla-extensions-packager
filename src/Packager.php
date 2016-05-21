@@ -6,6 +6,7 @@ use ZipArchive;
 
 class Packager
 {
+	//TODO: Merge everything into Package??
 	protected static $default_target_dir = __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'out';
 
 	/**
