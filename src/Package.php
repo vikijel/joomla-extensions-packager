@@ -5,6 +5,9 @@
 
 namespace VikiJel\JoomlaExtensionsPackager;
 
+use Exception;
+use ZipArchive;
+
 class Package
 {
 	/**
@@ -122,6 +125,11 @@ class Package
 	 */
 	protected $pkg_xml;
 
+	/**
+	 * @var string Default target directory
+	 */
+	protected static $default_target_dir = __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'out';
+
 	public function __construct($name)
 	{
 		$this->setName($name);
@@ -233,11 +241,59 @@ class Package
 	 * @param bool   $dry_run
 	 *
 	 * @return string Path to created package
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function pack($dir = null, $file = null, $dry_run = false)
 	{
-		return Packager::pack($this, $dir, $file, $dry_run);
+		$this->prepare();
+
+		$file = Helper::toFileName(empty($file) ? $this->getPkgPrefix() . $this->getPkgName() . '-' . $this->getVersion() . '.zip' : $file);
+		$dir  = Helper::toFilePath(empty($dir) ? self::$default_target_dir : $dir);
+		$path = Helper::toFilePath($dir . DIRECTORY_SEPARATOR . $file);
+
+		if ($dry_run)
+		{
+			throw new Exception(
+				"DRY RUN:\n" .
+				'$path = ' . $path . "\n" .
+				'$this = ' . print_r($this, true)
+			);
+		}
+
+		$zip = new ZipArchive();
+
+		if ((!file_exists($dir) and !mkdir($dir)) or !is_dir($dir))
+		{
+			throw new Exception("Cannot create/open directory for writing, dir = '$dir'");
+		}
+
+		if ($zip->open($path, ZipArchive::CREATE) !== true)
+		{
+			throw new Exception("Cannot create/open archive for writing, path = '$path'");
+		}
+
+		foreach ($this->getPkgFiles() as $package_file)
+		{
+			if (!$zip->addFromString($package_file->getName(), $package_file->getData()))
+			{
+				throw new Exception("Cannot add file to archive, name = '{$package_file->getName()}', path = '$path'");
+			}
+		}
+
+		$zip->setArchiveComment(
+			"{$this->getName()}\n" .
+			($this->getDescription() != '' ? $this->getDescription() : "Custom Joomla Extensions All-In-One package") . "\n\n" .
+			'Packed at ' . date('Y-m-d H:i:s') . "\n" .
+			'Packed by ' . $this->getPackager() . "\n" .
+			$this->getPackagerUrl() . "\n"
+		);
+
+		if (!$zip->close())
+		{
+			throw new Exception("Cannot close archive, path = '$path'");
+		}
+
+		return $path;
 	}
 
 	/**
