@@ -122,7 +122,7 @@ class Xml
 			$this->writeAttributeIfValueNotEmpty('group', $ext->getGroup());
 			$this->writeAttributeIfValueNotEmpty('client', $ext->getClient());
 
-			$this->writer->text(basename($ext->getFile()));
+			$this->writer->text(Helper::toFileName($ext->getFile()));
 			$this->writer->endElement();
 		}
 
@@ -139,7 +139,7 @@ class Xml
 			{
 				$this->writer->startElement('language');
 				$this->writeAttributeIfValueNotEmpty('tag', $lang->getTag());
-				$this->writer->text(basename($lang->getFile()));
+				$this->writer->text(Helper::toFileName($lang->getFile()));
 				$this->writer->endElement();
 			}
 

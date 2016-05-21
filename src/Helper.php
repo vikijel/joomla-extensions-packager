@@ -30,12 +30,22 @@ class Helper
 	}
 
 	/**
-	 * @param string $file
+	 * @param string $path
 	 *
 	 * @return string
 	 */
-	public static function toFilePath($file)
+	public static function toFilePath($path)
 	{
-		return trim(str_replace(['\\', '/'], DIRECTORY_SEPARATOR, $file));
+		return trim(str_replace(['\\', '/'], DIRECTORY_SEPARATOR, $path));
+	}
+
+	/**
+	 * @param string $path
+	 *
+	 * @return string
+	 */
+	public static function toFileName($path)
+	{
+		return basename(self::toFilePath($path));
 	}
 }

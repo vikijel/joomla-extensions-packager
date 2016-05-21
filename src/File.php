@@ -48,7 +48,7 @@ class File
 	 */
 	public static function createFromPath($path)
 	{
-		return new static(basename($path), @file_get_contents($path));
+		return new static(Helper::toFileName($path), @file_get_contents($path));
 	}
 
 	/**
