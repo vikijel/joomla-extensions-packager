@@ -124,7 +124,7 @@ class Xml
 			$this->writeAttributeIfValueNotEmpty('group', $ext->getGroup());
 			$this->writeAttributeIfValueNotEmpty('client', $ext->getClient());
 
-			$this->writer->text(Helper::toFileName($ext->getFile()));
+			$this->writer->text(Helper::toFileName($ext->getFile()->getName()));
 			$this->writer->endElement();
 		}
 

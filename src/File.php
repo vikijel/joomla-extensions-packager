@@ -5,6 +5,8 @@
 
 namespace VikiJel\JoomlaExtensionsPackager;
 
+use Exception;
+
 class File
 {
 	/**
@@ -22,7 +24,7 @@ class File
 	 * @param string $name File name
 	 * @param string $data File contents
 	 */
-	public function __construct($name, $data = '')
+	public function __construct($name, $data = null)
 	{
 		$this->setName($name);
 		$this->setData($data);
@@ -36,7 +38,7 @@ class File
 	 *
 	 * @return File
 	 */
-	public static function create($name, $data = '')
+	public static function create($name, $data = null)
 	{
 		return new static($name, $data);
 	}
@@ -46,10 +48,23 @@ class File
 	 * @param string $name Override file name
 	 *
 	 * @return File
+	 * @throws Exception
 	 */
 	public static function createFromPath($path, $name = null)
 	{
-		return new static(($name != null ? $name : Helper::toFileName($path)), @file_get_contents(Helper::toFilePath($path)));
+		$path = Helper::toFilePath($path);
+
+		if (!file_exists($path))
+		{
+			throw new Exception("File '$path' does not exist");
+		}
+
+		if (($data = file_get_contents($path)) === false)
+		{
+			throw new Exception("Cannot get contents of file '$path'");
+		}
+
+		return new static($name != null ? Helper::toFileName($name) : $path, $data);
 	}
 
 	/**

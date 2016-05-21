@@ -44,7 +44,7 @@ class Extension
 	public function __construct($name, $file, $type = 'component', $client = null, $group = null)
 	{
 		$this->setName($name);
-		$this->setFile($file);
+		$this->setFile($file, $this->getName() . '.zip');
 		$this->setType($type);
 		$this->setClient($client);
 		$this->setGroup($group);
@@ -87,7 +87,7 @@ class Extension
 	}
 
 	/**
-	 * @return string Path to extension's install package
+	 * @return File Extension's install package file
 	 */
 	public function getFile()
 	{
@@ -95,13 +95,26 @@ class Extension
 	}
 
 	/**
-	 * @param string $file Path to extension's install package
+	 * @param string $path Path to extension's install package file
+	 * @param string $name Override file name
 	 *
 	 * @return Extension
 	 */
-	public function setFile($file)
+	public function setFile($path, $name = null)
 	{
-		$this->file = Helper::toFilePath($file);
+		$this->file = File::createFromPath($path, $name);
+
+		return $this;
+	}
+
+	/**
+	 * @param File $file File Extension's install package file
+	 *
+	 * @return Extension
+	 */
+	public function setFileInstance($file)
+	{
+		$this->file = $file;
 
 		return $this;
 	}

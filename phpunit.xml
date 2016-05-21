@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit bootstrap="vendor/autoload.php">
 	<php>
-		<env name="PACKAGER_UNLINK" value="1"/>
+		<env name="PACKAGER_UNLINK" value="0"/>
 	</php>
 	<testsuites>
 		<testsuite name="all">

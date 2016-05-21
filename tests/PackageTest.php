@@ -13,6 +13,9 @@ class PackageTest extends \PHPUnit_Framework_TestCase
 	static $author       = 'Viktor Jelínek';
 	static $author_email = 'vikijel@gmail.com';
 	static $author_url   = 'http://www.vikijel.cz';
+	static $archive_src  = __DIR__ . '/data/some_archive.zip';
+	static $file_src     = __DIR__ . '/../examples/usage_basic.php';
+	static $file_src2    = __DIR__ . '/../examples/usage_advanced.php';
 
 	protected $path;
 
@@ -57,7 +60,7 @@ class PackageTest extends \PHPUnit_Framework_TestCase
 	{
 		$package = new Package(static::$name);
 
-		$package->addExtension('mod_test', '/var/www/something.zip', 'module', 'site');
+		$package->addExtension('mod_test', static::$archive_src, 'module', 'site');
 
 		$extensions = $package->getExtensions();
 
@@ -68,7 +71,7 @@ class PackageTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals(1, $count_1);
 		$this->assertInstanceOf('\\VikiJel\\JoomlaExtensionsPackager\\Extension', $extensions['mod_test']);
 
-		$package->addExtensionInstance(Extension::create('plg_search_stuff', '/var/www/something.zip', 'plugin', null, 'search'));
+		$package->addExtensionInstance(Extension::create('plg_search_stuff', static::$archive_src, 'plugin', null, 'search'));
 
 		$extensions = $package->getExtensions();
 
@@ -82,7 +85,7 @@ class PackageTest extends \PHPUnit_Framework_TestCase
 	{
 		$package = new Package(static::$name);
 
-		$package->addLanguage('/var/www/something.ini', 'cs-CZ');
+		$package->addLanguage(static::$file_src, 'cs-CZ');
 
 		$languages = $package->getLanguages();
 
@@ -93,7 +96,7 @@ class PackageTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals(1, $count_1);
 		$this->assertInstanceOf('\\VikiJel\\JoomlaExtensionsPackager\\Language', $languages[0]);
 
-		$package->addLanguageInstance(Language::create('/var/www/something2.ini', 'sk-SK'));
+		$package->addLanguageInstance(Language::create(static::$file_src2, 'sk-SK'));
 
 		$languages = $package->getLanguages();
 
@@ -106,9 +109,9 @@ class PackageTest extends \PHPUnit_Framework_TestCase
 	public function testPacks()
 	{
 		$this->path = Package::create($this->getUniqueName())
-		                     ->addLanguage('/var/www/something.ini', 'cs-CZ')
-		                     ->addExtension('mod_test', '/var/www/something.zip', 'module', 'site')
-		                     ->addExtensionInstance(Extension::create('plg_search_stuff', '/var/www/something.zip', 'plugin', null, 'search'))
+		                     ->addLanguage(static::$file_src, 'cs-CZ')
+		                     ->addExtension('mod_test', static::$archive_src, 'module', 'site')
+		                     ->addExtensionInstance(Extension::create('plg_search_stuff', static::$archive_src, 'plugin', null, 'search'))
 		                     ->pack();
 
 		$this->assertFileExists($this->path);
@@ -128,19 +131,21 @@ class PackageTest extends \PHPUnit_Framework_TestCase
 		                     ->setPkgPrefix('package_')
 		                     ->setPkgType('paaackaaaz')
 		                     ->setPkgVersion('3.2')
-		                     ->setScriptfile('/path\\to/script.php')
+		                     ->setScriptfile(__FILE__)
 		                     ->setVersion('1.2.3')
 		                     ->setUrl('https:://url.cz')
-		                     ->addExtension('com_test', 'path/to/com_test.zip')
-		                     ->addExtension('mod_test', 'path/to/mod_test.zip', 'module', 'site')
+		                     ->addExtension('com_easyredminehelper', static::$archive_src)
+		                     ->addExtension('mod_easyredmine_demo', static::$archive_src, 'module', 'site')
 		                     ->addExtensionInstance(
-			                     Extension::create('plg_system_test', 'path/to/plg_system_test.zip', 'plugin')->setGroup('system')
+			                     Extension::create('plg_system_nonseftosef', static::$archive_src)
+			                              ->setGroup('system')
+			                              ->setType('plugin')
 		                     )
-		                     ->addExtension('tpl_test', 'path/to/tpl_test.zip', 'template', 'admin')
-		                     ->addExtension('lib_test', 'path/to/lib_test.zip', 'library')
-		                     ->addExtension('lng_test', 'path/to/lng_test.zip', 'language', 'site')
+		                     ->addExtension('tpl_esw_easypeasy', static::$archive_src, 'template', 'site')
+		                     ->addExtension('lib_test', static::$archive_src, 'library')
+		                     ->addExtension('lng_test', static::$archive_src, 'language', 'site')
 		                     ->addExtensionInstance(
-			                     Extension::create('file_test', 'path/to/file_test.zip', 'file')
+			                     Extension::create('file_pricingpage', static::$archive_src, 'file')
 		                     )->pack();
 
 		$this->assertFileExists($this->path);
@@ -157,17 +162,18 @@ class PackageTest extends \PHPUnit_Framework_TestCase
 		                     ->setCreationDate(date('Y-m-d'))
 		                     ->setPkgVersion('3.2')
 		                     ->setUrl('http://url.com')
-		                     ->setScriptfile('/path\\to/script.php')
-		                     ->addExtension('com_test', 'path/to/com_test.zip')
-		                     ->addExtension('mod_test', 'path/to/mod_test.zip', 'module', 'site')
+		                     ->setScriptfile(__DIR__ . '/../examples/usage_basic.php')
+		                     ->addExtension('com_test', static::$archive_src)
+		                     ->addExtension('mod_test', static::$archive_src, 'module', 'site')
 		                     ->addExtensionInstance(
-			                     Extension::create('plg_system_test', 'path/to/plg_system_test.zip', 'plugin')->setGroup('system')
+			                     Extension::create('plg_system_test', static::$archive_src, 'plugin')
+			                              ->setGroup('system')
 		                     )
-		                     ->addExtension('tpl_test', 'path/to/tpl_test.zip', 'template', 'admin')
-		                     ->addExtension('lib_test', 'path/to/lib_test.zip', 'library')
-		                     ->addExtension('lng_test', 'path/to/lng_test.zip', 'language', 'site')
+		                     ->addExtension('tpl_test', static::$archive_src, 'template', 'admin')
+		                     ->addExtension('lib_test', static::$archive_src, 'library')
+		                     ->addExtension('lng_test', static::$archive_src, 'language', 'site')
 		                     ->addExtensionInstance(
-			                     Extension::create('file_test', 'path/to/file_test.zip', 'file')
+			                     Extension::create('file_test', static::$archive_src, 'file')
 		                     )->pack();
 
 		$this->assertFileExists($this->path);
@@ -177,16 +183,17 @@ class PackageTest extends \PHPUnit_Framework_TestCase
 	public function testBuildsPackageBasic()
 	{
 		$this->path = Package::create($this->getUniqueName())
-		                     ->addExtension('com_test', 'path/to/com_test.zip')
-		                     ->addExtension('mod_test', 'path/to/mod_test.zip', 'module', 'site')
+		                     ->addExtension('com_test', static::$archive_src)
+		                     ->addExtension('mod_test', static::$archive_src, 'module', 'site')
 		                     ->addExtensionInstance(
-			                     Extension::create('plg_system_test', 'path/to/plg_system_test.zip', 'plugin')->setGroup('system')
+			                     Extension::create('plg_system_test', static::$archive_src, 'plugin')
+			                              ->setGroup('system')
 		                     )
-		                     ->addExtension('tpl_test', 'path/to/tpl_test.zip', 'template', 'admin')
-		                     ->addExtension('lib_test', 'path/to/lib_test.zip', 'library')
-		                     ->addExtension('lng_test', 'path/to/lng_test.zip', 'language', 'site')
+		                     ->addExtension('tpl_test', static::$archive_src, 'template', 'admin')
+		                     ->addExtension('lib_test', static::$archive_src, 'library')
+		                     ->addExtension('lng_test', static::$archive_src, 'language', 'site')
 		                     ->addExtensionInstance(
-			                     Extension::create('file_test', 'path/to/file_test.zip', 'file')
+			                     Extension::create('file_test', static::$archive_src, 'file')
 		                     )->pack();
 
 		$this->assertFileExists($this->path);

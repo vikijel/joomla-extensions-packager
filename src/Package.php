@@ -354,7 +354,7 @@ class Package
 
 		foreach ($this->getExtensions() as $extension)
 		{
-			$this->pkg_files[] = File::createFromPath($extension->getFile());
+			$this->pkg_files[] = $extension->getFile();
 		}
 
 		foreach ($this->getLanguages() as $lang)
@@ -686,7 +686,7 @@ class Package
 	 *
 	 * @return Package
 	 */
-	public function setScriptfile($path, $name = null)
+	public function setScriptfile($path, $name = 'scriptfile.php')
 	{
 		$this->scriptfile = File::createFromPath($path, $name);
 

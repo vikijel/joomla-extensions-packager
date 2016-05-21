@@ -8,7 +8,7 @@ namespace VikiJel\JoomlaExtensionsPackager;
 class ExtensionTest extends \PHPUnit_Framework_TestCase
 {
 	static $name   = 'Plg system test';
-	static $file   = 'C:\\wamp\\www\\SomeFile.zip';
+	static $file   = __DIR__ . '/data/some_archive.zip';
 	static $type   = 'Plugin';
 	static $client = null;
 	static $group  = 'SYSteM';
@@ -25,7 +25,7 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
 		$instance = new Extension(static::$name, static::$file, static::$type, static::$client, static::$group);
 
 		$this->assertEquals('plg_system_test', $instance->getName());
-		$this->assertEquals('C:' . DIRECTORY_SEPARATOR . 'wamp' . DIRECTORY_SEPARATOR . 'www' . DIRECTORY_SEPARATOR . 'SomeFile.zip', $instance->getFile());
+		$this->assertEquals('plg_system_test.zip', $instance->getFile()->getName());
 		$this->assertEquals('plugin', $instance->getType());
 		$this->assertEquals(null, $instance->getClient());
 		$this->assertEquals('system', $instance->getGroup());
