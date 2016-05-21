@@ -30,8 +30,7 @@ try
 		       ->addExtension('plg_system_test', '/path/to/plg_system_test.zip', 'plugin', null, 'system')
 	);
 	
-	echo 'Path to created package is: ' . $path; 
-	//Outputs for example: Path to created package is /path/to/repository/out/pkg_something_all_in_one-1.0.0.zip
+	echo 'Path to created package is: ' . $path; //Path to created package is: /path/to/repository/out/pkg_something_all_in_one-1.0.0.zip
 }
 catch (Exception $e)
 {
@@ -68,10 +67,10 @@ try
 		       ->addExtension('lng_test', '/path/to/lng_test.zip', 'language', 'site')
 		       ->addExtensionInstance(
 			       Extension::create('file_test', '/path/to/file_test.zip', 'file')
-		       )
+		       ),
+	    '/path/to/custom_out_dir'
 	);
-	echo 'Path to created package is: ' . $path; 
-    //Outputs for example: Path to created package is /path/to/repository/out/pkg_something_all_in_one-1.0.0.zip
+	echo 'Path to created package is: ' . $path; //Path to created package is: /path/to/custom_out_dir/pkg_something_all_in_one-1.0.0.zip
 }
 catch (Exception $e)
 {
