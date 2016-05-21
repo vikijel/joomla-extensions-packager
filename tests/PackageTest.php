@@ -13,9 +13,9 @@ class PackageTest extends \PHPUnit_Framework_TestCase
 	static $author       = 'Viktor Jelínek';
 	static $author_email = 'vikijel@gmail.com';
 	static $author_url   = 'http://www.vikijel.cz';
-	static $archive_src  = __DIR__ . '/data/some_archive.zip';
-	static $file_src     = __DIR__ . '/../examples/usage_basic.php';
-	static $file_src2    = __DIR__ . '/../examples/usage_advanced.php';
+	static $archive_src  = __DIR__ . '/data/some_file.zip';
+	static $php_src      = __DIR__ . '/data/some_file.php';
+	static $ini_src      = __DIR__ . '/data/some_file.ini';
 
 	protected $path;
 
@@ -85,7 +85,7 @@ class PackageTest extends \PHPUnit_Framework_TestCase
 	{
 		$package = new Package(static::$name);
 
-		$package->addLanguage(static::$file_src, 'cs-CZ');
+		$package->addLanguage(static::$ini_src, 'cs-CZ');
 
 		$languages = $package->getLanguages();
 
@@ -96,7 +96,7 @@ class PackageTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals(1, $count_1);
 		$this->assertInstanceOf('\\VikiJel\\JoomlaExtensionsPackager\\Language', $languages[0]);
 
-		$package->addLanguageInstance(Language::create(static::$file_src2, 'sk-SK'));
+		$package->addLanguageInstance(Language::create(static::$ini_src, 'sk-SK'));
 
 		$languages = $package->getLanguages();
 
@@ -109,7 +109,7 @@ class PackageTest extends \PHPUnit_Framework_TestCase
 	public function testPacks()
 	{
 		$this->path = Package::create($this->getUniqueName())
-		                     ->addLanguage(static::$file_src, 'cs-CZ')
+		                     ->addLanguage(static::$ini_src, 'cs-CZ')
 		                     ->addExtension('mod_test', static::$archive_src, 'module', 'site')
 		                     ->addExtensionInstance(Extension::create('plg_search_stuff', static::$archive_src, 'plugin', null, 'search'))
 		                     ->pack();
@@ -162,7 +162,7 @@ class PackageTest extends \PHPUnit_Framework_TestCase
 		                     ->setCreationDate(date('Y-m-d'))
 		                     ->setPkgVersion('3.2')
 		                     ->setUrl('http://url.com')
-		                     ->setScriptfile(__DIR__ . '/../examples/usage_basic.php')
+		                     ->setScriptfile(static::$php_src)
 		                     ->addExtension('com_test', static::$archive_src)
 		                     ->addExtension('mod_test', static::$archive_src, 'module', 'site')
 		                     ->addExtensionInstance(

@@ -8,7 +8,7 @@ namespace VikiJel\JoomlaExtensionsPackager;
 class ExtensionTest extends \PHPUnit_Framework_TestCase
 {
 	static $name   = 'Plg system test';
-	static $file   = __DIR__ . '/data/some_archive.zip';
+	static $file   = __DIR__ . '/data/some_file.zip';
 	static $type   = 'Plugin';
 	static $client = null;
 	static $group  = 'SYSteM';
