@@ -23,7 +23,8 @@ try
 	               ->addExtension('com_test', '/path/to/com_test.zip')
 	               ->addExtension('mod_test', '/path/to/mod_test.zip', 'module', 'site')
 	               ->addExtensionInstance(
-		               Extension::create('plg_system_test', '/path/to/plg_system_test.zip', 'plugin')->setGroup('system')
+		               Extension::create('plg_system_test', '/path/to/plg_system_test.zip', 'plugin')
+		                        ->setGroup('system')
 	               )
 	               ->addExtension('tpl_test', '/path/to/tpl_test.zip', 'template', 'admin')
 	               ->addExtension('lib_test', '/path/to/lib_test.zip', 'library')
