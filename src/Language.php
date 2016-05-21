@@ -5,10 +5,12 @@
 
 namespace VikiJel\JoomlaExtensionsPackager;
 
+use InvalidArgumentException;
+
 class Language
 {
 	/**
-	 * @var string Path to language file for package (*.ini)
+	 * @var File Language file for package
 	 */
 	protected $file;
 
@@ -32,7 +34,7 @@ class Language
 	/**
 	 * @see Language::__construct()
 	 *
-	 * @param string $file
+	 * @param File   $file
 	 * @param string $tag
 	 *
 	 * @return Language
@@ -43,7 +45,7 @@ class Language
 	}
 
 	/**
-	 * @return string Path to language file for package (*.ini)
+	 * @return File
 	 */
 	public function getFile()
 	{
@@ -51,13 +53,27 @@ class Language
 	}
 
 	/**
-	 * @param string $file Path to language file for package (*.ini)
+	 * @param string $path
+	 * @param string $name
+	 *
+	 * @return Language
+	 * @throws \Exception
+	 */
+	public function setFile($path, $name = null)
+	{
+		$this->file = File::createFromPath($path, $name);
+
+		return $this;
+	}
+
+	/**
+	 * @param File $file
 	 *
 	 * @return Language
 	 */
-	public function setFile($file)
+	public function setFileInstance(File $file)
 	{
-		$this->file = Helper::toFilePath($file);
+		$this->file = $file;
 
 		return $this;
 	}
@@ -81,14 +97,14 @@ class Language
 
 		if (count($arr) != 2)
 		{
-			throw new   \InvalidArgumentException("Invalid format of language tag '{$tag}'");
+			throw new InvalidArgumentException("Invalid format of language tag '{$tag}'");
 		}
 
 		$tag = strtolower(trim($arr[0])) . '-' . strtoupper(trim($arr[1]));
 
 		if (strlen($tag) != 5)
 		{
-			throw new   \InvalidArgumentException("Invalid length of language tag '{$tag}'");
+			throw new InvalidArgumentException("Invalid length of language tag '{$tag}'");
 		}
 
 		$this->tag = $tag;

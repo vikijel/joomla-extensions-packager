@@ -7,7 +7,7 @@ namespace VikiJel\JoomlaExtensionsPackager;
 
 class FileTest extends \PHPUnit_Framework_TestCase
 {
-	static $path = __DIR__.'/data/some_file.php';
+	static $path = __DIR__ . '/data/some_file.php';
 
 	public function testClassInstantiates()
 	{
@@ -20,7 +20,7 @@ class FileTest extends \PHPUnit_Framework_TestCase
 	{
 		$instance = File::createFromPath(static::$path);
 
-		$this->assertEquals(Helper::toFilePath(static::$path), $instance->getName());
+		$this->assertEquals(Helper::toFileName(static::$path), $instance->getName());
 		$this->assertNotNull($instance->getData());
 	}
 }

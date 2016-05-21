@@ -359,7 +359,7 @@ class Package
 
 		foreach ($this->getLanguages() as $lang)
 		{
-			$this->pkg_files[] = File::createFromPath($lang->getFile());
+			$this->pkg_files[] = $lang->getFile();
 		}
 
 		if ($this->getScriptfile())

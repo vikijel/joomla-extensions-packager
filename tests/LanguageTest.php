@@ -7,7 +7,7 @@ namespace VikiJel\JoomlaExtensionsPackager;
 
 class LanguageTest extends \PHPUnit_Framework_TestCase
 {
-	static $file = 'some\path/to\\file.ini ';
+	static $file = __DIR__ . '/data/some_file.ini';
 	static $tag  = ' En - gB ';
 
 	public function testClassInstantiates()
@@ -21,8 +21,7 @@ class LanguageTest extends \PHPUnit_Framework_TestCase
 	{
 		$instance = new Language(static::$file, static::$tag);
 
-		$this->assertEquals('some' . DIRECTORY_SEPARATOR . 'path' . DIRECTORY_SEPARATOR . 'to' . DIRECTORY_SEPARATOR . 'file.ini',
-		                    $instance->getFile());
+		$this->assertEquals('some_file.ini', $instance->getFile()->getName());
 		$this->assertEquals('en-GB', $instance->getTag());
 	}
 }

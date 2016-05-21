@@ -64,7 +64,7 @@ class File
 			throw new Exception("Cannot get contents of file '$path'");
 		}
 
-		return new static($name != null ? Helper::toFileName($name) : $path, $data);
+		return new static($name != null ? $name : $path, $data);
 	}
 
 	/**
@@ -82,7 +82,7 @@ class File
 	 */
 	public function setName($name = null)
 	{
-		$this->name = $name;
+		$this->name = Helper::toFileName($name);
 
 		return $this;
 	}

@@ -146,7 +146,9 @@ class PackageTest extends \PHPUnit_Framework_TestCase
 		                     ->addExtension('lng_test', static::$archive_src, 'language', 'site')
 		                     ->addExtensionInstance(
 			                     Extension::create('file_pricingpage', static::$archive_src, 'file')
-		                     )->pack();
+		                     )
+		                     ->addLanguage(static::$ini_src, 'cs-CZ')
+		                     ->pack();
 
 		$this->assertFileExists($this->path);
 

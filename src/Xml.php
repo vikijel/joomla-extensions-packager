@@ -30,7 +30,7 @@ class Xml
 	 * @var Package
 	 */
 	protected $package;
-	
+
 	/**
 	 * @var XMLWriter
 	 */
@@ -133,7 +133,7 @@ class Xml
 
 	protected function initScriptfile()
 	{
-		if($this->package->getScriptfile() and $this->package->getScriptfile()->getName() != '')
+		if ($this->package->getScriptfile() and $this->package->getScriptfile()->getName() != '')
 		{
 			$this->writer->writeElement('scriptfile', $this->package->getScriptfile()->getName());
 		}
@@ -149,7 +149,7 @@ class Xml
 			{
 				$this->writer->startElement('language');
 				$this->writeAttributeIfValueNotEmpty('tag', $lang->getTag());
-				$this->writer->text(Helper::toFileName($lang->getFile()));
+				$this->writer->text($lang->getFile()->getName());
 				$this->writer->endElement();
 			}
 
