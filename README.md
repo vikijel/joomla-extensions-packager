@@ -1,9 +1,9 @@
 #   Joomla! Extensions Packager&nbsp;&nbsp;&nbsp;&nbsp;[![Build Status](https://travis-ci.org/vikijel/joomla-extensions-packager.svg?branch=master)](https://travis-ci.org/vikijel/joomla-extensions-packager)
-PHP Library for generating All-In-One install packages (*.zip) with multiple extensions for Joomla! CMS.
+PHP Library for generating All-In-One install packages (*.zip) with multiple extensions for Joomla! CMS
 
--   Packs given extensions, languages, scriptfile etc. together with auto-generated install xml manifest into a ZIP archive ready for installation.
--   Created packages are native extension installation packages of type 'package'.
--   Created packages are compatible with Joomla! 2.5 and newer.
+-   Packs given extensions, languages, scriptfile etc. together with auto-generated install xml manifest into a ZIP archive ready for installation
+-   Created packages are native extension installation packages of type 'package'
+-   Created packages are compatible with Joomla! 2.5 and newer
 
 ##  About
 -   Package: **vikijel/joomla-extensions-packager**
@@ -56,7 +56,7 @@ catch (Exception $e)
 
 ##  Usage - Advanced
 -   Source: [examples/usage_advanced.php](examples/usage_advanced.php)
--   *More information can be found directly inside [Package](src/Package.php) class and other classes in form of php-doc comments.*
+-   *More information can be found directly inside [Package](src/Package.php) class and other classes in form of php-doc comments*
 
 ```php
 use VikiJel\JoomlaExtensionsPackager\Package;
