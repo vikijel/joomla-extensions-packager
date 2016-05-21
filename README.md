@@ -48,10 +48,10 @@ use VikiJel\JoomlaExtensionsPackager\Extension;
 try
 {
 	$path = Packager::pack(
-		Package::create('Something All-in-one')
+		Package::create('Something Else All-in-one')
 		       ->setAuthor('Your Name', 'your.email@example.com', 'http://www.vikijel.cz')
 		       ->setVersion('1.2.3')
-		       ->setDescription('This is something...')
+		       ->setDescription('This is something else...')
 		       ->setLicense('GPL')
 		       ->setCreationDate('2016-05-20')
 		       ->setPkgVersion('3.2')
@@ -70,7 +70,7 @@ try
 		       ),
 	    '/path/to/custom_out_dir'
 	);
-	echo 'Path to created package is: ' . $path; //Path to created package is: /path/to/custom_out_dir/pkg_something_all_in_one-1.0.0.zip
+	echo 'Path to created package is: ' . $path; //Path to created package is: /path/to/custom_out_dir/pkg_something_else_all_in_one-1.2.3.zip
 }
 catch (Exception $e)
 {
