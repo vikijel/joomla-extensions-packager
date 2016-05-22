@@ -23,7 +23,7 @@ class Package
 	/**
 	 * @var string Description of package
 	 */
-	protected $description = '';
+	protected $description = 'Custom Joomla Extensions All-In-One package';
 
 	/**
 	 * @var string Version of package
@@ -355,7 +355,7 @@ class Package
 
 		$zip->setArchiveComment(
 			$this->getName() . ($this->getAuthor() != '' ? ' by ' . $this->getAuthor() : '') . "\n" .
-			"\n" . ($this->getDescription() != '' ? $this->getDescription() : "Custom Joomla Extensions All-In-One package") . "\n" .
+			"\n" . $this->getDescription() . "\n" .
 			"\n================================================================\n" .
 			"Packed using " . $this->getPackager() . "\n" .
 			$this->getPackagerUrl() . "\n"
@@ -671,11 +671,16 @@ class Package
 	}
 
 	/**
+	 * @param bool $replace_placeholders
+	 *
 	 * @return string
 	 */
-	public function getCopyright()
+	public function getCopyright($replace_placeholders = true)
 	{
-		$this->replaceCopyrightPlaceholders();
+		if ($replace_placeholders)
+		{
+			$this->replaceCopyrightPlaceholders();
+		}
 
 		return $this->copyright;
 	}
