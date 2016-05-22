@@ -354,10 +354,10 @@ class Package
 		}
 
 		$zip->setArchiveComment(
-			"{$this->getName()}\n" .
-			($this->getDescription() != '' ? $this->getDescription() : "Custom Joomla Extensions All-In-One package") . "\n\n" .
-			'Packed at ' . date('Y-m-d H:i:s') . "\n" .
-			'Packed by ' . $this->getPackager() . "\n" .
+			$this->getName() . ($this->getAuthor() != '' ? ' by ' . $this->getAuthor() : '') . "\n" .
+			"\n" . ($this->getDescription() != '' ? $this->getDescription() : "Custom Joomla Extensions All-In-One package") . "\n" .
+			"\n================================================================\n" .
+			"Packed using " . $this->getPackager() . "\n" .
 			$this->getPackagerUrl() . "\n"
 		);
 
@@ -395,6 +395,38 @@ class Package
 	public function setName($name)
 	{
 		$this->name = trim($name);
+
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getAuthor()
+	{
+		return $this->author;
+	}
+
+	/**
+	 * @param string $author
+	 * @param string $email
+	 * @param string $url
+	 *
+	 * @return Package
+	 */
+	public function setAuthor($author, $email = '', $url = '')
+	{
+		$this->author = $author;
+
+		if ($email != '')
+		{
+			$this->setAuthorEmail($email);
+		}
+
+		if ($url != '')
+		{
+			$this->setAuthorUrl($url);
+		}
 
 		return $this;
 	}
@@ -670,38 +702,6 @@ class Package
 				$this->copyright
 			);
 		}
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getAuthor()
-	{
-		return $this->author;
-	}
-
-	/**
-	 * @param string $author
-	 * @param string $email
-	 * @param string $url
-	 *
-	 * @return Package
-	 */
-	public function setAuthor($author, $email = '', $url = '')
-	{
-		$this->author = $author;
-
-		if ($email != '')
-		{
-			$this->setAuthorEmail($email);
-		}
-
-		if ($url != '')
-		{
-			$this->setAuthorUrl($url);
-		}
-
-		return $this;
 	}
 
 	/**
