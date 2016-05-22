@@ -196,7 +196,7 @@ class Package
 	 */
 	public function addLanguageInstance(Language $language)
 	{
-		$language->getFile()->setName($this->getPkgFileName($language->getTag() . '.ini', false));
+		$language->getFile()->setName($language->getTag() . '.' . $this->getPkgFileName('ini', false));
 
 		$this->pkg_languages[] = $language;
 
