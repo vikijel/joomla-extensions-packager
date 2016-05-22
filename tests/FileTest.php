@@ -21,6 +21,7 @@ class FileTest extends \PHPUnit_Framework_TestCase
 		$instance = File::createFromPath(static::$path);
 
 		$this->assertEquals(Helper::toFileName(static::$path), $instance->getName());
+		$this->assertEquals(file_get_contents(Helper::toFilePath(static::$path)), $instance->getData());
 		$this->assertNotNull($instance->getData());
 	}
 }

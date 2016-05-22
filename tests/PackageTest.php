@@ -34,16 +34,15 @@ class PackageTest extends \PHPUnit_Framework_TestCase
 		$this->assertInstanceOf('\\VikiJel\\JoomlaExtensionsPackager\\Package', $instance);
 	}
 
-	public function testPrepares()
+	public function testGetters()
 	{
 		$package = new Package(static::$name);
 		$package->setAuthor(static::$author);
 
-		$package->prepare();
-
 		$this->assertContains($package->getAuthor(), $package->getCopyright());
 		$this->assertContains(date('Y'), $package->getCopyright());
 		$this->assertEquals('1.0.0', $package->getVersion());
+		$this->assertEquals('pkg_' . Helper::toSystemName(static::$name) . '-1.0.0.zip', $package->getPkgFileName());
 	}
 
 	public function testSetsGetsAuthor()

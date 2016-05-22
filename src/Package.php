@@ -56,9 +56,9 @@ class Package
 	protected $url = '';
 
 	/**
-	 * @var string Date of package creation (if empty, actual date will be used)
+	 * @var string|bool Date of package creation (True => actual date will be used, False => unset)
 	 */
-	protected $creationDate = '';
+	protected $creationDate = true;
 
 	/**
 	 * @var File Install script file
@@ -211,21 +211,6 @@ class Package
 	}
 
 	/**
-	 * Auto-populates some properties before pack
-	 */
-	public function prepare()
-	{
-		$this->setCreationDate();
-		$this->setCopyright();
-		$this->setVersion($this->version);
-		$this->setPkgName($this->pkg_name);
-		$this->setPkgXml();
-		$this->setPkgFiles();
-
-		return $this;
-	}
-
-	/**
 	 * @return $this
 	 */
 	public function setPkgXml()
@@ -246,8 +231,6 @@ class Package
 	 */
 	public function pack($dir = null, $file = null, $dry_run = false)
 	{
-		$this->prepare();
-
 		$file = Helper::toFileName(empty($file) ? $this->getPkgFileName() : $file);
 		$dir  = Helper::toFilePath(empty($dir) ? self::$default_target_dir : $dir);
 		$path = Helper::toFilePath($dir . DIRECTORY_SEPARATOR . $file);
@@ -273,7 +256,7 @@ class Package
 			throw new Exception("Cannot create/open archive for writing, path = '$path'");
 		}
 
-		foreach ($this->getPkgFiles() as $package_file)
+		foreach ($this->getFiles() as $package_file)
 		{
 			if (!$zip->addFromString($package_file->getName(), $package_file->getData()))
 			{
@@ -302,10 +285,7 @@ class Package
 	 */
 	public function getPkgXml()
 	{
-		if (!($this->pkg_xml instanceof Xml))
-		{
-			$this->prepare();
-		}
+		$this->setPkgXml();
 
 		return $this->pkg_xml;
 	}
@@ -316,14 +296,6 @@ class Package
 	public function getExtensions()
 	{
 		return $this->pkg_extensions;
-	}
-
-	/**
-	 * @return Language[]
-	 */
-	public function getLanguages()
-	{
-		return $this->pkg_languages;
 	}
 
 	/**
@@ -349,7 +321,7 @@ class Package
 	/**
 	 * @return Package
 	 */
-	public function setPkgFiles()
+	public function setFiles()
 	{
 		$this->pkg_files   = [];
 		$this->pkg_files[] = new File($this->getPkgFileName('xml', false), (string) $this->getPkgXml());
@@ -457,6 +429,8 @@ class Package
 	 */
 	public function getVersion()
 	{
+		$this->setVersion($this->version);
+
 		return $this->version;
 	}
 
@@ -467,7 +441,7 @@ class Package
 	 */
 	public function setVersion($version = '')
 	{
-		$this->version = version_compare($version, '0.0.0', '>') ? $version : '1.0.0';
+		$this->version = ($version != '' and version_compare($version, '0.0.0', '>')) ? $version : '1.0.0';
 
 		return $this;
 	}
@@ -577,6 +551,8 @@ class Package
 	 */
 	public function getCopyright()
 	{
+		$this->replaceCopyrightPlaceholders();
+
 		return $this->copyright;
 	}
 
@@ -587,24 +563,21 @@ class Package
 	 */
 	public function setCopyright($copyright = '')
 	{
-		if ($copyright != '')
-		{
-			$this->copyright = $copyright;
-		}
-		elseif ($this->getAuthor() != '')
+		$this->copyright = $copyright;
+
+		return $this;
+	}
+
+	public function replaceCopyrightPlaceholders()
+	{
+		if ($this->getAuthor() != '')
 		{
 			$this->copyright = str_replace(
 				['{year}', '{author}', '  '],
-				[date('Y', strtotime($this->getCreationDate())), $this->author, ' '],
+				[date('Y', strtotime($this->getCreationDate())), $this->getAuthor(), ' '],
 				$this->copyright
 			);
 		}
-		else
-		{
-			$this->copyright = $copyright;
-		}
-
-		return $this;
 	}
 
 	/**
@@ -640,6 +613,8 @@ class Package
 	 */
 	public function getCreationDate()
 	{
+		$this->setCreationDate($this->creationDate);
+
 		return $this->creationDate;
 	}
 
@@ -650,9 +625,9 @@ class Package
 	 */
 	public function setCreationDate($creationDate = true)
 	{
-		if (is_string($creationDate))
+		if (is_string($creationDate) and trim($creationDate) != '')
 		{
-			$this->creationDate = trim($creationDate);
+			$this->creationDate = $creationDate;
 		}
 		else
 		{
@@ -700,6 +675,8 @@ class Package
 	 */
 	public function getPkgName()
 	{
+		$this->setPkgName($this->pkg_name);
+
 		return $this->pkg_name;
 	}
 
@@ -748,7 +725,7 @@ class Package
 	 */
 	public function setName($name)
 	{
-		$this->name = $name;
+		$this->name = trim($name);
 
 		return $this;
 	}
@@ -756,15 +733,17 @@ class Package
 	/**
 	 * @return File[]
 	 */
-	public function getPkgFiles()
+	public function getFiles()
 	{
+		$this->setFiles();
+
 		return $this->pkg_files;
 	}
 
 	/**
 	 * @return UpdateServer[]
 	 */
-	public function getPkgUpdateservers()
+	public function getUpdateservers()
 	{
 		return $this->pkg_updateservers;
 	}
@@ -772,7 +751,7 @@ class Package
 	/**
 	 * @return Language[]
 	 */
-	public function getPkgLanguages()
+	public function getLanguages()
 	{
 		return $this->pkg_languages;
 	}

@@ -124,7 +124,7 @@ class Xml
 			$this->writeAttributeIfValueNotEmpty('group', $ext->getGroup());
 			$this->writeAttributeIfValueNotEmpty('client', $ext->getClient());
 
-			$this->writer->text(Helper::toFileName($ext->getFile()->getName()));
+			$this->writer->text($ext->getFile()->getName());
 			$this->writer->endElement();
 		}
 
@@ -159,11 +159,11 @@ class Xml
 
 	protected function initUpdateServers()
 	{
-		if (!empty($this->package->getPkgUpdateservers()))
+		if (!empty($this->package->getUpdateservers()))
 		{
 			$this->writer->startElement('updateservers');
 
-			foreach ($this->package->getPkgUpdateservers() as $server)
+			foreach ($this->package->getUpdateservers() as $server)
 			{
 				$this->writer->startElement('server');
 
