@@ -355,7 +355,7 @@ class Package
 
 		$zip->setArchiveComment(
 			$this->getName() . ($this->getAuthor() != '' ? ' by ' . $this->getAuthor() : '') . "\n" .
-			"\n" . $this->getDescription() . "\n" .
+			($this->getDescription() != '' ? "\n" . $this->getDescription() . "\n" : '') .
 			"\n================================================================\n" .
 			"Packed using " . $this->getPackager() . "\n" .
 			$this->getPackagerUrl() . "\n"
