@@ -11,6 +11,11 @@ use ZipArchive;
 class Package
 {
 	/**
+	 * @var string Default target directory
+	 */
+	protected static $default_target_dir = __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'out';
+
+	/**
 	 * @var string Human name of package
 	 */
 	protected $name = '';
@@ -66,16 +71,6 @@ class Package
 	protected $scriptfile;
 
 	/**
-	 * @var string Packager of package
-	 */
-	private $packager = 'Joomla! Extensions Packager library made by VikiJel';
-
-	/**
-	 * @var string URL of package file
-	 */
-	private $packagerUrl = 'https://github.com/vikijel/joomla-extensions-packager';
-
-	/**
 	 * @var string System name of package
 	 */
 	protected $pkg_name = '';
@@ -126,10 +121,20 @@ class Package
 	protected $pkg_xml;
 
 	/**
-	 * @var string Default target directory
+	 * @var string Packager of package
 	 */
-	protected static $default_target_dir = __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'out';
+	private $packager = 'Joomla! Extensions Packager library made by VikiJel';
 
+	/**
+	 * @var string URL of package file
+	 */
+	private $packagerUrl = 'https://github.com/vikijel/joomla-extensions-packager';
+
+	/**
+	 * Package constructor.
+	 *
+	 * @param string $name Package name like 'Some Custom Package'
+	 */
 	public function __construct($name)
 	{
 		$this->setName($name);
@@ -138,7 +143,7 @@ class Package
 	/**
 	 * @see Package::__construct()
 	 *
-	 * @param string $name
+	 * @param string $name Package name like 'Some Custom Package'
 	 *
 	 * @return Package
 	 */
@@ -199,6 +204,88 @@ class Package
 	}
 
 	/**
+	 * @param string $extension
+	 * @param bool   $version
+	 *
+	 * @return string
+	 */
+	public function getPkgFileName($extension = 'zip', $version = true)
+	{
+		return $this->getPkgPrefix() . $this->getPkgName() . ($version ? '-' . $this->getVersion() : '') . '.' . $extension;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getPkgPrefix()
+	{
+		return $this->pkg_prefix;
+	}
+
+	/**
+	 * @param string $pkg_prefix
+	 *
+	 * @return Package
+	 */
+	public function setPkgPrefix($pkg_prefix)
+	{
+		$this->pkg_prefix = $pkg_prefix;
+
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getPkgName()
+	{
+		$this->setPkgName($this->pkg_name);
+
+		return $this->pkg_name;
+	}
+
+	/**
+	 * @param string $pkg_name
+	 *
+	 * @return Package
+	 */
+	public function setPkgName($pkg_name = '')
+	{
+		$this->pkg_name = $this->name;
+
+		if (trim($pkg_name) != '')
+		{
+			$this->pkg_name = $pkg_name;
+		}
+
+		$this->pkg_name = Helper::toSystemName($this->pkg_name);
+
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getVersion()
+	{
+		$this->setVersion($this->version);
+
+		return $this->version;
+	}
+
+	/**
+	 * @param string $version
+	 *
+	 * @return Package
+	 */
+	public function setVersion($version = '')
+	{
+		$this->version = ($version != '' and version_compare($version, '0.0.0', '>')) ? $version : '1.0.0';
+
+		return $this;
+	}
+
+	/**
 	 * @param UpdateServer $updateserver
 	 *
 	 * @return $this
@@ -211,11 +298,13 @@ class Package
 	}
 
 	/**
-	 * @return $this
+	 * @param File $scriptfile
+	 *
+	 * @return Package
 	 */
-	public function setPkgXml()
+	public function setScriptfileInstance(File $scriptfile)
 	{
-		$this->pkg_xml = Xml::create($this)->init();
+		$this->scriptfile = $scriptfile;
 
 		return $this;
 	}
@@ -281,41 +370,69 @@ class Package
 	}
 
 	/**
-	 * @return Xml
+	 * @return File[]
 	 */
-	public function getPkgXml()
+	public function getFiles()
 	{
-		$this->setPkgXml();
+		$this->setFiles();
 
-		return $this->pkg_xml;
-	}
-
-	/**
-	 * @return Extension[]
-	 */
-	public function getExtensions()
-	{
-		return $this->pkg_extensions;
+		return $this->pkg_files;
 	}
 
 	/**
 	 * @return string
 	 */
-	public function getPkgVersion()
+	public function getName()
 	{
-		return $this->pkg_version;
+		return $this->name;
 	}
 
 	/**
-	 * @param string $pkg_version
+	 * @param string $name
 	 *
 	 * @return Package
 	 */
-	public function setPkgVersion($pkg_version)
+	public function setName($name)
 	{
-		$this->pkg_version = $pkg_version;
+		$this->name = trim($name);
 
 		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getDescription()
+	{
+		return $this->description;
+	}
+
+	/**
+	 * @param string $description
+	 *
+	 * @return Package
+	 */
+	public function setDescription($description)
+	{
+		$this->description = $description;
+
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getPackager()
+	{
+		return $this->packager;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getPackagerUrl()
+	{
+		return $this->packagerUrl;
 	}
 
 	/**
@@ -340,6 +457,83 @@ class Package
 		{
 			$this->pkg_files[] = $this->getScriptfile();
 		}
+
+		return $this;
+	}
+
+	/**
+	 * @return Xml
+	 */
+	public function getPkgXml()
+	{
+		$this->setPkgXml();
+
+		return $this->pkg_xml;
+	}
+
+	/**
+	 * @return $this
+	 */
+	public function setPkgXml()
+	{
+		$this->pkg_xml = Xml::create($this)->init();
+
+		return $this;
+	}
+
+	/**
+	 * @return Extension[]
+	 */
+	public function getExtensions()
+	{
+		return $this->pkg_extensions;
+	}
+
+	/**
+	 * @return Language[]
+	 */
+	public function getLanguages()
+	{
+		return $this->pkg_languages;
+	}
+
+	/**
+	 * @return File
+	 */
+	public function getScriptfile()
+	{
+		return $this->scriptfile;
+	}
+
+	/**
+	 * @param string $path Path to file
+	 * @param string $name Override file name
+	 *
+	 * @return Package
+	 */
+	public function setScriptfile($path, $name = null)
+	{
+		$this->scriptfile = File::createFromPath($path, $name ?: $this->getPkgFileName('php', false));
+
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getPkgVersion()
+	{
+		return $this->pkg_version;
+	}
+
+	/**
+	 * @param string $pkg_version
+	 *
+	 * @return Package
+	 */
+	public function setPkgVersion($pkg_version)
+	{
+		$this->pkg_version = $pkg_version;
 
 		return $this;
 	}
@@ -387,100 +581,6 @@ class Package
 	/**
 	 * @return string
 	 */
-	public function getPkgPrefix()
-	{
-		return $this->pkg_prefix;
-	}
-
-	/**
-	 * @param string $pkg_prefix
-	 *
-	 * @return Package
-	 */
-	public function setPkgPrefix($pkg_prefix)
-	{
-		$this->pkg_prefix = $pkg_prefix;
-
-		return $this;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getDescription()
-	{
-		return $this->description;
-	}
-
-	/**
-	 * @param string $description
-	 *
-	 * @return Package
-	 */
-	public function setDescription($description)
-	{
-		$this->description = $description;
-
-		return $this;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getVersion()
-	{
-		$this->setVersion($this->version);
-
-		return $this->version;
-	}
-
-	/**
-	 * @param string $version
-	 *
-	 * @return Package
-	 */
-	public function setVersion($version = '')
-	{
-		$this->version = ($version != '' and version_compare($version, '0.0.0', '>')) ? $version : '1.0.0';
-
-		return $this;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getAuthor()
-	{
-		return $this->author;
-	}
-
-	/**
-	 * @param string $author
-	 * @param string $email
-	 * @param string $url
-	 *
-	 * @return Package
-	 */
-	public function setAuthor($author, $email = '', $url = '')
-	{
-		$this->author = $author;
-
-		if ($email != '')
-		{
-			$this->setAuthorEmail($email);
-		}
-
-		if ($url != '')
-		{
-			$this->setAuthorUrl($url);
-		}
-
-		return $this;
-	}
-
-	/**
-	 * @return string
-	 */
 	public function getAuthorEmail()
 	{
 		return $this->authorEmail;
@@ -516,14 +616,6 @@ class Package
 		$this->authorUrl = $authorUrl;
 
 		return $this;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getPackager()
-	{
-		return $this->packager;
 	}
 
 	/**
@@ -583,29 +675,33 @@ class Package
 	/**
 	 * @return string
 	 */
-	public function getUrl()
+	public function getAuthor()
 	{
-		return $this->url;
+		return $this->author;
 	}
 
 	/**
+	 * @param string $author
+	 * @param string $email
 	 * @param string $url
 	 *
 	 * @return Package
 	 */
-	public function setUrl($url)
+	public function setAuthor($author, $email = '', $url = '')
 	{
-		$this->url = $url;
+		$this->author = $author;
+
+		if ($email != '')
+		{
+			$this->setAuthorEmail($email);
+		}
+
+		if ($url != '')
+		{
+			$this->setAuthorUrl($url);
+		}
 
 		return $this;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getPackagerUrl()
-	{
-		return $this->packagerUrl;
 	}
 
 	/**
@@ -638,106 +734,23 @@ class Package
 	}
 
 	/**
-	 * @return File
-	 */
-	public function getScriptfile()
-	{
-		return $this->scriptfile;
-	}
-
-	/**
-	 * @param File $scriptfile
-	 *
-	 * @return Package
-	 */
-	public function setScriptfileInstance(File $scriptfile)
-	{
-		$this->scriptfile = $scriptfile;
-
-		return $this;
-	}
-
-	/**
-	 * @param string $path Path to file
-	 * @param string $name Override file name
-	 *
-	 * @return Package
-	 */
-	public function setScriptfile($path, $name = null)
-	{
-		$this->scriptfile = File::createFromPath($path, $name ?: $this->getPkgFileName('php', false));
-
-		return $this;
-	}
-
-	/**
 	 * @return string
 	 */
-	public function getPkgName()
+	public function getUrl()
 	{
-		$this->setPkgName($this->pkg_name);
-
-		return $this->pkg_name;
+		return $this->url;
 	}
 
 	/**
-	 * @param string $extension
-	 * @param bool   $version
-	 *
-	 * @return string
-	 */
-	public function getPkgFileName($extension = 'zip', $version = true)
-	{
-		return $this->getPkgPrefix() . $this->getPkgName() . ($version ? '-' . $this->getVersion() : '') . '.' . $extension;
-	}
-
-	/**
-	 * @param string $pkg_name
+	 * @param string $url
 	 *
 	 * @return Package
 	 */
-	public function setPkgName($pkg_name = '')
+	public function setUrl($url)
 	{
-		$this->pkg_name = $this->name;
-
-		if (trim($pkg_name) != '')
-		{
-			$this->pkg_name = $pkg_name;
-		}
-
-		$this->pkg_name = Helper::toSystemName($this->pkg_name);
+		$this->url = $url;
 
 		return $this;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getName()
-	{
-		return $this->name;
-	}
-
-	/**
-	 * @param string $name
-	 *
-	 * @return Package
-	 */
-	public function setName($name)
-	{
-		$this->name = trim($name);
-
-		return $this;
-	}
-
-	/**
-	 * @return File[]
-	 */
-	public function getFiles()
-	{
-		$this->setFiles();
-
-		return $this->pkg_files;
 	}
 
 	/**
@@ -746,13 +759,5 @@ class Package
 	public function getUpdateservers()
 	{
 		return $this->pkg_updateservers;
-	}
-
-	/**
-	 * @return Language[]
-	 */
-	public function getLanguages()
-	{
-		return $this->pkg_languages;
 	}
 }
