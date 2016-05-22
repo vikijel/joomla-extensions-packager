@@ -4,6 +4,6 @@ php:
   - '7.0'
 #  - 'hhvm'
 branches:
-  only:
-    - master
+  except:
+    - /^devel/
 before_script: composer install
