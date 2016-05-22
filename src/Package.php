@@ -191,6 +191,8 @@ class Package
 	 */
 	public function addLanguageInstance(Language $language)
 	{
+		$language->getFile()->setName($this->getPkgFileName($language->getTag() . '.ini', false));
+
 		$this->pkg_languages[] = $language;
 
 		return $this;
@@ -246,7 +248,7 @@ class Package
 	{
 		$this->prepare();
 
-		$file = Helper::toFileName(empty($file) ? $this->getPkgPrefix() . $this->getPkgName() . '-' . $this->getVersion() . '.zip' : $file);
+		$file = Helper::toFileName(empty($file) ? $this->getPkgFileName() : $file);
 		$dir  = Helper::toFilePath(empty($dir) ? self::$default_target_dir : $dir);
 		$path = Helper::toFilePath($dir . DIRECTORY_SEPARATOR . $file);
 
@@ -350,7 +352,7 @@ class Package
 	public function setPkgFiles()
 	{
 		$this->pkg_files   = [];
-		$this->pkg_files[] = new File($this->getPkgPrefix() . $this->getPkgName() . '.xml', (string) $this->getPkgXml());
+		$this->pkg_files[] = new File($this->getPkgFileName('xml', false), (string) $this->getPkgXml());
 
 		foreach ($this->getExtensions() as $extension)
 		{
@@ -686,9 +688,9 @@ class Package
 	 *
 	 * @return Package
 	 */
-	public function setScriptfile($path, $name = 'scriptfile.php')
+	public function setScriptfile($path, $name = null)
 	{
-		$this->scriptfile = File::createFromPath($path, $name);
+		$this->scriptfile = File::createFromPath($path, $name ?: $this->getPkgFileName('php', false));
 
 		return $this;
 	}
@@ -699,6 +701,17 @@ class Package
 	public function getPkgName()
 	{
 		return $this->pkg_name;
+	}
+
+	/**
+	 * @param string $extension
+	 * @param bool   $version
+	 *
+	 * @return string
+	 */
+	public function getPkgFileName($extension = 'zip', $version = true)
+	{
+		return $this->getPkgPrefix() . $this->getPkgName() . ($version ? '-' . $this->getVersion() : '') . '.' . $extension;
 	}
 
 	/**

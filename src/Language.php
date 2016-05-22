@@ -34,7 +34,7 @@ class Language
 	/**
 	 * @see Language::__construct()
 	 *
-	 * @param File   $file
+	 * @param string $file
 	 * @param string $tag
 	 *
 	 * @return Language
