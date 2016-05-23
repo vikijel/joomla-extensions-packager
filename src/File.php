@@ -7,6 +7,11 @@ namespace VikiJel\JoomlaExtensionsPackager;
 
 use Exception;
 
+/**
+ * Class File
+ *
+ * @package VikiJel\JoomlaExtensionsPackager
+ */
 class File
 {
 	/**

@@ -5,6 +5,11 @@
 
 namespace VikiJel\JoomlaExtensionsPackager;
 
+/**
+ * Class UpdateServer
+ *
+ * @package VikiJel\JoomlaExtensionsPackager
+ */
 class UpdateServer
 {
 	/**
@@ -27,6 +32,14 @@ class UpdateServer
 	 */
 	protected $priority;
 
+	/**
+	 * UpdateServer constructor.
+	 *
+	 * @param        $url
+	 * @param string $name
+	 * @param string $type
+	 * @param int    $priority
+	 */
 	public function __construct($url, $name = '', $type = '', $priority = 1)
 	{
 		$this->setUrl($url);

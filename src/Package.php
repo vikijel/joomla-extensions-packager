@@ -8,6 +8,11 @@ namespace VikiJel\JoomlaExtensionsPackager;
 use Exception;
 use ZipArchive;
 
+/**
+ * Class Package
+ *
+ * @package VikiJel\JoomlaExtensionsPackager
+ */
 class Package
 {
 	/**
@@ -160,6 +165,7 @@ class Package
 	 * @param string $group  Plugin group (system/content/search/authentication/...) - plugins only
 	 *
 	 * @return Package
+	 * @throws \Exception
 	 */
 	public function addExtension($name, $file, $type = 'component', $client = null, $group = null)
 	{
@@ -183,6 +189,8 @@ class Package
 	 * @param string $tag  Language tag like 'en-GB'
 	 *
 	 * @return Package
+	 * @throws \Exception
+	 * @throws \InvalidArgumentException
 	 */
 	public function addLanguage($file, $tag = 'en-GB')
 	{
@@ -335,8 +343,8 @@ class Package
 	 */
 	public function pack($dir = null, $file = null, $dry_run = false)
 	{
-		$file = Helper::toFileName(empty($file) ? $this->getPkgFileName() : $file);
-		$dir  = Helper::toFilePath(empty($dir) ? self::$default_target_dir : $dir);
+		$file = Helper::toFileName(trim($file) != '' ? $this->getPkgFileName() : $file);
+		$dir  = Helper::toFilePath(trim($dir) != '' ? self::$default_target_dir : $dir);
 		$path = Helper::toFilePath($dir . DIRECTORY_SEPARATOR . $file);
 
 		if ($dry_run)
@@ -372,7 +380,7 @@ class Package
 			$this->getName() . ($this->getAuthor() != '' ? ' by ' . $this->getAuthor() : '') . "\n" .
 			($this->getDescription() != '' ? "\n" . $this->getDescription() . "\n" : '') .
 			"\n================================================================\n" .
-			"Packed using " . $this->getPackager() . "\n" .
+			'Packed using ' . $this->getPackager() . "\n" .
 			$this->getPackagerUrl() . "\n"
 		);
 
@@ -557,6 +565,7 @@ class Package
 	 * @param string $name Override file name
 	 *
 	 * @return Package
+	 * @throws \Exception
 	 */
 	public function setScriptfile($path, $name = null)
 	{

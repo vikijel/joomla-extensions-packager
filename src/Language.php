@@ -7,6 +7,11 @@ namespace VikiJel\JoomlaExtensionsPackager;
 
 use InvalidArgumentException;
 
+/**
+ * Class Language
+ *
+ * @package VikiJel\JoomlaExtensionsPackager
+ */
 class Language
 {
 	/**
@@ -24,6 +29,9 @@ class Language
 	 *
 	 * @param string $file Path to language file for package (*.ini)
 	 * @param string $tag  Language tag like 'en-GB'
+	 *
+	 * @throws \Exception
+	 * @throws \InvalidArgumentException
 	 */
 	public function __construct($file, $tag = 'en-GB')
 	{
@@ -38,6 +46,8 @@ class Language
 	 * @param string $tag
 	 *
 	 * @return Language
+	 * @throws \InvalidArgumentException
+	 * @throws \Exception
 	 */
 	public static function create($file, $tag = 'en-GB')
 	{
@@ -90,6 +100,7 @@ class Language
 	 * @param string $tag Language tag like 'en-GB'
 	 *
 	 * @return Language
+	 * @throws \InvalidArgumentException
 	 */
 	public function setTag($tag)
 	{

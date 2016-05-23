@@ -9,8 +9,16 @@ use XMLWriter;
 
 //todo: refactor to Manifest??
 //todo: move generic_properties from Package??
+/**
+ * Class Xml
+ *
+ * @package VikiJel\JoomlaExtensionsPackager
+ */
 class Xml
 {
+	/**
+	 * @var array
+	 */
 	protected static $generic_properties = [
 		'name',
 		'version',
@@ -69,6 +77,9 @@ class Xml
 		return $this->package;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function __toString()
 	{
 		return $this->writer->outputMemory(false);
@@ -141,12 +152,17 @@ class Xml
 
 	protected function initLanguages()
 	{
-		if (!empty($this->package->getLanguages()))
+		if (count($this->package->getLanguages()))
 		{
 			$this->writer->startElement('languages');
 
 			foreach ($this->package->getLanguages() as $lang)
 			{
+				if (trim($lang->getTag()) == '' or trim($lang->getFile()->getName()) == '')
+				{
+					continue;
+				}
+
 				$this->writer->startElement('language');
 				$this->writeAttributeIfValueNotEmpty('tag', $lang->getTag());
 				$this->writer->text($lang->getFile()->getName());
@@ -159,12 +175,17 @@ class Xml
 
 	protected function initUpdateServers()
 	{
-		if (!empty($this->package->getUpdateservers()))
+		if (count($this->package->getUpdateservers()))
 		{
 			$this->writer->startElement('updateservers');
 
 			foreach ($this->package->getUpdateservers() as $server)
 			{
+				if (trim($server->getUrl()) == '')
+				{
+					continue;
+				}
+
 				$this->writer->startElement('server');
 
 				$this->writeAttributeIfValueNotEmpty('type', $server->getType());
@@ -179,6 +200,10 @@ class Xml
 		}
 	}
 
+	/**
+	 * @param $name
+	 * @param $value
+	 */
 	protected function writeElementIfValueNotEmpty($name, $value)
 	{
 		$value = trim($value);
@@ -189,6 +214,10 @@ class Xml
 		}
 	}
 
+	/**
+	 * @param $name
+	 * @param $value
+	 */
 	protected function writeAttributeIfValueNotEmpty($name, $value)
 	{
 		$value = trim($value);

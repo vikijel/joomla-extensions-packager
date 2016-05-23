@@ -4,6 +4,11 @@
  */
 namespace VikiJel\JoomlaExtensionsPackager;
 
+/**
+ * Class Helper
+ *
+ * @package VikiJel\JoomlaExtensionsPackager
+ */
 class Helper
 {
 	/**

@@ -5,6 +5,11 @@
 
 namespace VikiJel\JoomlaExtensionsPackager;
 
+/**
+ * Class Extension
+ *
+ * @package VikiJel\JoomlaExtensionsPackager
+ */
 class Extension
 {
 	/**
@@ -40,6 +45,8 @@ class Extension
 	 * @param string $type   Type of extension (component/module/plugin/language/file/library/template)
 	 * @param string $client Client (site/admin) - only some extension types such as modules, templates and language packs
 	 * @param string $group  Plugin group (system/content/search/authentication/...) - plugins only
+	 *
+	 * @throws \Exception
 	 */
 	public function __construct($name, $file, $type = 'component', $client = null, $group = null)
 	{
@@ -60,6 +67,7 @@ class Extension
 	 * @param null   $group
 	 *
 	 * @return Extension
+	 * @throws \Exception
 	 */
 	public static function create($name, $file, $type = 'component', $client = null, $group = null)
 	{
@@ -99,6 +107,7 @@ class Extension
 	 * @param string $name Override file name
 	 *
 	 * @return Extension
+	 * @throws \Exception
 	 */
 	public function setFile($path, $name = null)
 	{
