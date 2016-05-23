@@ -723,14 +723,11 @@ class Package
 
 	public function replaceCopyrightPlaceholders()
 	{
-		if ($this->getAuthor() != '')
-		{
-			$this->copyright = str_replace(
-				['{year}', '{author}', '  '],
-				[date('Y', strtotime($this->getCreationDate())), $this->getAuthor(), ' '],
-				$this->copyright
-			);
-		}
+		$this->copyright = str_replace(
+			['{year}', '{author}', '  '],
+			[date('Y', strtotime($this->getCreationDate())), $this->getAuthor(), ' '],
+			$this->copyright
+		);
 	}
 
 	/**
