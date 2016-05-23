@@ -83,47 +83,47 @@ class Package
 	/**
 	 * @var string Joomla minimal version
 	 */
-	protected $pkg_version = '2.5';
+	protected $min_joomla_version = '2.5';
 
 	/**
 	 * @var string Package type
 	 */
-	protected $pkg_type = 'package';
+	protected $type = 'package';
 
 	/**
 	 * @var string Package install method
 	 */
-	protected $pkg_method = 'upgrade';
+	protected $method = 'upgrade';
 
 	/**
 	 * @var string Prefix for archive and xml filenames
 	 */
-	protected $pkg_prefix = 'pkg_';
+	protected $prefix = 'pkg_';
 
 	/**
 	 * @var array List of extensions contained in package
 	 */
-	protected $pkg_extensions = [];
+	protected $extensions = [];
 
 	/**
 	 * @var array List of languages contained in package
 	 */
-	protected $pkg_languages = [];
+	protected $languages = [];
 
 	/**
 	 * @var array List of package update servers
 	 */
-	protected $pkg_updateservers = [];
+	protected $updateservers = [];
 
 	/**
 	 * @var array List of filepaths to be packed into package
 	 */
-	protected $pkg_files = [];
+	protected $files = [];
 
 	/**
 	 * @var Xml Install xml manifest
 	 */
-	protected $pkg_xml;
+	protected $xml;
 
 	/**
 	 * @var string Packager of package
@@ -179,7 +179,7 @@ class Package
 	 */
 	public function addExtensionInstance(Extension $extension)
 	{
-		$this->pkg_extensions[$extension->getName()] = $extension;
+		$this->extensions[$extension->getName()] = $extension;
 
 		return $this;
 	}
@@ -206,7 +206,7 @@ class Package
 	{
 		$language->getFile()->setName($language->getTag() . '.' . $this->getPkgFileName('ini', false));
 
-		$this->pkg_languages[] = $language;
+		$this->languages[] = $language;
 
 		return $this;
 	}
@@ -219,25 +219,25 @@ class Package
 	 */
 	public function getPkgFileName($extension = 'zip', $version = true)
 	{
-		return $this->getPkgPrefix() . $this->getPackagename() . ($version ? '-' . $this->getVersion() : '') . '.' . $extension;
+		return $this->getPrefix() . $this->getPackagename() . ($version ? '-' . $this->getVersion() : '') . '.' . $extension;
 	}
 
 	/**
 	 * @return string
 	 */
-	public function getPkgPrefix()
+	public function getPrefix()
 	{
-		return $this->pkg_prefix;
+		return $this->prefix;
 	}
 
 	/**
-	 * @param string $pkg_prefix
+	 * @param string $prefix
 	 *
 	 * @return Package
 	 */
-	public function setPkgPrefix($pkg_prefix)
+	public function setPrefix($prefix)
 	{
-		$this->pkg_prefix = $pkg_prefix;
+		$this->prefix = $prefix;
 
 		return $this;
 	}
@@ -315,7 +315,7 @@ class Package
 	 */
 	public function addUpdateServerInstance(UpdateServer $updateserver)
 	{
-		$this->pkg_updateservers[] = $updateserver;
+		$this->updateservers[] = $updateserver;
 
 		return $this;
 	}
@@ -399,7 +399,7 @@ class Package
 	{
 		$this->setFiles();
 
-		return $this->pkg_files;
+		return $this->files;
 	}
 
 	/**
@@ -495,22 +495,22 @@ class Package
 	 */
 	public function setFiles()
 	{
-		$this->pkg_files   = [];
-		$this->pkg_files[] = new File($this->getPkgFileName('xml', false), (string) $this->getPkgXml());
+		$this->files   = [];
+		$this->files[] = new File($this->getPkgFileName('xml', false), (string) $this->getXml());
 
 		foreach ($this->getExtensions() as $extension)
 		{
-			$this->pkg_files[] = $extension->getFile();
+			$this->files[] = $extension->getFile();
 		}
 
 		foreach ($this->getLanguages() as $lang)
 		{
-			$this->pkg_files[] = $lang->getFile();
+			$this->files[] = $lang->getFile();
 		}
 
 		if ($this->getScriptfile())
 		{
-			$this->pkg_files[] = $this->getScriptfile();
+			$this->files[] = $this->getScriptfile();
 		}
 
 		return $this;
@@ -519,19 +519,19 @@ class Package
 	/**
 	 * @return Xml
 	 */
-	public function getPkgXml()
+	public function getXml()
 	{
-		$this->setPkgXml();
+		$this->setXml();
 
-		return $this->pkg_xml;
+		return $this->xml;
 	}
 
 	/**
 	 * @return $this
 	 */
-	public function setPkgXml()
+	public function setXml()
 	{
-		$this->pkg_xml = Xml::create($this)->init();
+		$this->xml = Xml::create($this)->init();
 
 		return $this;
 	}
@@ -541,7 +541,7 @@ class Package
 	 */
 	public function getExtensions()
 	{
-		return $this->pkg_extensions;
+		return $this->extensions;
 	}
 
 	/**
@@ -549,7 +549,7 @@ class Package
 	 */
 	public function getLanguages()
 	{
-		return $this->pkg_languages;
+		return $this->languages;
 	}
 
 	/**
@@ -577,19 +577,19 @@ class Package
 	/**
 	 * @return string
 	 */
-	public function getPkgVersion()
+	public function getMinJoomlaVersion()
 	{
-		return $this->pkg_version;
+		return $this->min_joomla_version;
 	}
 
 	/**
-	 * @param string $pkg_version
+	 * @param string $min_joomla_version
 	 *
 	 * @return Package
 	 */
-	public function setPkgVersion($pkg_version)
+	public function setMinJoomlaVersion($min_joomla_version)
 	{
-		$this->pkg_version = $pkg_version;
+		$this->min_joomla_version = $min_joomla_version;
 
 		return $this;
 	}
@@ -597,19 +597,19 @@ class Package
 	/**
 	 * @return string
 	 */
-	public function getPkgType()
+	public function getType()
 	{
-		return $this->pkg_type;
+		return $this->type;
 	}
 
 	/**
-	 * @param string $pkg_type
+	 * @param string $type
 	 *
 	 * @return Package
 	 */
-	public function setPkgType($pkg_type)
+	public function setType($type)
 	{
-		$this->pkg_type = $pkg_type;
+		$this->type = $type;
 
 		return $this;
 	}
@@ -617,19 +617,19 @@ class Package
 	/**
 	 * @return string
 	 */
-	public function getPkgMethod()
+	public function getMethod()
 	{
-		return $this->pkg_method;
+		return $this->method;
 	}
 
 	/**
-	 * @param string $pkg_method
+	 * @param string $method
 	 *
 	 * @return Package
 	 */
-	public function setPkgMethod($pkg_method)
+	public function setMethod($method)
 	{
-		$this->pkg_method = $pkg_method;
+		$this->method = $method;
 
 		return $this;
 	}
@@ -784,6 +784,6 @@ class Package
 	 */
 	public function getUpdateservers()
 	{
-		return $this->pkg_updateservers;
+		return $this->updateservers;
 	}
 }

@@ -17,7 +17,7 @@ try
 	               ->setDescription('This is something else...')
 	               ->setLicense('GPL')
 	               ->setCreationDate('2016-05-21')
-	               ->setPkgVersion('2.5')
+	               ->setMinJoomlaVersion('2.5')
 	               ->setUrl('http://url.com')
 	               ->setScriptfile('/path/to/script.php')
 	               ->addExtension('com_test', '/path/to/com_test.zip')

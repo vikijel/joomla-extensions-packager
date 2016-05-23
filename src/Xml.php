@@ -93,9 +93,9 @@ class Xml
 	{
 		$this->writer->startElement('extension');
 
-		$this->writeAttributeIfValueNotEmpty('type', $this->package->getPkgType());
-		$this->writeAttributeIfValueNotEmpty('version', $this->package->getPkgVersion());
-		$this->writeAttributeIfValueNotEmpty('method', $this->package->getPkgMethod());
+		$this->writeAttributeIfValueNotEmpty('type', $this->package->getType());
+		$this->writeAttributeIfValueNotEmpty('version', $this->package->getMinJoomlaVersion());
+		$this->writeAttributeIfValueNotEmpty('method', $this->package->getMethod());
 
 		$this->initProperties();
 		$this->initScriptfile();
