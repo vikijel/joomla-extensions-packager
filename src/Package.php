@@ -83,7 +83,7 @@ class Package
 	/**
 	 * @var string Joomla minimal version
 	 */
-	protected $pkg_version = '3.5';
+	protected $pkg_version = '2.5';
 
 	/**
 	 * @var string Package type
