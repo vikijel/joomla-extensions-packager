@@ -9,6 +9,7 @@ PHP Library for generating All-In-One install packages (*.zip) with multiple ext
 -   Author: [Viktor Jelínek (VikiJel)](http://www.vikijel.cz), *<vikijel@gmail.com>*
 -   License: [The MIT License (MIT)](LICENSE.txt)
 -   Copyright: (c) 2016 Viktor Jelínek
+-	Website: [http://www.joomla-extensions-packager.org](http://www.joomla-extensions-packager.org)
 
 ##  Features
 -   Packs given extensions, languages, scriptfile etc. together with auto-generated install xml manifest into a ZIP archive ready for installation into Joomla! CMS
