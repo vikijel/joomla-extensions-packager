@@ -7,7 +7,7 @@ namespace VikiJel\JoomlaExtensionsPackager;
 
 class XmlTest extends \PHPUnit_Framework_TestCase
 {
-	static $name = 'Package Test';
+	public static $name = 'Package Test';
 
 	public function testClassInstantiates()
 	{

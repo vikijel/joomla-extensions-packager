@@ -7,8 +7,8 @@ namespace VikiJel\JoomlaExtensionsPackager;
 
 class LanguageTest extends \PHPUnit_Framework_TestCase
 {
-	static $file = __DIR__ . '/data/some_file.ini';
-	static $tag  = ' En - gB ';
+	public static $file = __DIR__ . '/data/some_file.ini';
+	public static $tag  = ' En - gB ';
 
 	public function testClassInstantiates()
 	{

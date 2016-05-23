@@ -7,10 +7,10 @@ namespace VikiJel\JoomlaExtensionsPackager;
 
 class UpdateServerTest extends \PHPUnit_Framework_TestCase
 {
-	static $url      = 'http://updates.vikijel.cz/test.xml';
-	static $name     = 'VikiJel';
-	static $type     = 'vikijel';
-	static $priority = 2;
+	public static $url      = 'http://updates.vikijel.cz/test.xml';
+	public static $name     = 'VikiJel';
+	public static $type     = 'vikijel';
+	public static $priority = 2;
 
 	public function testClassInstantiates()
 	{

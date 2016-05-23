@@ -50,7 +50,8 @@ try
 	               ->addExtension('plg_system_test', '/path/to/plg_system_test.zip', 'plugin', null, 'system')
 	               ->pack();
 
-	echo 'Path to created package is: ' . $path; //Path to created package is: /path/to/repository/out/pkg_something_all_in_one-1.0.0.zip
+	echo 'Path to created package is ' . $path; 
+	//Outputs: Path to created package is: /path/to/repository/out/pkg_something_all_in_one-1.0.0.zip
 }
 catch (Exception $e)
 {
@@ -90,9 +91,12 @@ try
 		               Extension::create('file_test', '/path/to/file_test.zip', 'file')
 	               )
 	               ->addLanguage('/path/to/cs-CZ.pkg_something.ini', 'cs-CZ')
-	               ->pack('/path/to/custom_out_dir');
+	               ->addUpdateServer('http://updates1.example.com', 'My update server 1')
+	               ->addUpdateServer('http://updates2.example.com', 'My update server 2', 'collection', 2)
+	               ->pack('/path/to/custom_out_dir', 'pkg_overridden_name.zip');
 
-	echo 'Path to created package is: ' . $path; //Path to created package is: /path/to/custom_out_dir/pkg_something_else_all_in_one-1.2.3.zip
+	echo 'Path to created package is ' . $path;
+	//Outputs: Path to created package is /path/to/custom_out_dir/pkg_overridden_name.zip
 }
 catch (Exception $e)
 {

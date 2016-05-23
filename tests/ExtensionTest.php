@@ -7,11 +7,11 @@ namespace VikiJel\JoomlaExtensionsPackager;
 
 class ExtensionTest extends \PHPUnit_Framework_TestCase
 {
-	static $name   = 'Plg system test';
-	static $file   = __DIR__ . '/data/some_file.zip';
-	static $type   = 'Plugin';
-	static $client = null;
-	static $group  = 'SYSteM';
+	public static $name   = 'Plg system test';
+	public static $file   = __DIR__ . '/data/some_file.zip';
+	public static $type   = 'Plugin';
+	public static $client = null;
+	public static $group  = 'SYSteM';
 
 	public function testClassInstantiates()
 	{

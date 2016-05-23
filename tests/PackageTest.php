@@ -9,13 +9,13 @@ use Exception;
 
 class PackageTest extends \PHPUnit_Framework_TestCase
 {
-	static $name         = 'Package Test';
-	static $author       = 'Viktor Jelínek';
-	static $author_email = 'vikijel@gmail.com';
-	static $author_url   = 'http://www.vikijel.cz';
-	static $archive_src  = __DIR__ . '/data/some_file.zip';
-	static $php_src      = __DIR__ . '/data/some_file.php';
-	static $ini_src      = __DIR__ . '/data/some_file.ini';
+	public static $name         = 'Package Test';
+	public static $author       = 'Viktor Jelínek';
+	public static $author_email = 'vikijel@gmail.com';
+	public static $author_url   = 'http://www.vikijel.cz';
+	public static $archive_src  = __DIR__ . '/data/some_file.zip';
+	public static $php_src      = __DIR__ . '/data/some_file.php';
+	public static $ini_src      = __DIR__ . '/data/some_file.ini';
 
 	protected $path;
 
@@ -147,6 +147,9 @@ class PackageTest extends \PHPUnit_Framework_TestCase
 			                     Extension::create('file_pricingpage', static::$archive_src, 'file')
 		                     )
 		                     ->addLanguage(static::$ini_src, 'cs-CZ')
+		                     ->addLanguage(static::$ini_src, 'en-GB')
+		                     ->addUpdateServer('http://updates1.example.com', 'My update server 1')
+		                     ->addUpdateServer('http://updates2.example.com', 'My update server 2', 'collection', 2)
 		                     ->pack();
 
 		$this->assertFileExists($this->path);

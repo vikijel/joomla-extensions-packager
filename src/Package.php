@@ -294,14 +294,14 @@ class Package
 	}
 
 	/**
-	 * @param        $url
+	 * @param string $url
 	 * @param string $name
 	 * @param string $type
 	 * @param int    $priority
 	 *
 	 * @return $this
 	 */
-	public function addUpdateServer($url, $name = '', $type = '', $priority = 1)
+	public function addUpdateServer($url, $name = '', $type = 'extension', $priority = 1)
 	{
 		$this->addUpdateServerInstance(UpdateServer::create($url, $name, $type, $priority));
 

@@ -7,7 +7,7 @@ namespace VikiJel\JoomlaExtensionsPackager;
 
 class FileTest extends \PHPUnit_Framework_TestCase
 {
-	static $path = __DIR__ . '/data/some_file.php';
+	public static $path = __DIR__ . '/data/some_file.php';
 
 	public function testClassInstantiates()
 	{

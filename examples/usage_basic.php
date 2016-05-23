@@ -16,7 +16,8 @@ try
 	               ->addExtension('plg_system_test', '/path/to/plg_system_test.zip', 'plugin', null, 'system')
 	               ->pack();
 
-	echo 'Path to created package is: ' . $path; //Path to created package is: /path/to/repository/out/pkg_something_all_in_one-1.0.0.zip
+	echo 'Path to created package is ' . $path; 
+	//Outputs: Path to created package is: /path/to/repository/out/pkg_something_all_in_one-1.0.0.zip
 }
 catch (Exception $e)
 {
