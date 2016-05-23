@@ -78,7 +78,7 @@ class Package
 	/**
 	 * @var string System name of package
 	 */
-	protected $pkg_name = '';
+	protected $packagename = '';
 
 	/**
 	 * @var string Joomla minimal version
@@ -219,7 +219,7 @@ class Package
 	 */
 	public function getPkgFileName($extension = 'zip', $version = true)
 	{
-		return $this->getPkgPrefix() . $this->getPkgName() . ($version ? '-' . $this->getVersion() : '') . '.' . $extension;
+		return $this->getPkgPrefix() . $this->getPackagename() . ($version ? '-' . $this->getVersion() : '') . '.' . $extension;
 	}
 
 	/**
@@ -245,28 +245,28 @@ class Package
 	/**
 	 * @return string
 	 */
-	public function getPkgName()
+	public function getPackagename()
 	{
-		$this->setPkgName($this->pkg_name);
+		$this->setPackagename($this->packagename);
 
-		return $this->pkg_name;
+		return $this->packagename;
 	}
 
 	/**
-	 * @param string $pkg_name
+	 * @param string $packagename
 	 *
 	 * @return Package
 	 */
-	public function setPkgName($pkg_name = '')
+	public function setPackagename($packagename = '')
 	{
-		$this->pkg_name = $this->name;
+		$this->packagename = $this->name;
 
-		if (trim($pkg_name) != '')
+		if (trim($packagename) != '')
 		{
-			$this->pkg_name = $pkg_name;
+			$this->packagename = $packagename;
 		}
 
-		$this->pkg_name = Helper::toSystemName($this->pkg_name);
+		$this->packagename = Helper::toSystemName($this->packagename);
 
 		return $this;
 	}

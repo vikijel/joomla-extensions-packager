@@ -21,6 +21,7 @@ class Xml
 	 */
 	protected static $generic_properties = [
 		'name',
+		'packagename',
 		'version',
 		'author',
 		'authorEmail',

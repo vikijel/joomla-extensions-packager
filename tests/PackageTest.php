@@ -121,7 +121,7 @@ class PackageTest extends \PHPUnit_Framework_TestCase
 		$this->path = Package::create($this->getUniqueName())
 		                     ->setAuthor('VikiJel', 'vikijel@gmail.com', 'http://vikijel.cz')
 		                     ->setUrl('http://url.com')
-		                     ->setPkgName($this->getUniqueName(' custom2 packagename2 '))
+		                     ->setPackagename($this->getUniqueName(' custom2 packagename2 '))
 		                     ->setCopyright('Custom copyright author={author} - year={year}')
 		                     ->setDescription('description')
 		                     ->setLicense('GPL')
