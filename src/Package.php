@@ -286,6 +286,21 @@ class Package
 	}
 
 	/**
+	 * @param        $url
+	 * @param string $name
+	 * @param string $type
+	 * @param int    $priority
+	 *
+	 * @return $this
+	 */
+	public function addUpdateServer($url, $name = '', $type = '', $priority = 1)
+	{
+		$this->addUpdateServerInstance(UpdateServer::create($url, $name, $type, $priority));
+
+		return $this;
+	}
+
+	/**
 	 * @param UpdateServer $updateserver
 	 *
 	 * @return $this
@@ -335,7 +350,7 @@ class Package
 
 		$zip = new ZipArchive();
 
-		if ((!file_exists($dir) and !mkdir($dir)) or !is_dir($dir))
+		if (!file_exists($dir) and !@mkdir($dir) && !is_dir($dir))
 		{
 			throw new Exception("Cannot create/open directory for writing, dir = '$dir'");
 		}
