@@ -133,7 +133,7 @@ class Package
 	/**
 	 * @var string URL of package file
 	 */
-	private $packagerUrl = 'https://github.com/vikijel/joomla-extensions-packager';
+	private $packagerurl = 'https://github.com/vikijel/joomla-extensions-packager';
 
 	/**
 	 * Package constructor.
@@ -381,7 +381,7 @@ class Package
 			($this->getDescription() != '' ? "\n" . $this->getDescription() . "\n" : '') .
 			"\n================================================================\n" .
 			'Packed using ' . $this->getPackager() . "\n" .
-			$this->getPackagerUrl() . "\n"
+			$this->getPackagerurl() . "\n"
 		);
 
 		if (!$zip->close())
@@ -485,9 +485,9 @@ class Package
 	/**
 	 * @return string
 	 */
-	public function getPackagerUrl()
+	public function getPackagerurl()
 	{
-		return $this->packagerUrl;
+		return $this->packagerurl;
 	}
 
 	/**

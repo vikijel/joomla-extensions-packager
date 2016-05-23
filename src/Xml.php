@@ -32,7 +32,7 @@ class Xml
 		'license',
 		'url',
 		'packager',
-		'packagerUrl',
+		'packagerurl',
 	];
 
 	/**
