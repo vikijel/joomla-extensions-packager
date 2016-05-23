@@ -343,8 +343,8 @@ class Package
 	 */
 	public function pack($dir = null, $file = null, $dry_run = false)
 	{
-		$file = Helper::toFileName(trim($file) != '' ? $this->getPkgFileName() : $file);
-		$dir  = Helper::toFilePath(trim($dir) != '' ? self::$default_target_dir : $dir);
+		$file = Helper::toFileName(trim($file) == '' ? $this->getPkgFileName() : $file);
+		$dir  = Helper::toFilePath(trim($dir) == '' ? self::$default_target_dir : $dir);
 		$path = Helper::toFilePath($dir . DIRECTORY_SEPARATOR . $file);
 
 		if ($dry_run)
