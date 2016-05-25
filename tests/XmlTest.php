@@ -53,4 +53,12 @@ class XmlTest extends \PHPUnit_Framework_TestCase
 		self::assertContains('VikiJel', (string) $simple_xml->packager);
 		self::assertContains('vikijel', (string) $simple_xml->packagerurl);
 	}
+
+	public function testReturnsWriter()
+	{
+		$package  = new Package(self::$name);
+		$instance = new Xml($package);
+
+		self::assertInstanceOf('\\XMLWriter', $instance->getWriter());
+	}
 }
