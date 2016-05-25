@@ -104,6 +104,11 @@ class Language
 	 */
 	public function setTag($tag)
 	{
+		if (trim($tag) == '')
+		{
+			throw new InvalidArgumentException('Language tag cannot be empty!');
+		}
+
 		$arr = explode('-', $tag);
 
 		if (count($arr) != 2)
