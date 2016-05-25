@@ -17,17 +17,17 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
 	{
 		$instance = new Extension(static::$name, static::$file, static::$type, static::$client, static::$group);
 
-		$this->assertInstanceOf('\\VikiJel\\JoomlaExtensionsPackager\\Extension', $instance);
+		self::assertInstanceOf('\\VikiJel\\JoomlaExtensionsPackager\\Extension', $instance);
 	}
 
 	public function testSetsGetsProperties()
 	{
 		$instance = new Extension(static::$name, static::$file, static::$type, static::$client, static::$group);
 
-		$this->assertEquals('plg_system_test', $instance->getName());
-		$this->assertEquals('plg_system_test.zip', $instance->getFile()->getName());
-		$this->assertEquals('plugin', $instance->getType());
-		$this->assertEquals(null, $instance->getClient());
-		$this->assertEquals('system', $instance->getGroup());
+		self::assertEquals('plg_system_test', $instance->getName());
+		self::assertEquals('plg_system_test.zip', $instance->getFile()->getName());
+		self::assertEquals('plugin', $instance->getType());
+		self::assertEquals(null, $instance->getClient());
+		self::assertEquals('system', $instance->getGroup());
 	}
 }

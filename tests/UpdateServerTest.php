@@ -14,8 +14,8 @@ class UpdateServerTest extends \PHPUnit_Framework_TestCase
 
 	public function testClassInstantiates()
 	{
-		$instance = new UpdateServer(static::$url, static::$name, static::$type, static::$priority);
+		$instance = new UpdateServer(self::$url, self::$name, self::$type, self::$priority);
 
-		$this->assertInstanceOf('\\VikiJel\\JoomlaExtensionsPackager\\UpdateServer', $instance);
+		self::assertInstanceOf('\\VikiJel\\JoomlaExtensionsPackager\\UpdateServer', $instance);
 	}
 }
