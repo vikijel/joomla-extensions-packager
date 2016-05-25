@@ -20,7 +20,7 @@ class XmlTest extends \PHPUnit_Framework_TestCase
 		self::assertInstanceOf('\\VikiJel\\JoomlaExtensionsPackager\\Xml', $instance);
 	}
 
-	public function testInits()
+	public function testGeneratesXml()
 	{
 		$package    = Package::create(self::$name)
 		                     ->setAuthor('VikiJel')
@@ -50,7 +50,7 @@ class XmlTest extends \PHPUnit_Framework_TestCase
 		self::assertEquals('pkg_package_test.php', (string) $simple_xml->scriptfile);
 		self::assertContains('VikiJel', (string) $simple_xml->copyright);
 		self::assertContains(date('Y'), (string) $simple_xml->copyright);
-
-		self::assertInstanceOf('\\VikiJel\\JoomlaExtensionsPackager\\Xml', $instance);
+		self::assertContains('VikiJel', (string) $simple_xml->packager);
+		self::assertContains('vikijel', (string) $simple_xml->packagerurl);
 	}
 }
