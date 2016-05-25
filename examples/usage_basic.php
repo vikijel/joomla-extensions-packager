@@ -11,9 +11,9 @@ use VikiJel\JoomlaExtensionsPackager\Package;
 try
 {
 	$path = Package::create('Something All-In-One')
-	               ->addExtension('com_test', '/path/to/com_test.zip')
-	               ->addExtension('mod_test', '/path/to/mod_test.zip', 'module', 'site')
-	               ->addExtension('plg_system_test', '/path/to/plg_system_test.zip', 'plugin', null, 'system')
+	               ->addExtension('com_test', '../tests/data/some_file.zip')
+	               ->addExtension('mod_test', '../tests/data/some_file.zip', 'module', 'site')
+	               ->addExtension('plg_system_test', '../tests/data/some_file.zip', 'plugin', null, 'system')
 	               ->pack();
 
 	echo 'Path to created package is ' . $path; 

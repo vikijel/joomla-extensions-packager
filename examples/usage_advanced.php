@@ -19,26 +19,26 @@ try
 	               ->setCreationDate('2016-05-21')
 	               ->setMinJoomlaVersion('2.5')
 	               ->setUrl('http://url.com')
-	               ->setScriptfile('/path/to/script.php')
-	               ->addExtension('com_test', '/path/to/com_test.zip')
-	               ->addExtension('mod_test', '/path/to/mod_test.zip', 'module', 'site')
+	               ->setScriptfile('../tests/data/some_file.php')
+	               ->addExtension('com_test', '../tests/data/some_file.zip')
+	               ->addExtension('mod_test', '../tests/data/some_file.zip', 'module', 'site')
 	               ->addExtensionInstance(
-		               Extension::create('plg_system_test', '/path/to/plg_system_test.zip', 'plugin')
+		               Extension::create('plg_system_test', '../tests/data/some_file.zip', 'plugin')
 		                        ->setGroup('system')
 	               )
-	               ->addExtension('tpl_test', '/path/to/tpl_test.zip', 'template', 'admin')
-	               ->addExtension('lib_test', '/path/to/lib_test.zip', 'library')
-	               ->addExtension('lng_test', '/path/to/lng_test.zip', 'language', 'site')
+	               ->addExtension('tpl_test', '../tests/data/some_file.zip', 'template', 'admin')
+	               ->addExtension('lib_test', '../tests/data/some_file.zip', 'library')
+	               ->addExtension('lng_test', '../tests/data/some_file.zip', 'language', 'site')
 	               ->addExtensionInstance(
-		               Extension::create('file_test', '/path/to/file_test.zip', 'file')
+		               Extension::create('file_test', '../tests/data/some_file.zip', 'file')
 	               )
-	               ->addLanguage('/path/to/cs-CZ.pkg_something.ini', 'cs-CZ')
+	               ->addLanguage('../tests/data/some_file.ini', 'cs-CZ')
 	               ->addUpdateServer('http://updates1.example.com', 'My update server 1')
 	               ->addUpdateServer('http://updates2.example.com', 'My update server 2', 'collection', 2)
-	               ->pack('/path/to/custom_out_dir', 'pkg_overridden_name.zip');
+	               ->pack('../out/custom', 'pkg_overridden_name.zip');
 
 	echo 'Path to created package is ' . $path;
-	//Outputs: Path to created package is /path/to/custom_out_dir/pkg_overridden_name.zip
+	//Outputs: Path to created package is /path/to/repository/out/custom/pkg_overridden_name.zip
 }
 catch (Exception $e)
 {

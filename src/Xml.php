@@ -228,4 +228,12 @@ class Xml
 			$this->writer->writeAttribute($name, $value);
 		}
 	}
+
+	/**
+	 * @return XMLWriter
+	 */
+	public function getWriter()
+	{
+		return $this->writer;
+	}
 }

@@ -31,7 +31,43 @@ class PackageTest extends \PHPUnit_Framework_TestCase
 	{
 		$instance = new Package(static::$name);
 
-		$this->assertInstanceOf('\\VikiJel\\JoomlaExtensionsPackager\\Package', $instance);
+		self::assertInstanceOf('\\VikiJel\\JoomlaExtensionsPackager\\Package', $instance);
+	}
+
+	public function testValidatesName()
+	{
+		$this->expectException(\InvalidArgumentException::class);
+		new Package('');
+	}
+
+	public function testValidatesUrlScheme()
+	{
+		$this->expectException(\InvalidArgumentException::class);
+		Package::create(static::$name)->setUrl('example.com');
+	}
+
+	public function testValidatesUrlHost()
+	{
+		$this->expectException(\InvalidArgumentException::class);
+		Package::create(static::$name)->setUrl('http://');
+	}
+
+	public function testValidatesAuthorUrlScheme()
+	{
+		$this->expectException(\InvalidArgumentException::class);
+		Package::create(static::$name)->setAuthorUrl('example.com');
+	}
+
+	public function testValidatesAuthorUrlHost()
+	{
+		$this->expectException(\InvalidArgumentException::class);
+		Package::create(static::$name)->setAuthorUrl('http://');
+	}
+
+	public function testValidatesLicense()
+	{
+		$this->expectException(\InvalidArgumentException::class);
+		Package::create(static::$name)->setLicense('MIT');
 	}
 
 	public function testGetters()
@@ -39,10 +75,10 @@ class PackageTest extends \PHPUnit_Framework_TestCase
 		$package = new Package(static::$name);
 		$package->setAuthor(static::$author);
 
-		$this->assertContains($package->getAuthor(), $package->getCopyright());
-		$this->assertContains(date('Y'), $package->getCopyright());
-		$this->assertEquals('1.0.0', $package->getVersion());
-		$this->assertEquals('pkg_' . Helper::toSystemName(static::$name) . '-1.0.0.zip', $package->getPkgFileName());
+		self::assertContains($package->getAuthor(), $package->getCopyright());
+		self::assertContains(date('Y'), $package->getCopyright());
+		self::assertEquals('1.0.0', $package->getVersion());
+		self::assertEquals('pkg_' . Helper::toSystemName(static::$name) . '-1.0.0.zip', $package->getPkgFileName());
 	}
 
 	public function testSetsGetsAuthor()
@@ -50,9 +86,9 @@ class PackageTest extends \PHPUnit_Framework_TestCase
 		$package = new Package(static::$name);
 		$package->setAuthor(static::$author, static::$author_email, static::$author_url);
 
-		$this->assertEquals(static::$author, $package->getAuthor());
-		$this->assertEquals(static::$author_email, $package->getAuthorEmail());
-		$this->assertEquals(static::$author_url, $package->getAuthorUrl());
+		self::assertEquals(static::$author, $package->getAuthor());
+		self::assertEquals(static::$author_email, $package->getAuthorEmail());
+		self::assertEquals(static::$author_url, $package->getAuthorUrl());
 	}
 
 	public function testAddsExtensions()
@@ -63,12 +99,12 @@ class PackageTest extends \PHPUnit_Framework_TestCase
 
 		$extensions = $package->getExtensions();
 
-		$this->assertNotEmpty($extensions);
+		self::assertNotEmpty($extensions);
 
 		$count_1 = count($extensions);
 
-		$this->assertEquals(1, $count_1);
-		$this->assertInstanceOf('\\VikiJel\\JoomlaExtensionsPackager\\Extension', $extensions['mod_test']);
+		self::assertEquals(1, $count_1);
+		self::assertInstanceOf('\\VikiJel\\JoomlaExtensionsPackager\\Extension', $extensions['mod_test']);
 
 		$package->addExtensionInstance(Extension::create('plg_search_stuff', static::$archive_src, 'plugin', null, 'search'));
 
@@ -76,8 +112,8 @@ class PackageTest extends \PHPUnit_Framework_TestCase
 
 		$count_2 = count($extensions);
 
-		$this->assertEquals(2, $count_2);
-		$this->assertInstanceOf('\\VikiJel\\JoomlaExtensionsPackager\\Extension', $extensions['plg_search_stuff']);
+		self::assertEquals(2, $count_2);
+		self::assertInstanceOf('\\VikiJel\\JoomlaExtensionsPackager\\Extension', $extensions['plg_search_stuff']);
 	}
 
 	public function testAddsLanguage()
@@ -88,12 +124,12 @@ class PackageTest extends \PHPUnit_Framework_TestCase
 
 		$languages = $package->getLanguages();
 
-		$this->assertNotEmpty($languages);
+		self::assertNotEmpty($languages);
 
 		$count_1 = count($languages);
 
-		$this->assertEquals(1, $count_1);
-		$this->assertInstanceOf('\\VikiJel\\JoomlaExtensionsPackager\\Language', $languages[0]);
+		self::assertEquals(1, $count_1);
+		self::assertInstanceOf('\\VikiJel\\JoomlaExtensionsPackager\\Language', $languages[0]);
 
 		$package->addLanguageInstance(Language::create(static::$ini_src, 'sk-SK'));
 
@@ -101,8 +137,8 @@ class PackageTest extends \PHPUnit_Framework_TestCase
 
 		$count_2 = count($languages);
 
-		$this->assertEquals(2, $count_2);
-		$this->assertInstanceOf('\\VikiJel\\JoomlaExtensionsPackager\\Language', $languages[1]);
+		self::assertEquals(2, $count_2);
+		self::assertInstanceOf('\\VikiJel\\JoomlaExtensionsPackager\\Language', $languages[1]);
 	}
 
 	public function testPacks()
@@ -113,14 +149,14 @@ class PackageTest extends \PHPUnit_Framework_TestCase
 		                     ->addExtensionInstance(Extension::create('plg_search_stuff', static::$archive_src, 'plugin', null, 'search'))
 		                     ->pack();
 
-		$this->assertFileExists($this->path);
+		self::assertFileExists($this->path);
 	}
 
 	public function testBuildsPackageComplete()
 	{
 		$this->path = Package::create($this->getUniqueName())
 		                     ->setAuthor('VikiJel', 'vikijel@gmail.com', 'http://vikijel.cz')
-		                     ->setUrl('http://url.com')
+		                     ->setUrl('http://example.com')
 		                     ->setPackagename($this->getUniqueName(' custom2 packagename2 '))
 		                     ->setCopyright('Custom copyright author={author} - year={year}')
 		                     ->setDescription('description')
@@ -132,7 +168,7 @@ class PackageTest extends \PHPUnit_Framework_TestCase
 		                     ->setMinJoomlaVersion('3.2')
 		                     ->setScriptfile(static::$php_src)
 		                     ->setVersion('1.2.3')
-		                     ->setUrl('https:://url.cz')
+		                     ->setUrl('https://example.com')
 		                     ->addExtension('com_easyredminehelper', static::$archive_src)
 		                     ->addExtension('mod_easyredmine_demo', static::$archive_src, 'module', 'site')
 		                     ->addExtensionInstance(
@@ -152,7 +188,7 @@ class PackageTest extends \PHPUnit_Framework_TestCase
 		                     ->addUpdateServer('http://updates2.example.com', 'My update server 2', 'collection', 2)
 		                     ->pack();
 
-		$this->assertFileExists($this->path);
+		self::assertFileExists($this->path);
 
 	}
 
@@ -165,7 +201,7 @@ class PackageTest extends \PHPUnit_Framework_TestCase
 		                     ->setLicense('GPL')
 		                     ->setCreationDate(date('Y-m-d'))
 		                     ->setMinJoomlaVersion('3.2')
-		                     ->setUrl('http://url.com')
+		                     ->setUrl('http://example.com')
 		                     ->setScriptfile(static::$php_src)
 		                     ->addExtension('com_test', static::$archive_src)
 		                     ->addExtension('mod_test', static::$archive_src, 'module', 'site')
@@ -180,7 +216,7 @@ class PackageTest extends \PHPUnit_Framework_TestCase
 			                     Extension::create('file_test', static::$archive_src, 'file')
 		                     )->pack();
 
-		$this->assertFileExists($this->path);
+		self::assertFileExists($this->path);
 
 	}
 
@@ -200,7 +236,7 @@ class PackageTest extends \PHPUnit_Framework_TestCase
 			                     Extension::create('file_test', static::$archive_src, 'file')
 		                     )->pack();
 
-		$this->assertFileExists($this->path);
+		self::assertFileExists($this->path);
 	}
 
 	public function testRunsDry()
@@ -209,7 +245,7 @@ class PackageTest extends \PHPUnit_Framework_TestCase
 
 		$this->path = Package::create($this->getUniqueName())->pack(null, null, true);
 
-		$this->assertNull($this->path);
+		self::assertNull($this->path);
 	}
 
 	protected function getUniqueName($prefix = null)

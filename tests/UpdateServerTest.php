@@ -14,8 +14,29 @@ class UpdateServerTest extends \PHPUnit_Framework_TestCase
 
 	public function testClassInstantiates()
 	{
-		$instance = new UpdateServer(static::$url, static::$name, static::$type, static::$priority);
+		$instance = new UpdateServer(self::$url, self::$name, self::$type, self::$priority);
 
-		$this->assertInstanceOf('\\VikiJel\\JoomlaExtensionsPackager\\UpdateServer', $instance);
+		self::assertInstanceOf('\\VikiJel\\JoomlaExtensionsPackager\\UpdateServer', $instance);
+	}
+
+	public function testValidatesUrl()
+	{
+		$this->expectException(\InvalidArgumentException::class);
+
+		new UpdateServer('wrongUrl', self::$name, self::$type, self::$priority);
+	}
+
+	public function testValidatesUrlScheme()
+	{
+		$this->expectException(\InvalidArgumentException::class);
+
+		new UpdateServer('example.com', self::$name, self::$type, self::$priority);
+	}
+
+	public function testValidatesUrlHost()
+	{
+		$this->expectException(\InvalidArgumentException::class);
+
+		new UpdateServer('http://', self::$name, self::$type, self::$priority);
 	}
 }

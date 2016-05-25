@@ -13,15 +13,22 @@ class FileTest extends \PHPUnit_Framework_TestCase
 	{
 		$instance = File::createFromPath(static::$path);
 
-		$this->assertInstanceOf('\\VikiJel\\JoomlaExtensionsPackager\\File', $instance);
+		self::assertInstanceOf('\\VikiJel\\JoomlaExtensionsPackager\\File', $instance);
 	}
 
 	public function testSetsGetsProperties()
 	{
 		$instance = File::createFromPath(static::$path);
 
-		$this->assertEquals(Helper::toFileName(static::$path), $instance->getName());
-		$this->assertEquals(file_get_contents(Helper::toFilePath(static::$path)), $instance->getData());
-		$this->assertNotNull($instance->getData());
+		self::assertEquals(Helper::toFileName(static::$path), $instance->getName());
+		self::assertEquals(file_get_contents(Helper::toFilePath(static::$path)), $instance->getData());
+		self::assertNotNull($instance->getData());
+	}
+
+	public function testValidatesPath()
+	{
+		$this->expectException(\Exception::class);
+
+		File::createFromPath('err');
 	}
 }

@@ -14,14 +14,28 @@ class LanguageTest extends \PHPUnit_Framework_TestCase
 	{
 		$instance = new Language(static::$file, static::$tag);
 
-		$this->assertInstanceOf('\\VikiJel\\JoomlaExtensionsPackager\\Language', $instance);
+		self::assertInstanceOf('\\VikiJel\\JoomlaExtensionsPackager\\Language', $instance);
 	}
 
 	public function testSetsGetsProperties()
 	{
 		$instance = new Language(static::$file, static::$tag);
 
-		$this->assertEquals('some_file.ini', $instance->getFile()->getName());
-		$this->assertEquals('en-GB', $instance->getTag());
+		self::assertEquals('some_file.ini', $instance->getFile()->getName());
+		self::assertEquals('en-GB', $instance->getTag());
+	}
+
+	public function testValidatesFile()
+	{
+		$this->expectException(\Exception::class);
+
+		new Language('err', static::$tag);
+	}
+
+	public function testValidatesTag()
+	{
+		$this->expectException(\Exception::class);
+
+		new Language(static::$file, 'engb');
 	}
 }

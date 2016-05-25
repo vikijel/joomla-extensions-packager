@@ -414,10 +414,18 @@ class Package
 	 * @param string $name
 	 *
 	 * @return Package
+	 * @throws \InvalidArgumentException
 	 */
 	public function setName($name)
 	{
-		$this->name = trim($name);
+		$name = trim($name);
+
+		if ($name == '')
+		{
+			throw new \InvalidArgumentException('Name cannot be empty!');
+		}
+
+		$this->name = $name;
 
 		return $this;
 	}
@@ -587,9 +595,9 @@ class Package
 	 *
 	 * @return Package
 	 */
-	public function setMinJoomlaVersion($min_joomla_version)
+	public function setMinJoomlaVersion($min_joomla_version = '')
 	{
-		$this->min_joomla_version = $min_joomla_version;
+		$this->min_joomla_version = ($min_joomla_version != '' and version_compare($min_joomla_version, '2.5', '>=')) ? $min_joomla_version : '2.5';
 
 		return $this;
 	}
@@ -609,7 +617,7 @@ class Package
 	 */
 	public function setType($type)
 	{
-		$this->type = $type;
+		$this->type = Helper::toSystemName($type);
 
 		return $this;
 	}
@@ -629,7 +637,7 @@ class Package
 	 */
 	public function setMethod($method)
 	{
-		$this->method = $method;
+		$this->method = Helper::toSystemName($method);
 
 		return $this;
 	}
@@ -666,9 +674,15 @@ class Package
 	 * @param string $authorUrl
 	 *
 	 * @return Package
+	 * @throws \InvalidArgumentException
 	 */
 	public function setAuthorUrl($authorUrl)
 	{
+		if (filter_var($authorUrl, FILTER_VALIDATE_URL, FILTER_FLAG_SCHEME_REQUIRED && FILTER_FLAG_HOST_REQUIRED) === false)
+		{
+			throw new \InvalidArgumentException("Author Url '$authorUrl' is not valid! Valid scheme and host are required.");
+		}
+
 		$this->authorUrl = $authorUrl;
 
 		return $this;
@@ -686,9 +700,15 @@ class Package
 	 * @param string $license
 	 *
 	 * @return Package
+	 * @throws \InvalidArgumentException
 	 */
 	public function setLicense($license)
 	{
+		if (stripos($license, 'gpl') === false)
+		{
+			throw new \InvalidArgumentException("License '$license' is not GPL comatible");
+		}
+
 		$this->license = $license;
 
 		return $this;
@@ -771,9 +791,15 @@ class Package
 	 * @param string $url
 	 *
 	 * @return Package
+	 * @throws \InvalidArgumentException
 	 */
 	public function setUrl($url)
 	{
+		if (filter_var($url, FILTER_VALIDATE_URL, FILTER_FLAG_SCHEME_REQUIRED && FILTER_FLAG_HOST_REQUIRED) === false)
+		{
+			throw new \InvalidArgumentException("Url '$url' is not valid! Valid scheme and host are required.");
+		}
+
 		$this->url = $url;
 
 		return $this;
