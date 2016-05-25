@@ -86,9 +86,17 @@ class Extension
 	 * @param string $name System name of extension
 	 *
 	 * @return Extension
+	 * @throws \InvalidArgumentException
 	 */
 	public function setName($name)
 	{
+		$name = trim($name);
+
+		if ($name == '')
+		{
+			throw new \InvalidArgumentException('Extension Name cannot be empty!');
+		}
+
 		$this->name = Helper::toSystemName($name);
 
 		return $this;
@@ -160,9 +168,15 @@ class Extension
 	 * @param string $client Client (site/admin) - only some extension types such as modules, templates and language packs
 	 *
 	 * @return Extension
+	 * @throws \InvalidArgumentException
 	 */
 	public function setClient($client = null)
 	{
+		if ($this->getType() == 'module' and trim($client) == '')
+		{
+			throw new \InvalidArgumentException('Extension Type ' . $this->getType() . ' requires non-empty Client');
+		}
+
 		$this->client = $client !== null ? Helper::toSystemName($client) : $client;
 
 		return $this;
@@ -180,9 +194,15 @@ class Extension
 	 * @param string $group Plugin group (system/content/search/authentication/...) - plugins only
 	 *
 	 * @return Extension
+	 * @throws \InvalidArgumentException
 	 */
 	public function setGroup($group = null)
 	{
+		if ($this->getType() == 'plugin' and trim($group) == '')
+		{
+			throw new \InvalidArgumentException('Extension Type ' . $this->getType() . ' requires non-empty Group');
+		}
+
 		$this->group = $group !== null ? Helper::toSystemName($group) : $group;
 
 		return $this;

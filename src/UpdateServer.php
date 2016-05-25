@@ -81,7 +81,7 @@ class UpdateServer
 	{
 		if ($url != '' and filter_var($url, FILTER_VALIDATE_URL, FILTER_FLAG_SCHEME_REQUIRED && FILTER_FLAG_HOST_REQUIRED) === false)
 		{
-			throw new \InvalidArgumentException("Url '$url' is not valid! Valid scheme and host are required.");
+			throw new \InvalidArgumentException("Updateserver Url '$url' is not valid! Valid scheme and host are required.");
 		}
 		
 		$this->url = $url;
