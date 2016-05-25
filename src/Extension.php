@@ -121,7 +121,7 @@ class Extension
 	 *
 	 * @return Extension
 	 */
-	public function setFileInstance($file)
+	public function setFileInstance(File $file)
 	{
 		$this->file = $file;
 

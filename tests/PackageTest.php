@@ -34,6 +34,42 @@ class PackageTest extends \PHPUnit_Framework_TestCase
 		self::assertInstanceOf('\\VikiJel\\JoomlaExtensionsPackager\\Package', $instance);
 	}
 
+	public function testValidatesName()
+	{
+		$this->expectException(\InvalidArgumentException::class);
+		new Package('');
+	}
+
+	public function testValidatesUrlScheme()
+	{
+		$this->expectException(\InvalidArgumentException::class);
+		Package::create(static::$name)->setUrl('example.com');
+	}
+
+	public function testValidatesUrlHost()
+	{
+		$this->expectException(\InvalidArgumentException::class);
+		Package::create(static::$name)->setUrl('http://');
+	}
+
+	public function testValidatesAuthorUrlScheme()
+	{
+		$this->expectException(\InvalidArgumentException::class);
+		Package::create(static::$name)->setAuthorUrl('example.com');
+	}
+
+	public function testValidatesAuthorUrlHost()
+	{
+		$this->expectException(\InvalidArgumentException::class);
+		Package::create(static::$name)->setAuthorUrl('http://');
+	}
+
+	public function testValidatesLicense()
+	{
+		$this->expectException(\InvalidArgumentException::class);
+		Package::create(static::$name)->setLicense('MIT');
+	}
+
 	public function testGetters()
 	{
 		$package = new Package(static::$name);
@@ -120,7 +156,7 @@ class PackageTest extends \PHPUnit_Framework_TestCase
 	{
 		$this->path = Package::create($this->getUniqueName())
 		                     ->setAuthor('VikiJel', 'vikijel@gmail.com', 'http://vikijel.cz')
-		                     ->setUrl('http://url.com')
+		                     ->setUrl('http://example.com')
 		                     ->setPackagename($this->getUniqueName(' custom2 packagename2 '))
 		                     ->setCopyright('Custom copyright author={author} - year={year}')
 		                     ->setDescription('description')
@@ -132,7 +168,7 @@ class PackageTest extends \PHPUnit_Framework_TestCase
 		                     ->setMinJoomlaVersion('3.2')
 		                     ->setScriptfile(static::$php_src)
 		                     ->setVersion('1.2.3')
-		                     ->setUrl('https:://url.cz')
+		                     ->setUrl('https://example.com')
 		                     ->addExtension('com_easyredminehelper', static::$archive_src)
 		                     ->addExtension('mod_easyredmine_demo', static::$archive_src, 'module', 'site')
 		                     ->addExtensionInstance(
@@ -165,7 +201,7 @@ class PackageTest extends \PHPUnit_Framework_TestCase
 		                     ->setLicense('GPL')
 		                     ->setCreationDate(date('Y-m-d'))
 		                     ->setMinJoomlaVersion('3.2')
-		                     ->setUrl('http://url.com')
+		                     ->setUrl('http://example.com')
 		                     ->setScriptfile(static::$php_src)
 		                     ->addExtension('com_test', static::$archive_src)
 		                     ->addExtension('mod_test', static::$archive_src, 'module', 'site')

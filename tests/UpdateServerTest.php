@@ -18,4 +18,25 @@ class UpdateServerTest extends \PHPUnit_Framework_TestCase
 
 		self::assertInstanceOf('\\VikiJel\\JoomlaExtensionsPackager\\UpdateServer', $instance);
 	}
+
+	public function testValidatesUrl()
+	{
+		$this->expectException(\InvalidArgumentException::class);
+
+		new UpdateServer('wrongUrl', self::$name, self::$type, self::$priority);
+	}
+
+	public function testValidatesUrlScheme()
+	{
+		$this->expectException(\InvalidArgumentException::class);
+
+		new UpdateServer('example.com', self::$name, self::$type, self::$priority);
+	}
+
+	public function testValidatesUrlHost()
+	{
+		$this->expectException(\InvalidArgumentException::class);
+
+		new UpdateServer('http://', self::$name, self::$type, self::$priority);
+	}
 }

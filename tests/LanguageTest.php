@@ -24,4 +24,18 @@ class LanguageTest extends \PHPUnit_Framework_TestCase
 		self::assertEquals('some_file.ini', $instance->getFile()->getName());
 		self::assertEquals('en-GB', $instance->getTag());
 	}
+
+	public function testValidatesFile()
+	{
+		$this->expectException(\Exception::class);
+
+		new Language('err', static::$tag);
+	}
+
+	public function testValidatesTag()
+	{
+		$this->expectException(\Exception::class);
+
+		new Language(static::$file, 'engb');
+	}
 }

@@ -75,9 +75,15 @@ class UpdateServer
 	 * @param string $url URL of update server's xml list of updates
 	 *
 	 * @return UpdateServer
+	 * @throws \InvalidArgumentException
 	 */
 	public function setUrl($url)
 	{
+		if (filter_var($url, FILTER_VALIDATE_URL, FILTER_FLAG_SCHEME_REQUIRED && FILTER_FLAG_HOST_REQUIRED) === false)
+		{
+			throw new \InvalidArgumentException("Url '$url' is not valid! Valid scheme and host are required.");
+		}
+		
 		$this->url = $url;
 
 		return $this;

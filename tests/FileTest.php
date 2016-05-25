@@ -24,4 +24,11 @@ class FileTest extends \PHPUnit_Framework_TestCase
 		self::assertEquals(file_get_contents(Helper::toFilePath(static::$path)), $instance->getData());
 		self::assertNotNull($instance->getData());
 	}
+
+	public function testValidatesPath()
+	{
+		$this->expectException(\Exception::class);
+
+		File::createFromPath('err');
+	}
 }
