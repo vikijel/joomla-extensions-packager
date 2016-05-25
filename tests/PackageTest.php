@@ -206,7 +206,8 @@ class PackageTest extends \PHPUnit_Framework_TestCase
 		                     ->addExtension('com_test', static::$archive_src)
 		                     ->addExtension('mod_test', static::$archive_src, 'module', 'site')
 		                     ->addExtensionInstance(
-			                     Extension::create('plg_system_test', static::$archive_src, 'plugin')
+			                     Extension::create('plg_system_test', static::$archive_src)
+			                              ->setType('plugin')
 			                              ->setGroup('system')
 		                     )
 		                     ->addExtension('tpl_test', static::$archive_src, 'template', 'admin')
@@ -226,7 +227,8 @@ class PackageTest extends \PHPUnit_Framework_TestCase
 		                     ->addExtension('com_test', static::$archive_src)
 		                     ->addExtension('mod_test', static::$archive_src, 'module', 'site')
 		                     ->addExtensionInstance(
-			                     Extension::create('plg_system_test', static::$archive_src, 'plugin')
+			                     Extension::create('plg_system_test', static::$archive_src)
+			                              ->setType('plugin')
 			                              ->setGroup('system')
 		                     )
 		                     ->addExtension('tpl_test', static::$archive_src, 'template', 'admin')
@@ -250,6 +252,6 @@ class PackageTest extends \PHPUnit_Framework_TestCase
 
 	protected function getUniqueName($prefix = null)
 	{
-		return ($prefix !== null ? $prefix : static::$name) . ' ' . uniqid();
+		return ($prefix !== null ? $prefix : static::$name) . ' ' . uniqid('', true);
 	}
 }
