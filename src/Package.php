@@ -678,7 +678,7 @@ class Package
 	 */
 	public function setAuthorUrl($authorUrl)
 	{
-		if (filter_var($authorUrl, FILTER_VALIDATE_URL, FILTER_FLAG_SCHEME_REQUIRED && FILTER_FLAG_HOST_REQUIRED) === false)
+		if ($authorUrl != '' and filter_var($authorUrl, FILTER_VALIDATE_URL, FILTER_FLAG_SCHEME_REQUIRED && FILTER_FLAG_HOST_REQUIRED) === false)
 		{
 			throw new \InvalidArgumentException("Author Url '$authorUrl' is not valid! Valid scheme and host are required.");
 		}
@@ -795,7 +795,7 @@ class Package
 	 */
 	public function setUrl($url)
 	{
-		if (filter_var($url, FILTER_VALIDATE_URL, FILTER_FLAG_SCHEME_REQUIRED && FILTER_FLAG_HOST_REQUIRED) === false)
+		if ($url != '' and filter_var($url, FILTER_VALIDATE_URL, FILTER_FLAG_SCHEME_REQUIRED && FILTER_FLAG_HOST_REQUIRED) === false)
 		{
 			throw new \InvalidArgumentException("Url '$url' is not valid! Valid scheme and host are required.");
 		}
