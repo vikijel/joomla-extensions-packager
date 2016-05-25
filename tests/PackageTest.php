@@ -245,7 +245,18 @@ class PackageTest extends \PHPUnit_Framework_TestCase
 	{
 		$this->expectException(Exception::class);
 
-		$this->path = Package::create($this->getUniqueName())->pack(null, null, true);
+		$this->path = Package::create($this->getUniqueName())
+		                     ->addExtension('com_test', static::$archive_src)
+		                     ->pack(null, null, true);
+
+		self::assertNull($this->path);
+	}
+
+	public function testDoesNotPackEmpty()
+	{
+		$this->expectException(Exception::class);
+
+		$this->path = Package::create($this->getUniqueName())->pack();
 
 		self::assertNull($this->path);
 	}
