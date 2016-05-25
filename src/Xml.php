@@ -99,7 +99,7 @@ class Xml
 
 		$this->initProperties();
 		$this->initScriptfile();
-		$this->initFiles();
+		$this->initExtensions();
 		$this->initLanguages();
 		$this->initUpdateServers();
 
@@ -123,8 +123,13 @@ class Xml
 		}
 	}
 
-	protected function initFiles()
+	protected function initExtensions()
 	{
+		if (!$this->package->hasExtensions())
+		{
+			return;
+		}
+
 		$this->writer->startElement('files');
 
 		foreach ($this->package->getExtensions() as $ext)
@@ -145,7 +150,7 @@ class Xml
 
 	protected function initScriptfile()
 	{
-		if ($this->package->getScriptfile() and $this->package->getScriptfile()->getName() != '')
+		if ($this->package->hasScriptfile())
 		{
 			$this->writer->writeElement('scriptfile', $this->package->getScriptfile()->getName());
 		}
@@ -153,52 +158,56 @@ class Xml
 
 	protected function initLanguages()
 	{
-		if (count($this->package->getLanguages()))
+		if (!$this->package->hasLanguages())
 		{
-			$this->writer->startElement('languages');
+			return;
+		}
 
-			foreach ($this->package->getLanguages() as $lang)
+		$this->writer->startElement('languages');
+
+		foreach ($this->package->getLanguages() as $lang)
+		{
+			if (trim($lang->getTag()) == '' or trim($lang->getFile()->getName()) == '')
 			{
-				if (trim($lang->getTag()) == '' or trim($lang->getFile()->getName()) == '')
-				{
-					continue;
-				}
-
-				$this->writer->startElement('language');
-				$this->writeAttributeIfValueNotEmpty('tag', $lang->getTag());
-				$this->writer->text($lang->getFile()->getName());
-				$this->writer->endElement();
+				continue;
 			}
 
+			$this->writer->startElement('language');
+			$this->writeAttributeIfValueNotEmpty('tag', $lang->getTag());
+			$this->writer->text($lang->getFile()->getName());
 			$this->writer->endElement();
 		}
+
+		$this->writer->endElement();
 	}
 
 	protected function initUpdateServers()
 	{
-		if (count($this->package->getUpdateservers()))
+		if (!$this->package->hasUpdateservers())
 		{
-			$this->writer->startElement('updateservers');
+			return;
+		}
+		
+		$this->writer->startElement('updateservers');
 
-			foreach ($this->package->getUpdateservers() as $server)
+		foreach ($this->package->getUpdateservers() as $server)
+		{
+			if (trim($server->getUrl()) == '')
 			{
-				if (trim($server->getUrl()) == '')
-				{
-					continue;
-				}
-
-				$this->writer->startElement('server');
-
-				$this->writeAttributeIfValueNotEmpty('type', $server->getType());
-				$this->writeAttributeIfValueNotEmpty('priority', $server->getPriority());
-				$this->writeAttributeIfValueNotEmpty('name', $server->getName());
-
-				$this->writer->text($server->getUrl());
-				$this->writer->endElement();
+				continue;
 			}
 
+			$this->writer->startElement('server');
+
+			$this->writeAttributeIfValueNotEmpty('type', $server->getType());
+			$this->writeAttributeIfValueNotEmpty('priority', $server->getPriority());
+			$this->writeAttributeIfValueNotEmpty('name', $server->getName());
+
+			$this->writer->text($server->getUrl());
 			$this->writer->endElement();
 		}
+
+		$this->writer->endElement();
 	}
 
 	/**

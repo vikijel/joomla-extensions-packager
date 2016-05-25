@@ -343,6 +343,11 @@ class Package
 	 */
 	public function pack($dir = null, $file = null, $dry_run = false)
 	{
+		if (!$this->hasExtensions() and !$this->hasLanguages() and !$this->hasScriptfile() and !$this->hasUpdateservers())
+		{
+			throw new Exception('Pointless pack! (Missing some extensions / languages / updateservers / scriptfile)');
+		}
+
 		$file = Helper::toFileName(trim($file) == '' ? $this->getPkgFileName() : $file);
 		$dir  = Helper::toFilePath(trim($dir) == '' ? self::$default_target_dir : $dir);
 		$path = Helper::toFilePath($dir . DIRECTORY_SEPARATOR . $file);
@@ -811,5 +816,37 @@ class Package
 	public function getUpdateservers()
 	{
 		return $this->updateservers;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function hasUpdateservers()
+	{
+		return count($this->getUpdateservers());
+	}
+
+	/**
+	 * @return int
+	 */
+	public function hasExtensions()
+	{
+		return count($this->getExtensions());
+	}
+
+	/**
+	 * @return int
+	 */
+	public function hasLanguages()
+	{
+		return count($this->getLanguages());
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function hasScriptfile()
+	{
+		return ($this->getScriptfile() and $this->getScriptfile()->getName() != '');
 	}
 }
