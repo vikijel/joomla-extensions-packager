@@ -44,7 +44,7 @@ class XmlTest extends \PHPUnit_Framework_TestCase
 		self::assertEquals(1, (int) $simple_xml->updateservers->server->attributes()->priority);
 		self::assertEquals('extension', (string) $simple_xml->updateservers->server->attributes()->type);
 		self::assertEquals('com_test', (string) $simple_xml->files->file->attributes()->id);
-		self::assertEquals('com_test.zip', (string) $simple_xml->files->file);
+		self::assertEquals('some_file.zip', (string) $simple_xml->files->file);
 		self::assertEquals('en-GB.pkg_package_test.ini', (string) $simple_xml->languages->language);
 		self::assertEquals('en-GB', (string) $simple_xml->languages->language->attributes()->tag);
 		self::assertEquals('pkg_package_test.php', (string) $simple_xml->scriptfile);

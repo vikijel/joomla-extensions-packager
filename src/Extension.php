@@ -51,7 +51,7 @@ class Extension
 	public function __construct($name, $file, $type = 'component', $client = null, $group = null)
 	{
 		$this->setName($name);
-		$this->setFile($file, $this->getName() . '.zip');
+		$this->setFile($file);
 		$this->setType($type);
 		$this->setClient($client);
 		$this->setGroup($group);

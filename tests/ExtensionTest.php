@@ -25,7 +25,7 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
 		$instance = new Extension(static::$name, static::$file, static::$type, static::$client, static::$group);
 
 		self::assertEquals('plg_system_test', $instance->getName());
-		self::assertEquals('plg_system_test.zip', $instance->getFile()->getName());
+		self::assertEquals('some_file.zip', $instance->getFile()->getName());
 		self::assertEquals('plugin', $instance->getType());
 		self::assertEquals(null, $instance->getClient());
 		self::assertEquals('system', $instance->getGroup());
